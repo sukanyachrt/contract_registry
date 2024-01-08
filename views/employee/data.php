@@ -1,0 +1,208 @@
+<?php include("../../include/header.php"); ?>
+<link rel="stylesheet" href="../../assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<link rel="stylesheet" href="../../assets/plugins/toastr/toastr.min.css">
+
+<body>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <?php include("../../include/menu_admin.php"); ?>
+            <div class="layout-page">
+                <?php include("../../include/navbar.php"); ?>
+                <div class="content-wrapper">
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <h4 class="py-3 mb-4"><span class="text-muted fw-light">ข้อมูลพนักงาน</span></h4>
+                        <div class="row">
+                            <!-- Basic Layout -->
+                            <div class="col-xxl">
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex align-items-center justify-content-between">
+                                        <h5 class="mb-0">แก้ไขข้อมูล</h5>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="employeeForm">
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Salesperson_Code">รหัสพนักงานขาย</label>
+                                                <div class="col-sm-10 form-group">
+                                                    <input type="text" class="form-control" disabled id="Salesperson_Code" name="Salesperson_Code" placeholder="รหัสพนักงานขาย" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Salesperson_Name">ชื่อพนักงานขาย</label>
+                                                <div class="col-sm-10 form-group">
+                                                    <input type="text" class="form-control" id="Salesperson_Name" name="Salesperson_Name" placeholder="ชื่อพนักงานขาย" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Telephone_Number">เบอร์โทรศัพท์</label>
+                                                <div class="col-sm-10 form-group">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" id="Telephone_Number" name="Telephone_Number" class="form-control" placeholder="เบอร์โทรศัพท์" />
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Salesperson_position">ตำแหน่งพนักงาน </label>
+                                                <div class="col-sm-10 form-group">
+                                                    <select id="Salesperson_position" name="Salesperson_position" class="form-select">
+                                                        <option value="">เลือกตำแหน่งพนักงาน</option>
+                                                        <option value="Admin Sale">Admin Sale</option>
+                                                        <option value="ฝ่ายสินเชื่อ">ฝ่ายสินเชื่อ</option>
+                                                        <option value="ฝ่ายติดตั้ง">ฝ่ายติดตั้ง</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Salesperson_status"> สถานะพนักงาน</label>
+                                                <div class="col-sm-10 form-group">
+                                                    <select id="Salesperson_status" name="Salesperson_status" class="form-select">
+                                                        <option value="">เลือกสถานะพนักงาน</option>
+                                                        <option value="ใช้งาน">ใช้งาน</option>
+                                                        <option value="ไม่ใช้งาน">ไม่ใช้งาน</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Login_Code"> Username เข้าสู่ระบบ</label>
+                                                <div class="col-sm-10 form-group">
+                                                    <input type="text" id="Login_Code" name="Login_Code" class="form-control" placeholder="Username เข้าสู่ระบบ" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Password_ID">รหัสผ่าน</label>
+                                                <div class="col-sm-10 form-group">
+                                                    <input type="text" id="Password_ID" name="Password_ID" class="form-control" placeholder="รหัสผ่าน" />
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-primary">บันทึกการแก้ไข</button>
+                                                    <button type="button" class="btn btn-outline-secondary">กลับ</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php include("../../include/footer.php"); ?>
+                    <div class="content-backdrop fade"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+</body>
+<?php include("../../include/script.php"); ?>
+<script src="../../assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="../../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="../../assets/plugins/toastr/toastr.min.js"></script>
+<script>
+    $('#employeeForm').validate({
+        rules: {
+            Salesperson_Code: {
+                required: true,
+                alphanumeric: true,
+            },
+            Salesperson_Name: {
+                required: true,
+                alphanumeric: true,
+            },
+            Telephone_Number: {
+                required: true,
+                digits: true, // ต้องเป็นตัวเลขเท่านั้น
+                minlength: 10 ,// ต้องมีจำนวน 10 ตัว
+                maxlength: 10
+            },
+            Salesperson_position :{
+                required: true,
+            },
+            Salesperson_status : {
+                required: true,
+            },
+            Login_Code: {
+                required: true,
+                alphanumeric: true,
+                minlength: 10 ,
+                maxlength: 10
+            },
+            Password_ID: {
+                required: true,
+                alphanumeric: true,
+                minlength: 6 ,
+                maxlength: 6
+            },
+        },
+        messages: {
+            Salesperson_Code: {
+                required: "โปรดกรอกรหัสพนักงานขาย",
+                alphanumeric: "โปรดกรอกรหัสผู้ใช้งานที่มีเฉพาะตัวเลขและตัวอักษร",
+            },
+            Salesperson_Name: {
+                required: "โปรดกรอกรหัสผ่าน",
+                alphanumeric: "โปรดกรอกรหัสผ่านที่มีเฉพาะตัวเลขและตัวอักษร",
+            },
+            Telephone_Number: {
+                required: "กรุณากรอกเบอร์โทรศัพท์",
+                digits: "กรุณากรอกเฉพาะตัวเลข",
+                minlength: "กรุณากรอกเบอร์โทรศัพท์ที่มีจำนวน 10 ตัว"
+            },
+            Salesperson_position :{
+                required: "กรุณาเลือกตำแหน่งพนักงานขาย",
+            },
+            Salesperson_status :{
+                required: "กรุณาเลือกสถานะพนักงานขาย",
+            },
+            Login_Code :{
+                required: "กรุณากรอก USERNAME เข้าสู่ระบบ",
+                digits: "กรุณากรอกเฉพาะตัวเลขและตัวอักษร A-ZA",
+                minlength: "กรุณากรอกUSERNAME เข้าสู่ระบบ จำนวน 10 ตัว"
+            },
+            Password_ID :{
+                required: "กรุณากรอกรหัสผ่านเข้าสู่ระบบ",
+                digits: "กรุณากรอกเฉพาะตัวเลขและตัวอักษร A-ZA",
+                minlength: "กรุณากรอกรหัสผ่านเข้าสู่ระบบ จำนวน 6 ตัว"
+            }
+            
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                type: 'POST',
+                url: "services/auth/data.php?v=checkauth",
+                data: $(form).serialize(),
+                success: function(response) {
+                    console.log(response)
+                    if (response.status == "ok") {
+                        postSession(response);
+
+                    } else {
+                        toastr.error(response.msg)
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        },
+    });
+
+    // เพิ่มเงื่อนไขสำหรับกฎ alphanumeric
+    $.validator.addMethod("alphanumeric", function(value, element) {
+        return this.optional(element) || /^[a-zA-Z0-9]+$/.test(value);
+    }, "โปรดกรอกข้อมูลที่มีเฉพาะตัวเลขและตัวอักษร (a-z)");
+</script>
