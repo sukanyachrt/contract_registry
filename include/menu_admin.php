@@ -16,19 +16,45 @@
 
         <!-- Components -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">จัดการข้อมูล</span></li>
-        <!-- Cards -->
-        <li class="menu-item">
+        <li class="menu-item active" data-menu="employee">
             <a href="../employee/index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-user-account"></i>
                 <div data-i18n="Basic">ข้อมูลพนักงาน</div>
             </a>
         </li>
-        <li class="menu-item">
-            <a href="test.php" class="menu-link">
+        <li class="menu-item" data-menu="customer">
+            <a href="../customer/index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-detail"></i>
                 <div data-i18n="Basic">ข้อมูลทะเบียนสัญญา</div>
             </a>
         </li>
 
+
     </ul>
 </aside>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function handleMenuItemClick(clickedItem) {
+            document.querySelectorAll('.menu-item').forEach(function(item) {
+                item.classList.remove('active');
+            });
+            clickedItem.classList.add('active');
+            sessionStorage.setItem('menu', clickedItem.getAttribute('data-menu'));
+        }
+
+        document.querySelectorAll('.menu-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                handleMenuItemClick(item);
+            });
+        });
+
+        var storedMenu = sessionStorage.getItem('menu');
+        if (storedMenu) {
+            document.querySelectorAll('.menu-item').forEach(function(item) {
+                if (item.getAttribute('data-menu') === storedMenu) {
+                    handleMenuItemClick(item);
+                }
+            });
+        }
+    });
+</script>

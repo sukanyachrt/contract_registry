@@ -1,4 +1,6 @@
 <?php include("../../include/header.php"); ?>
+<link rel="stylesheet" href="../../assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<link rel="stylesheet" href="../../assets/plugins/toastr/toastr.min.css">
 
 <body>
     <div class="layout-wrapper layout-content-navbar">
@@ -10,13 +12,13 @@
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <div class="row">
                             <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
-                                <button type="button" class="btn btn-primary account-image-reset mb-4">
+                                <a href="data.php" class="btn btn-primary text-white account-image-reset mb-4">
                                     <i class="bx bx-plus d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">
                                         <i class="bx bx-plus me-1"></i>
 
                                         เพิ่มข้อมูล</span>
-                                </button>
+                                </a>
                             </div>
 
                             <div class="col-lg-12 mb-4 order-0">
@@ -78,9 +80,23 @@
     </div>
 </body>
 <?php include("../../include/script.php"); ?>
-<script src="../../include/changepage.js"></script>
+<script src="../../assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="../../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="../../assets/plugins/toastr/toastr.min.js"></script>
 <script>
-    dataEmploy();
+    $(document).ready(function() {
+        dataEmploy();
+        if (sessionStorage.getItem('toastrShown') === 'edit') {
+            toastr.success("แก้ไขข้อมูลแล้วค่ะ !");
+            sessionStorage.removeItem('toastrShown');
+        }
+        if (sessionStorage.getItem('toastrShown') === 'save') {
+            toastr.success("บันทึกข้อมูลแล้วค่ะ !");
+            sessionStorage.removeItem('toastrShown');
+        }
+    });
+
+
 
     function dataEmploy() {
         var xhttp = new XMLHttpRequest();
@@ -102,7 +118,7 @@
     }
 
     function confirmDel_employ() {
-        let objId= $('#btnIdEmploy').val();
+        let objId = $('#btnIdEmploy').val();
         $.ajax({
             type: 'GET',
             url: "../../services/employee/data.php?v=updateEmployStatus&id=" + objId,
