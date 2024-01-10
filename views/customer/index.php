@@ -29,15 +29,16 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-center">รหัสพนักงานขาย</th>
-                                                        <th class="text-center">ชื่อพนักงานขาย</th>
+                                                        <th class="text-center">รหัสลูกค้า</th>
+                                                        <th class="text-center">ชื่อลูกค้า</th>
+                                                        <th class="text-center">ที่อยู่</th>
                                                         <th class="text-center">เบอร์โทรศัพท์</th>
-                                                        <th class="text-center">ตำแหน่ง</th>
+                                                        <th class="text-center">พนักงานขาย</th>
                                                         <th class="text-center">สถานะ</th>
                                                         <th class="text-center">จัดการข้อมูล</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="tbEmploy">
+                                                <tbody id="tbCustomers">
 
 
                                                 </tbody>
@@ -46,13 +47,27 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
-
                     </div>
-                    
+                    <div class="modal fade" id="modal_confirm_del" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header bg-warning ">
+                                    <h4 class="modal-title text-white" id="exampleModalLabel2">แจ้งเตือน</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h5 class="">ยืนยันการลบข้อมูล ?</h5>
+                                </div>
+                                <div class="modal-footer text-center">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        ยกเลิก
+                                    </button>
+                                    <button type="button" id="btnIdCustomer" onclick="confirmDel_customer()" class="btn btn-warning">ยืนยัน</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <?php include("../../include/footer.php"); ?>
                     <div class="content-backdrop fade"></div>
                 </div>
@@ -65,3 +80,45 @@
 <script src="../../assets/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="../../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
+<script>
+    $(document).ready(function() {
+        dataCustomer();
+    });
+
+    function dataCustomer() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("tbCustomers").innerHTML = this.responseText;
+
+            }
+        };
+        xhttp.open("GET", "../../services/customer/tableCustomer.php", true);
+        xhttp.send();
+    }
+
+    function updateCustomerStatus(objId) {
+        $('#modal_confirm_del').modal('show');
+        $('#btnIdCustomer').val(objId)
+
+
+    }
+
+    function confirmDel_customer() {
+        let objId = $('#btnIdCustomer').val();
+        $.ajax({
+            type: 'GET',
+            url: "../../services/customer/data.php?v=customerStatus&id=" + objId,
+            success: function(response) {
+                if (response.result == 1) {
+                    dataCustomer();
+                    toastr.error("ลบข้อมูลลูกค้าแล้วค่ะ !");
+                    $('#modal_confirm_del').modal('hide');
+                }
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+    }
+</script>
