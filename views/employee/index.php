@@ -10,6 +10,8 @@
                 <?php include("../../include/navbar.php"); ?>
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
+                        <h4 class="py-3 mb-0">ข้อมูลพนักงาน</h4>
+
                         <div class="row">
                             <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
                                 <a href="data.php" class="btn btn-primary text-white account-image-reset mb-4">
@@ -23,7 +25,12 @@
 
                             <div class="col-lg-12 mb-4 order-0">
                                 <div class="card">
-                                    <h5 class="card-header">ข้อมูลพนักงาน</h5>
+                                    <h5 class="card-header ">
+                                        <div class="input-group ">
+                                            <span class="input-group-text bg-primary text-white" id="basic-addon11">ค้นหาข้อมูล </span>
+                                            <input type="text" autocomplete="yes" id="search" name="search" class="form-control" placeholder="ค้นหาข้อมูลจากตาราง" />
+                                        </div>
+                                    </h5>
                                     <div class="card-body">
                                         <div class="table-responsive text-nowrap">
                                             <table class="table table-bordered">
@@ -95,7 +102,12 @@
             sessionStorage.removeItem('toastrShown');
         }
     });
-
+    $("#search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tbEmploy tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 
 
     function dataEmploy() {
