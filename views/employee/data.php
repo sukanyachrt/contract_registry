@@ -19,7 +19,10 @@
                             <div class="col-xxl">
                                 <div class="card mb-4">
                                     <div class="card-header d-flex align-items-center justify-content-between">
-                                        <h5 class="mb-0">แก้ไขข้อมูล</h5>
+                                        <h5 class="mb-0">
+                                            
+                                            <?php if($id=="") { echo "เพิ่มข้อมูล" ;} else { echo "แก้ไขข้อมูล";}?>
+                                        </h5>
 
                                     </div>
                                     <div class="card-body">

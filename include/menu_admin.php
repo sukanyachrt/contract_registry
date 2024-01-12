@@ -18,19 +18,20 @@
         <li class="menu-header small text-uppercase"><span class="menu-header-text">จัดการข้อมูล</span></li>
         <li class="menu-item" data-menu="customer">
             <a href="../customer/index.php" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon tf-icons bx bxs-group"></i>
                 <div data-i18n="Basic">ข้อมูลลุกค้า</div>
+               
             </a>
         </li>
         <li class="menu-item active" data-menu="employee">
             <a href="../employee/index.php" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-user-account"></i>
+                <i class="menu-icon tf-icons bx bxs-user-pin"></i>
                 <div data-i18n="Basic">ข้อมูลพนักงาน</div>
             </a>
         </li>
         <li class="menu-item" data-menu="contract">
             <a href="../contract/index.php" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon tf-icons bx bxs-file-doc"></i>
                 <div data-i18n="Basic">ข้อมูลทะเบียนสัญญา</div>
             </a>
         </li>
