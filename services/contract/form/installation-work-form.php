@@ -47,17 +47,17 @@ FROM
 	project AS t_project
 	INNER JOIN installation_work AS t_install ON t_project.Project_code = t_install.Project_ID 
 WHERE
-	t_project.Project_code = '".$_GET['id']."'";
+	t_project.Project_code = '" . $_GET['id'] . "'";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
-    $data['Contract_delivery_datesend']=date('d/m/Y',strtotime($rsconnect['Contract_delivery_datesend']));
-    $data['Contract_delivery_dateoffer']=date('d/m/Y',strtotime($rsconnect['Contract_delivery_dateoffer']));
-    $data['Project_work_page']=$rsconnect['Project_work_page'];
-    $data['Picture']=$rsconnect['Picture'];
-    $data['Order_details']=$rsconnect['Order_details'];
-    $data['Credit_department']=$rsconnect['Credit_department'];
-    $data['Installation_department']=$rsconnect['Installation_department'];
-    $data['Installation_status']=$rsconnect['Installation_status'];
+    $data['Contract_delivery_datesend'] = date('d/m/Y', strtotime($rsconnect['Contract_delivery_datesend']));
+    $data['Contract_delivery_dateoffer'] = date('d/m/Y', strtotime($rsconnect['Contract_delivery_dateoffer']));
+    $data['Project_work_page'] = $rsconnect['Project_work_page'];
+    $data['Picture'] = $rsconnect['Picture'];
+    $data['Order_details'] = $rsconnect['Order_details'];
+    $data['Credit_department'] = $rsconnect['Credit_department'];
+    $data['Installation_department'] = $rsconnect['Installation_department'];
+    $data['Installation_status'] = $rsconnect['Installation_status'];
 }
 
 echo ' <div class="row mb-3">
@@ -88,11 +88,29 @@ echo ' <div class="row mb-3">
     <input type="text" class="form-control" value="' . $data['Project_work_page'] . '" id="Project_work_page" name="Project_work_page" placeholder="แบบหน้างานโครงการ" />
 </div>
 </div>
-<div class="row mb-3">
+<div class="row mb-3 displayimage" style="display:none">
+<label class="col-sm-2 col-form-label" for="Picture">รูปภาพ (*ไฟล์รูปเท่านั้น)
+</label>
+    <div class="col-sm-10 form-group">
+        <div class="error_msg"></div>
+                <div class="uploaded_file_view" id="uploaded_view">
+                    <span class="file_remove" onclick="file_remove()">X</span>
+                </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-3 uploadImage">
 <label class="col-sm-2 col-form-label" for="Picture">รูปภาพ (*ไฟล์รูปเท่านั้น)
 </label>
 <div class="col-sm-10 form-group">
-<input class="form-control" type="file" value="' . $data['Picture'] . '" id="Picture" name="Picture" accept="image/*"/>
+    <div class="button_outer" onclick="showFile(this)" style="cursor:pointer">
+        <div class="btn_upload">
+            <input type="file" hidden value="' . $data['Picture'] . '" id="Picture" name="Picture" accept="image/*" >
+                Upload Image
+        </div>
+        <div class="processing_bar"></div>
+        <div class="success_box"></div>
+    </div>
 </div>
 </div>
 <div class="row mb-3">
@@ -121,7 +139,7 @@ echo ' <div class="row mb-3">
 <div class="col-sm-10 form-group">
 <select class="form-control"  id="Installation_status" name="Installation_status">';
 echo '<option value>เลือก</option>';
-foreach ($options as $key => $value){
+foreach ($options as $key => $value) {
     echo '<option value="' . $value['id'] . '"';
     if ($value['id'] == $rsconnect['Installation_status']) {
         echo " selected";
@@ -140,4 +158,5 @@ echo '</select>
     </button>
     <button type="button" class="btn btn-success" onclick="checkInstall()"> <span class="align-middle d-sm-inline-block d-none me-sm-1 me-0">บันทึกข้อมูล</span> <i class="bx bx-save bx-sm me-sm-n2"></i></button>
 </div>
-</div>';
+</div>
+';
