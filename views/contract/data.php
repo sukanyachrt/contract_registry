@@ -376,6 +376,11 @@
                     language: 'th',
                     thaiyear: true
                 }).datepicker('update', moment(Contract_delivery_dateoffer, 'DD/MM/YYYY').toDate());
+
+                var el = window._protected_reference = document.getElementById("Picture");
+                console.log(el)
+                var fileInputContainer = document.querySelector('.button_outer');
+                loadfile(fileInputContainer);
             }
 
         };
@@ -490,37 +495,6 @@
 
 
 
-    function uploadfile(e) {
-        var el = window._protected_reference = document.createElement("INPUT");
-        el.type = "file";
-        el.accept = "image/*";
-        el.multiple = "multiple";
-        // var btnUpload = $("#Picture"),
-        // btnOuter = $(".button_outer");
-        // btnUpload.on("change", function(e) {
-        //     console.log(btnUpload.val())
-        //     var ext = btnUpload.val().split('.').pop().toLowerCase();
-        //     if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
-        //         $(".error_msg").text("Not an Image...");
-
-
-        //     } else {
-        //         $(".error_msg").text("");
-        //         btnOuter.addClass("file_uploading");
-        //         setTimeout(function() {
-        //             btnOuter.addClass("file_uploaded");
-        //         }, 3000);
-        //         var uploadedFile = URL.createObjectURL(e.target.files[0]);
-        //         setTimeout(function() {
-        //             $("#uploaded_view").find("img").remove();
-        //             $('.displayimage').show();
-        //             $('.uploadImage').hide()
-        //             $("#uploaded_view").append('<img src="' + uploadedFile + '" />').addClass("show");
-        //         }, 3500);
-        //     }
-        // });
-
-    }
 
 
 
@@ -533,6 +507,7 @@
         var btnOuter = $(".button_outer");
         btnOuter.removeClass("file_uploading");
         btnOuter.removeClass("file_uploaded");
+        $("#hiddenPic").val('');
 
     }
 
@@ -561,7 +536,7 @@
                     btnOuter.removeClass("file_uploading");
                     setTimeout(function() {
                         btnOuter.removeClass("file_uploaded");
-                    }, 3000);
+                    }, 1500);
 
                 } else {
                     $(".error_msg").text('');
@@ -569,14 +544,14 @@
                     btnOuter.addClass("file_uploading");
                     setTimeout(function() {
                         btnOuter.addClass("file_uploaded");
-                    }, 3000);
+                    }, 1000);
                     var uploadedFile = URL.createObjectURL(el.files[0]);
                     setTimeout(function() {
                         $("#uploaded_view").find("img").remove();
                         $('.displayimage').show();
                         $('.uploadImage').hide();
                         $("#uploaded_view").append('<img src="' + uploadedFile + '" />').addClass("show");
-                    }, 3500);
+                    }, 1000);
                 }
 
 
@@ -587,5 +562,19 @@
         });
 
         el.click();
+    }
+
+    function loadfile(input) {
+        var fileInput = $('#Picture').attr('value');
+        if (fileInput != "") {
+            $("#uploaded_view").find("img").remove();
+            $('.displayimage').show();
+            $('.uploadImage').hide();
+            $("#uploaded_view").append('<img src="' + fileInput + '" alt="Uploaded Image" />').addClass("show");
+
+        }
+
+
+
     }
 </script>

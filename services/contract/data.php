@@ -114,6 +114,17 @@ else if($data=="data_Installation"){
             } 
         }
 
+         if($filename==""){
+            if($post['hiddenPic']==""){
+                $filename="";
+            }
+            else{
+                $filename=$post['hiddenPic'];
+            }
+           
+        }
+        
+
         $connect->sql = "UPDATE `installation_work` SET 
         `Installation_code`= '" . $post['Installation_code'] . "',
         `Contract_delivery_datesend`= '" . $post['Contract_delivery_datesend'] . "',

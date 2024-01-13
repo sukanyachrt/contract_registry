@@ -24,6 +24,7 @@ $data = [
     "Credit_department" => '',
     "Installation_department" => '',
     "Installation_status" => '',
+    "hiddenPic" => ''
 ];
 
 if ($_GET['id'] <= 0) {
@@ -53,7 +54,15 @@ WHERE
     $data['Contract_delivery_datesend'] = date('d/m/Y', strtotime($rsconnect['Contract_delivery_datesend']));
     $data['Contract_delivery_dateoffer'] = date('d/m/Y', strtotime($rsconnect['Contract_delivery_dateoffer']));
     $data['Project_work_page'] = $rsconnect['Project_work_page'];
-    $data['Picture'] = $rsconnect['Picture'];
+    if($rsconnect['Picture']!=""){
+        $imageData = "../../services/uploadfile/" . $rsconnect['Picture'];
+    }
+    else{
+        $imageData ="";
+    }
+   
+    $data['hiddenPic']=$rsconnect['Picture'];
+    $data['Picture'] = $imageData;
     $data['Order_details'] = $rsconnect['Order_details'];
     $data['Credit_department'] = $rsconnect['Credit_department'];
     $data['Installation_department'] = $rsconnect['Installation_department'];
@@ -111,6 +120,16 @@ echo ' <div class="row mb-3">
         <div class="processing_bar"></div>
         <div class="success_box"></div>
     </div>
+</div>
+</div>
+<div>
+
+</div>
+<div class="row mb-3" style="display:none;">
+<label class="col-sm-2 col-form-label" for="Order_details">hiddenPic
+</label>
+<div class="col-sm-10 form-group">
+<input type="text" id="hiddenPic" name="hiddenPic" value="'.$data['hiddenPic'].'">
 </div>
 </div>
 <div class="row mb-3">
