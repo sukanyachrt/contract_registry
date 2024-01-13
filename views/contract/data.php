@@ -41,10 +41,12 @@
                                     <div class="card-body">
                                         <div class="bs-stepper wizard-modern wizard-modern-example">
                                             <div class="bs-stepper-header table-responsive">
+
                                                 <div class="step" data-target="#project-detail">
                                                     <button type="button" class="step-trigger">
                                                         <span class="bs-stepper-circle">1</span>
                                                         <span class="text-sm bs-stepper-title">โครงการ</span>
+
                                                     </button>
                                                 </div>
                                                 <div class="line"></div>
@@ -58,7 +60,7 @@
                                                 <div class="step" data-target="#installation-work-detail">
                                                     <button type="button" class="step-trigger">
                                                         <span class="bs-stepper-circle">3</span>
-                                                        <span class="text-sm ">การตรวจสอบและการรับงานติดตั้ง</span>
+                                                        <span class="text-sm bs-stepper-title">การตรวจสอบและการรับงานติดตั้ง</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -131,7 +133,14 @@
 <script src="../../assets/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="../../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
+<link href="../../assets/datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<script src="../../assets/datepicker/js/bootstrap-datepicker-custom.js"></script>
+<script src="../../assets/datepicker/locales/bootstrap-datepicker.th.min.js" charset="UTF-8"></script>
 
+<!-- form -->
+<script src="js/project-form.js"></script>
+<script src="js/contract-register-form.js"></script>
+<script src="js/installation-work-form.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -140,42 +149,14 @@
         installation_work_form();
     });
     document.addEventListener('DOMContentLoaded', function() {
-        window.stepper = new Stepper(document.querySelector('.wizard-modern-example'))
-        
+        window.stepper = new Stepper(document.querySelector('.wizard-modern-example'), {
+            linear: false,
+            animation: true
+        })
+
     });
 
-    function loadStepper() {
-        // const wizardNumbered = document.querySelector(".wizard-modern-example");
 
-        // if (typeof wizardNumbered !== undefined && wizardNumbered !== null) {
-        //     const wizardNumberedBtnNextList = [].slice.call(wizardNumbered.querySelectorAll('.btn-next')),
-        //         wizardNumberedBtnPrevList = [].slice.call(wizardNumbered.querySelectorAll('.btn-prev')),
-        //         wizardNumberedBtnSubmit = wizardNumbered.querySelector('.btn-submit');
-        //     const numberedStepper = new Stepper(wizardNumbered, {
-        //         linear: false
-        //     });
-        //     if (wizardNumberedBtnNextList) {
-        //         wizardNumberedBtnNextList.forEach(wizardNumberedBtnNext => {
-        //             wizardNumberedBtnNext.addEventListener('click', event => {
-        //                 numberedStepper.next();
-        //             });
-        //         });
-        //     }
-        //     if (wizardNumberedBtnPrevList) {
-        //         wizardNumberedBtnPrevList.forEach(wizardNumberedBtnPrev => {
-        //             wizardNumberedBtnPrev.addEventListener('click', event => {
-        //                 numberedStepper.previous();
-        //             });
-        //         });
-        //     }
-        //     if (wizardNumberedBtnSubmit) {
-        //         wizardNumberedBtnSubmit.addEventListener('click', event => {
-        //             alert('Submitted..!!');
-        //         });
-        //     }
-
-        // }
-    }
 
 
 
@@ -185,7 +166,12 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("load-project-form").innerHTML = this.responseText;
-                loadStepper()
+                $('.datepicker').datepicker({
+                    format: 'dd/mm/yyyy',
+                    todayBtn: true,
+                    language: 'th',
+                    thaiyear: true
+                });
             }
 
         };
@@ -200,7 +186,7 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("load-contract-register-form").innerHTML = this.responseText;
-                loadStepper()
+
             }
 
         };
@@ -214,7 +200,12 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("load-installation-work-form").innerHTML = this.responseText;
-                loadStepper()
+                $('.datepicker').datepicker({
+                    format: 'dd/mm/yyyy',
+                    todayBtn: true,
+                    language: 'th',
+                    thaiyear: true
+                });
             }
 
         };
@@ -223,18 +214,84 @@
 
     }
 
-    $(".step").on('click', function(event) {
-        stepper.to(2)
-        //var stepper = new Stepper($('.step')[0]);
-       // let curPage = stepper._currentIndex;
-        //     $(".step").removeClass("active");
-        //     $(this).addClass("active");
-        //     const target = $(this).data('target');
+    function checkProject() {
+        if ($('#project-form').valid()) {
+            $('[data-target="#project-detail"] .step-trigger .bs-stepper-title').css('color', 'green');
+            $('[data-target="#project-detail"] .bs-stepper-circle').css('background-color', 'green');
+        } else {
+            $('[data-target="#project-detail"] .step-trigger .bs-stepper-title').css('color', 'red');
+            $('[data-target="#project-detail"] .bs-stepper-circle').css('background-color', 'red');
+        }
 
-        // // เปลี่ยน step ไปที่ target ที่ได้
-        // window.stepper.to(target);
+        stepper.next();
+    }
 
-        // // เพิ่ม class 'active' ให้กับ target ที่ถูกเลือก
-        // $(target).addClass("active");
-    })
+    function checkContract() {
+        if ($('#contract-register-form').valid()) {
+            $('[data-target="#contract-register-detail"] .step-trigger .bs-stepper-title').css('color', 'green');
+            $('[data-target="#contract-register-detail"] .bs-stepper-circle').css('background-color', 'green');
+        } else {
+            $('[data-target="#contract-register-detail"] .step-trigger .bs-stepper-title').css('color', 'red');
+            $('[data-target="#contract-register-detail"] .bs-stepper-circle').css('background-color', 'red');
+        }
+
+        stepper.next();
+    }
+
+    function checkInstall() {
+        if ($('#installation-work-form').valid()) {
+            $('[data-target="#installation-work-detail"] .step-trigger .bs-stepper-title').css('color', 'green');
+            $('[data-target="#installation-work-detail"] .bs-stepper-circle').css('background-color', 'green');
+        } else {
+            $('[data-target="#installation-work-detail"] .step-trigger .bs-stepper-title').css('color', 'red');
+            $('[data-target="#installation-work-detail"] .bs-stepper-circle').css('background-color', 'red');
+        }
+
+        if ($('#project-form').valid() && $('#contract-register-form').valid() && $('#installation-work-form').valid()) {
+            //บันทึกข้อมูล
+            console.log("บันทึกข้อมูล")
+            $.ajax({
+                async: true,
+                url: "../../services/contract/data.php?v=data_Project",
+                type: "POST",
+                cache: false,
+                data: $('#project-form').serialize(),
+                success: function(Res) {
+                    console.log(Res)
+                    if (Res.id > 0 && Res.status == "ok") {
+                        //บันทึกข้อมูลโครงการ
+                        let id=Res.id
+                        $.ajax({
+                            async: true,
+                            url: "../../services/contract/data.php?v=data_Contract_register&id=" +id,
+                            type: "POST",
+                            cache: false,
+                            data: $('#contract-register-form').serialize(),
+                            success: function(Res) {
+                                console.log(Res)
+                                if (Res.id > 0 && Res.status == "ok") {
+                                    //บันทึกข้อมูลการตรวจสอบการติดตั้ง
+                                    $.ajax({
+                                        async: true,
+                                        url: "../../services/contract/data.php?v=data_Installation&id=" + id,
+                                        type: "POST",
+                                        cache: false,
+                                        data: $('#installation-work-form').serialize(),
+                                        success: function(Res) {
+                                            console.log(Res)
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            toastr.error("โปรดกรอกข้อมูลให้ครบค่ะ !");
+        }
+
+
+
+    }
 </script>

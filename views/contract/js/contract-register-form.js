@@ -1,35 +1,36 @@
-$('#project-form').validate({
+$('#contract-register-form').validate({
     rules: {
-        Project_code: {
+        registration_code: {
             required: true,
 
         },
-        Name_Project: {
+        Customer_ID: {
             required: true,
 
         },
-        Date: {
+        Installment_payment: {
             required: true,
+            maxlength: 60
         },
-        Address: {
+        Sale_Contract: {
             required: true,
             maxlength: 60
         },
        
     },
     messages: {
-        Project_code: {
-            required: "โปรดกรอกรหัสโครงการ ",
+        registration_code: {
+            required: "โปรดกรอกรหัสทะเบียนสัญญาเข้า ",
 
         },
-        Name_Project: {
-            required: "โปรดกรอกชื่อโครงการ ",
+        Customer_ID: {
+            required: "โปรดเลือกรหัสลูกค้า ",
         },
-        Date: {
-            required: "โปรดกรอกวัน/เดือน/ปี ",
+        Installment_payment: {
+            required: "โปรดกรอกชำระเงินงวด",
         },
-        Address: {
-            required: "โปรดกรอกที่อยู่โครงการ ",
+        Sale_Contract: {
+            required: "โปรดกรอกสัญญาซื้อขาย ",
         },
         
     },
