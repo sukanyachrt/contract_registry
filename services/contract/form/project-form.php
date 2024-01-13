@@ -7,7 +7,7 @@ $connect->connectData();
 $data=[
     "Project_code" => '',
     "Name_Project" => '',
-    "Date" => '',
+    "Date" => date('d/m/Y'),
     "Address" => '',
 ];
    
@@ -23,7 +23,7 @@ else{
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
     $data['Name_Project']=$rsconnect['Name_Project'];
-    $data['Date']=$rsconnect['Date'];
+    $data['Date']=date('d/m/Y',strtotime($rsconnect['Date']));
     $data['Address']=$rsconnect['Address'];
 }
 
@@ -64,3 +64,4 @@ echo '<div class="row mb-3 ">
     </button>
 </div>
 </div>';
+

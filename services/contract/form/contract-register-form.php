@@ -18,8 +18,9 @@ if($_GET['id']<=0){
     $data['registration_code']=$rsconnect['maxid']+1;
 }
 else{
-    $data['registration_code']=$_GET['id'];
+    
     $connect->sql = "SELECT 
+    t_contract.registration_code,
 	t_contract.Customer_ID,
 	t_contract.Installment_payment,
 	t_contract.Sale_Contract 

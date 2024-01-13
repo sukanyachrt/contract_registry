@@ -45,13 +45,13 @@ if ($_GET['id'] <= 0) {
 	t_install.Installation_status 
 FROM
 	project AS t_project
-	INNER JOIN installation_work AS t_install ON t_project.Project_code = t_install.Project_code 
+	INNER JOIN installation_work AS t_install ON t_project.Project_code = t_install.Project_ID 
 WHERE
 	t_project.Project_code = '".$_GET['id']."'";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
-    $data['Contract_delivery_datesend']=$rsconnect['Contract_delivery_datesend'];
-    $data['Contract_delivery_dateoffer']=$rsconnect['Contract_delivery_dateoffer'];
+    $data['Contract_delivery_datesend']=date('d/m/Y',strtotime($rsconnect['Contract_delivery_datesend']));
+    $data['Contract_delivery_dateoffer']=date('d/m/Y',strtotime($rsconnect['Contract_delivery_dateoffer']));
     $data['Project_work_page']=$rsconnect['Project_work_page'];
     $data['Picture']=$rsconnect['Picture'];
     $data['Order_details']=$rsconnect['Order_details'];
@@ -89,10 +89,10 @@ echo ' <div class="row mb-3">
 </div>
 </div>
 <div class="row mb-3">
-<label class="col-sm-2 col-form-label" for="Picture">รูปภาพ
+<label class="col-sm-2 col-form-label" for="Picture">รูปภาพ (*ไฟล์รูปเท่านั้น)
 </label>
 <div class="col-sm-10 form-group">
-<input class="form-control" type="file" value="' . $data['Picture'] . '" id="Picture" name="Picture" />
+<input class="form-control" type="file" value="' . $data['Picture'] . '" id="Picture" name="Picture" accept="image/*"/>
 </div>
 </div>
 <div class="row mb-3">

@@ -95,9 +95,14 @@
 <script src="../../assets/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="../../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
+
 <script>
      $(document).ready(function() {
         dataContract();
+        if (sessionStorage.getItem('toastrShown') === 'saveContract') {
+            toastr.success("บันทึกข้อมูลแล้วค่ะ !");
+            sessionStorage.removeItem('toastrShown');
+        }
      });
      function dataContract() {
         var xhttp = new XMLHttpRequest();
@@ -107,7 +112,7 @@
 
             }
         };
-        xhttp.open("GET", "../../services/contract/tableCustomer.php", true);
+        xhttp.open("GET", "../../services/contract/tableContract.php", true);
         xhttp.send();
     }
 </script>

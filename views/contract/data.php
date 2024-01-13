@@ -136,7 +136,7 @@
 <link href="../../assets/datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
 <script src="../../assets/datepicker/js/bootstrap-datepicker-custom.js"></script>
 <script src="../../assets/datepicker/locales/bootstrap-datepicker.th.min.js" charset="UTF-8"></script>
-
+<script src="../../assets/js/moment.js"></script>
 <!-- form -->
 <script src="js/project-form.js"></script>
 <script src="js/contract-register-form.js"></script>
@@ -166,17 +166,18 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("load-project-form").innerHTML = this.responseText;
-                $('.datepicker').datepicker({
+                var Date = document.getElementById("Date").value;
+                $('#Date').datepicker({
                     format: 'dd/mm/yyyy',
                     todayBtn: true,
                     language: 'th',
                     thaiyear: true
-                });
+                }).datepicker('update', moment(Date, 'DD/MM/YYYY').toDate());
             }
 
         };
 
-        xhttp.open("GET", "../../services/contract/form/project-form.php", true);
+        xhttp.open("GET", "../../services/contract/form/project-form.php?id=<?php echo $id ?>", true);
         xhttp.send();
 
     }
@@ -190,7 +191,7 @@
             }
 
         };
-        xhttp.open("GET", "../../services/contract/form/contract-register-form.php", true);
+        xhttp.open("GET", "../../services/contract/form/contract-register-form.php?id=<?php echo $id ?>", true);
         xhttp.send();
 
     }
@@ -200,16 +201,25 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("load-installation-work-form").innerHTML = this.responseText;
-                $('.datepicker').datepicker({
+                var Contract_delivery_datesend = document.getElementById("Contract_delivery_datesend").value;
+                var Contract_delivery_dateoffer = document.getElementById("Contract_delivery_dateoffer").value;
+                $('#Contract_delivery_datesend').datepicker({
                     format: 'dd/mm/yyyy',
                     todayBtn: true,
                     language: 'th',
                     thaiyear: true
-                });
+                }).datepicker('update', moment(Contract_delivery_datesend, 'DD/MM/YYYY').toDate());
+
+                $('#Contract_delivery_dateoffer').datepicker({
+                    format: 'dd/mm/yyyy',
+                    todayBtn: true,
+                    language: 'th',
+                    thaiyear: true
+                }).datepicker('update', moment(Contract_delivery_dateoffer, 'DD/MM/YYYY').toDate());
             }
 
         };
-        xhttp.open("GET", "../../services/contract/form/installation-work-form.php", true);
+        xhttp.open("GET", "../../services/contract/form/installation-work-form.php?id=<?php echo $id ?>", true);
         xhttp.send();
 
     }
@@ -252,7 +262,7 @@
             console.log("บันทึกข้อมูล")
             $.ajax({
                 async: true,
-                url: "../../services/contract/data.php?v=data_Project",
+                url: "../../services/contract/data.php?v=data_Project&id=<?php echo $id ?>",
                 type: "POST",
                 cache: false,
                 data: $('#project-form').serialize(),
@@ -260,10 +270,11 @@
                     console.log(Res)
                     if (Res.id > 0 && Res.status == "ok") {
                         //บันทึกข้อมูลโครงการ
-                        let id=Res.id
+                        let id = Res.id;
+
                         $.ajax({
                             async: true,
-                            url: "../../services/contract/data.php?v=data_Contract_register&id=" +id,
+                            url: "../../services/contract/data.php?v=data_Contract_register&id=" + id,
                             type: "POST",
                             cache: false,
                             data: $('#contract-register-form').serialize(),
@@ -271,20 +282,42 @@
                                 console.log(Res)
                                 if (Res.id > 0 && Res.status == "ok") {
                                     //บันทึกข้อมูลการตรวจสอบการติดตั้ง
+                                    var fd = new FormData($('#installation-work-form')[0]);
+                                    var files = $('#Picture')[0].files[0];
+                                    fd.append('Picture', files);
                                     $.ajax({
                                         async: true,
                                         url: "../../services/contract/data.php?v=data_Installation&id=" + id,
                                         type: "POST",
                                         cache: false,
-                                        data: $('#installation-work-form').serialize(),
+                                        contentType: false,
+                                        processData: false,
+                                        data: fd,
                                         success: function(Res) {
                                             console.log(Res)
+                                            if (Res.id > 0 && Res.status == "ok") {
+                                                sessionStorage.setItem('toastrShown', 'saveContract');
+                                                location.href = 'index.php';
+                                            }
+                                        },
+                                        error: function(e) {
+                                            console.log(e)
+                                            toastr.error(e.responseText);
                                         }
                                     });
                                 }
+
+                            },
+                            error: function(e) {
+                                console.log(e)
+                                toastr.error(e.responseText);
                             }
                         });
                     }
+                },
+                error: function(e) {
+                    console.log(e)
+                    toastr.error(e.responseText);
                 }
             });
         } else {
