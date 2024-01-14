@@ -140,7 +140,7 @@
             success: function(response) {
                 if (response.result == 1) {
                     dataCustomer();
-                    toastr.error("ลบข้อมูลลูกค้าแล้วค่ะ !");
+                    toastr.success("ลบข้อมูลลูกค้าแล้วค่ะ !");
                     $('#modal_confirm_del').modal('hide');
                 }
             },

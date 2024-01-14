@@ -10,7 +10,7 @@
                 <?php include("../../include/navbar.php"); ?>
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="py-3 mb-0">ข้อมุลโครงการ</h4>
+                        <h4 class="py-3 mb-0">ข้อมูลทะเบียนสัญญา</h4>
 
                         <div class="row">
                             <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
@@ -64,25 +64,26 @@
                         </div>
 
                     </div>
+                    <!-- ลบข้อมูล -->
                     <div class="modal fade" id="modal_confirm_del" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-sm" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header bg-warning ">
-                                    <h4 class="modal-title text-white" id="exampleModalLabel2">แจ้งเตือน</h4>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <h5 class="">ยืนยันการลบข้อมูล ?</h5>
-                                </div>
-                                <div class="modal-footer text-center">
-                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        ยกเลิก
-                                    </button>
-                                    <button type="button" id="btnIdEmploy" onclick="confirmDel_employ()" class="btn btn-warning">ยืนยัน</button>
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-warning ">
+                                        <h4 class="modal-title text-white" id="exampleModalLabel2">แจ้งเตือน</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5 class="">ยืนยันการลบข้อมูล ?</h5>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                            ยกเลิก
+                                        </button>
+                                        <button type="button" id="btnIdProject" onclick="confirmDel_project()" class="btn btn-warning">ยืนยัน</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <?php include("../../include/footer.php"); ?>
                     <div class="content-backdrop fade"></div>
                 </div>
@@ -103,6 +104,11 @@
             toastr.success("บันทึกข้อมูลแล้วค่ะ !");
             sessionStorage.removeItem('toastrShown');
         }
+        if (sessionStorage.getItem('toastrShown') === 'delproject') {
+            toastr.success("ลบข้อมูลแล้วค่ะ !");
+            sessionStorage.removeItem('toastrShown');
+        }
+        
      });
      function dataContract() {
         var xhttp = new XMLHttpRequest();
@@ -115,5 +121,35 @@
         xhttp.open("GET", "../../services/contract/tableContract.php", true);
         xhttp.send();
     }
+
+    
+    function updateProjectStatus(id) {
+        $('#modal_confirm_del').modal('show');
+        $('#btnIdProject').val(id)
+    }
+    function confirmDel_project() {
+        let objId = $('#btnIdProject').val();
+        $.ajax({
+            type: 'GET',
+            url: "../../services/contract/data.php?v=projectStatus&id=" + objId,
+            success: function(response) {
+                if (response.result == 1) {
+                    dataContract();
+                    toastr.success("ลบข้อมูลแล้วค่ะ !");
+                    $('#modal_confirm_del').modal('hide');
+                }
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+
+    }
+    $("#search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tbContract tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 </script>
 

@@ -18,12 +18,13 @@ if ($data == "data_Project") {
         $rsconnect = $connect->fetch_AssocData();
         $id = $rsconnect['maxid'] + 1;
 
-        $connect->sql = "INSERT INTO `project` (`Project_code`, `Name_Project`, `Date`, `Address`, `Salesperson_Code`)  VALUES 
+        $connect->sql = "INSERT INTO `project` (`Project_code`, `Name_Project`, `Date`, `Address`, `Salesperson_Code`,Status_Project)  VALUES 
        ('" . $id . "',
        '" . $post['Name_Project'] . "',
        '" . $post['Date'] . "',
        '" . $post['Address'] . "',
-       '" . $_SESSION['Salesperson_Code'] . "'
+       '" . $_SESSION['Salesperson_Code'] . "',
+       '1'
        )";
         $connect->queryData();
         $result = ["id" => $connect->id_insertrows(), "status" => "ok"];
@@ -185,4 +186,10 @@ else if($data=="data_Installation"){
 
     }
     echo json_encode($result);
+}
+else if($data=="projectStatus"){
+    $connect->sql = "UPDATE project SET Status_Project = '0' 
+    WHERE Project_code='" . $_GET['id'] . "'";
+   $connect->queryData();
+   echo json_encode(["result" => $connect->affected_rows()]);
 }

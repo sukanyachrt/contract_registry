@@ -377,10 +377,8 @@
                     thaiyear: true
                 }).datepicker('update', moment(Contract_delivery_dateoffer, 'DD/MM/YYYY').toDate());
 
-                var el = window._protected_reference = document.getElementById("Picture");
-                console.log(el)
-                var fileInputContainer = document.querySelector('.button_outer');
-                loadfile(fileInputContainer);
+                 var fileInputContainer = document.querySelector('.button_outer');
+                 loadfile(fileInputContainer);
             }
 
         };
