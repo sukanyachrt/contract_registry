@@ -28,9 +28,14 @@ while ($rsconnect = $connect->fetch_AssocData()) {
     <td class="text-center">' . $rsconnect['Telephone_Number'] . '</td>
     <td class="text-center">' . $rsconnect['Salesperson_Name'] . '</td>
     <td class="text-center">' . $Customer_Status . '</td>
-    <td class="text-center">
-        <a  href="data.php?id='.$rsconnect['Customer_ID'].'"><button class="border-warning text-warning"><i class="bx bx-edit-alt me-1"></i></button></a>
-        <button class="border-danger text-danger"  onclick="updateCustomerStatus('.$rsconnect['Customer_ID'].')"><i class="bx bx-trash me-1"></i></button>
-    </td>
+    <td class="text-center">';
+    if ($_SESSION['Salesperson_position'] == "admin_sale") {
+        echo ' <a  href="data.php?id=' . $rsconnect['Customer_ID'] . '"><button class="border-warning text-warning"><i class="bx bx-edit-alt me-1"></i></button></a>
+        <button class="border-danger text-danger"  onclick="updateCustomerStatus(' . $rsconnect['Customer_ID'] . ')"><i class="bx bx-trash me-1"></i></button>';
+    } else {
+        echo ' <a  href="show.php?id=' . $rsconnect['Customer_ID'] . '"><button class="border-secondary text-secondary"><i class="bx bx-zoom-in me-1"></i></button></a>';
+    }
+
+    echo '</td>
     </tr>';
 }

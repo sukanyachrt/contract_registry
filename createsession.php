@@ -7,7 +7,19 @@ if (isset($_POST['status']) && $_POST['status'] === 'ok') {
     $_SESSION['Salesperson_Code'] = $data['Salesperson_Code'];
     $_SESSION['Salesperson_Name'] =$data['Salesperson_Name'];
     $_SESSION['Salesperson_position'] =$data['Salesperson_position'];
-    echo json_encode(["data"=>"ok","page"=>"views/employee/index.php"]);
+    if($_SESSION['Salesperson_position']=="admin_sale"){
+        echo json_encode(["data"=>"ok","page"=>"views/contract/index.php"]);
+    }
+    else if($_SESSION['Salesperson_position']=="ฝ่ายสินเชื่อ"){
+        echo json_encode(["data"=>"ok","page"=>"views/contract/index.php"]);
+    } 
+    else if($_SESSION['Salesperson_position']=="ฝ่ายติดตั้ง"){
+        echo json_encode(["data"=>"ok","page"=>"views/contract/index.php"]);
+    } 
+    else{
+
+    }
+    
     
 } else {
     echo json_encode(["data"=>"no"]);

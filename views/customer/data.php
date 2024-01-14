@@ -5,7 +5,7 @@
 <body>
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            <?php include("../../include/menu_admin.php"); ?>
+            <?php include("../../include/checkmenu.php"); ?>
             <div class="layout-page">
                 <?php include("../../include/navbar.php"); ?>
                 <?php
