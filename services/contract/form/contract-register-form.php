@@ -7,8 +7,12 @@ $connect->connectData();
 $data=[
     "registration_code" => '',
     "Customer_ID" => '',
-    "Installment_payment" => '',
-    "Sale_Contract" => '',
+    "type_payment" => '',
+    "money_payment" => '',
+    "period_payment" => '',
+    "contract_es" => '',
+    "contract_el" => '',
+    "contract_model" => ''
 ];
    
 if($_GET['id']<=0){
@@ -22,8 +26,13 @@ else{
     $connect->sql = "SELECT 
     t_contract.registration_code,
 	t_contract.Customer_ID,
-	t_contract.Installment_payment,
-	t_contract.Sale_Contract 
+	t_contract.type_payment,
+    t_contract.money_payment,
+    t_contract.period_payment,
+	t_contract.contract_es,
+    t_contract.contract_model,
+    t_contract.contract_el,
+    t_contract.Order_details
 FROM
 	project AS t_project
 	INNER JOIN contract_register AS t_contract ON t_project.Project_code = t_contract.Project_ID
@@ -32,8 +41,12 @@ WHERE t_contract.Project_ID='".$_GET['id']."'";
     $rsconnect = $connect->fetch_AssocData();
     $data['registration_code']=$rsconnect['registration_code'];
     $data['Customer_ID']=$rsconnect['Customer_ID'];
-    $data['Installment_payment']=$rsconnect['Installment_payment'];
-    $data['Sale_Contract']=$rsconnect['Sale_Contract'];
+    $data['type_payment']=$rsconnect['type_payment'];
+    $data['money_payment']=$rsconnect['money_payment'];
+    $data['period_payment']=$rsconnect['period_payment'];
+    $data['contract_es']=$rsconnect['contract_es'];
+    $data['contract_el']=$rsconnect['contract_el'];
+    $data['contract_model']=$rsconnect['contract_model'];
 }
 
 
@@ -55,7 +68,7 @@ while($rsconnect = $connect->fetch_AssocData()){
     if ($data['Customer_ID'] == $rsconnect['Customer_ID']) {
         echo " selected";
     }
-    echo '>'.$rsconnect['Customer_Name'].'</option>';
+    echo '>'.$rsconnect['Customer_ID'].'</option>';
     
    
 }
@@ -63,15 +76,60 @@ echo '</select>
 </div>
 </div>
 <div class="row mb-3">
-<label class="col-sm-2 col-form-label" for="Installment_payment">ชำระเงินงวด</label>
-<div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['Installment_payment'].'" id="Installment_payment" name="Installment_payment" placeholder="ชำระเงินงวด" />
+<div class="col-sm-12 form-group">
+<div class="divider">
+<div class="divider-text">การชำระเงิน</div>
+</div>
 </div>
 </div>
 <div class="row mb-3">
-<label class="col-sm-2 col-form-label" for="Sale_Contract">สัญญาซื้อขาย</label>
+<label class="col-sm-2 col-form-label" for="type_payment">ประเภทการชำระ</label>
 <div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['Sale_Contract'].'" id="Sale_Contract" name="Sale_Contract" placeholder="สัญญาซื้อขาย" />
+    <input type="text" class="form-control" value="'.$data['type_payment'].'" id="type_payment" name="type_payment" placeholder="ประเภทการชำระ" />
+</div>
+</div>
+<div class="row mb-3">
+<label class="col-sm-2 col-form-label" for="money_payment">จำนวนเงิน</label>
+<div class="col-sm-10 form-group">
+    <input type="text" class="form-control" value="'.$data['money_payment'].'" id="money_payment" name="money_payment" placeholder="จำนวนเงิน" />
+</div>
+</div>
+<div class="row mb-3">
+<label class="col-sm-2 col-form-label" for="period_payment">งวดที่ชำระ</label>
+<div class="col-sm-10 form-group">
+    <input type="text" class="form-control" value="'.$data['period_payment'].'" id="period_payment" name="period_payment" placeholder="งวดที่ชำระ" />
+</div>
+</div>
+<div class="row mb-3">
+<div class="col-sm-12 form-group">
+<div class="divider">
+<div class="divider-text">สัญญาซื้อขาย</div>
+</div>
+</div>
+</div>
+<div class="row mb-3">
+<label class="col-sm-2 col-form-label" for="contract_es">E/S</label>
+<div class="col-sm-10 form-group">
+    <input type="text" class="form-control" value="'.$data['contract_es'].'" id="contract_es" name="contract_es" placeholder="E/S" />
+</div>
+</div>
+<div class="row mb-3">
+<label class="col-sm-2 col-form-label" for="contract_el">E/L</label>
+<div class="col-sm-10 form-group">
+    <input type="text" class="form-control" value="'.$data['contract_el'].'" id="contract_el" name="contract_el" placeholder="E/L" />
+</div>
+</div>
+<div class="row mb-3">
+<label class="col-sm-2 col-form-label" for="contract_model">Model</label>
+<div class="col-sm-10 form-group">
+    <input type="text" class="form-control" value="'.$data['contract_model'].'" id="contract_model" name="contract_model" placeholder="Model" />
+</div>
+</div>
+<div class="row mb-3">
+<label class="col-sm-2 col-form-label" for="Order_details">รายละเอียด
+</label>
+<div class="col-sm-10 form-group">
+    <input type="text" class="form-control" value="' . $data['Order_details'] . '" id="Order_details" name="Order_details" placeholder="รายละเอียดการสั่งซื้อ" />
 </div>
 </div>
 <div class="row justify-content-end">

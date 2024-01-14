@@ -42,8 +42,7 @@
                                                         <th class="text-center">ชื่อลูกค้า</th>
                                                         <th class="text-center">ที่อยู่โครงการ</th>
                                                         <th class="text-center">รหัสทะเบียนสัญญาเข้า</th>
-                                                        <th class="text-center">ชำระเงินงวด</th>
-                                                        <th class="text-center">สัญญาซื้อขาย</th>
+                                                        
                                                         <th class="text-center">ชื่อพนักงานขาย</th>
                                                         <th class="text-center">การตรวจสอบและการรับงานติดตั้ง</th>
                                                         <th class="text-center">จัดการข้อมูล</th>

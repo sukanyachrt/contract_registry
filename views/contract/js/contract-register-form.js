@@ -8,9 +8,19 @@ $('#contract-register-form').validate({
             required: true,
 
         },
-        Installment_payment: {
+        type_payment: {
             required: true,
             maxlength: 60
+        },
+        money_payment: {
+            required: true,
+            number: true,
+            maxlength: 10
+        },
+        period_payment: {
+            required: true,
+            number: true,
+            maxlength: 2
         },
         Sale_Contract: {
             required: true,
@@ -26,8 +36,14 @@ $('#contract-register-form').validate({
         Customer_ID: {
             required: "โปรดเลือกรหัสลูกค้า ",
         },
-        Installment_payment: {
-            required: "โปรดกรอกชำระเงินงวด",
+        type_payment: {
+            required: "โปรดกรอกประเภทการชำระ",
+        },
+        money_payment: {
+            required: "โปรดกรอกจำนวนเงิน",
+        },
+        period_payment: {
+            required: "โปรดกรอกงวดที่ชำระ",
         },
         Sale_Contract: {
             required: "โปรดกรอกสัญญาซื้อขาย ",
@@ -51,3 +67,6 @@ $('#contract-register-form').validate({
     },
 
 });
+$.validator.addMethod("numericWithComma", function(value, element) {
+    return this.optional(element) || /^[0-9,]+$/.test(value);
+}, "โปรดกรอกข้อมูลที่มีเฉพาะตัวเลขและ ,");

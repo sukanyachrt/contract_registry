@@ -9,7 +9,7 @@ t_install.Contract_delivery_datesend,
 t_install.Contract_delivery_dateoffer,
 t_install.Project_work_page,
 t_install.Picture,
-t_install.Order_details,
+t_contract.Order_details,
 t_install.Credit_department,
 t_install.Installation_department,
 t_install.Installation_status,
@@ -20,8 +20,12 @@ t_project.Address,
 t_project.Salesperson_Code,
 t_contract.registration_code,
 t_contract.Customer_ID,
-t_contract.Installment_payment,
-t_contract.Sale_Contract,
+t_contract.type_payment,
+t_contract.money_payment,
+t_contract.period_payment,
+t_contract.contract_el,
+t_contract.contract_es,
+t_contract.contract_model,
 t_cus.Customer_Name,
 t_sale.Salesperson_Name 
 FROM
@@ -51,8 +55,7 @@ while ($rsconnect = $connect->fetch_AssocData()) {
     <td class="text-center">' . $rsconnect['Customer_Name'] . '</td>
     <td class="text-center">' . $rsconnect['Address'] . '</td>
     <td class="text-center">' . $rsconnect['registration_code'] . '</td>
-    <td class="text-center">' . $rsconnect['Installment_payment'] . '</td>
-    <td class="text-center">' . $rsconnect['Sale_Contract'] . '</td>
+   
     <td class="text-center">' . $rsconnect['Salesperson_Name'] . '</td>
     <td class="text-center">' . $Installation_status . '</td>
     <td class="text-center">

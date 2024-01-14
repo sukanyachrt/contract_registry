@@ -19,7 +19,6 @@ $data = [
     "Contract_delivery_dateoffer" => '',
     "Project_work_page" => '',
     "Picture" => '',
-    "Order_details" => '',
     "Credit_department" => '',
     "Installation_department" => '',
     "Installation_status" => '',
@@ -34,7 +33,6 @@ $connect->sql = "SELECT
 	t_install.Contract_delivery_dateoffer,
 	t_install.Project_work_page,
 	t_install.Picture,
-	t_install.Order_details,
 	t_install.Credit_department,
 	t_install.Installation_department,
 	t_install.Installation_status 
@@ -57,7 +55,6 @@ if ($rsconnect['Picture'] != "") {
 
 $data['hiddenPic'] = $rsconnect['Picture'];
 $data['Picture'] = $imageData;
-$data['Order_details'] = $rsconnect['Order_details'];
 $data['Credit_department'] = $rsconnect['Credit_department'];
 $data['Installation_department'] = $rsconnect['Installation_department'];
 $data['Installation_status'] = $rsconnect['Installation_status'];
@@ -107,7 +104,7 @@ echo '<div class="row mb-3">
 <div class="row mb-3">
 <div class="col-4 text-end">
     <div class="form-group">
-        <label for="txtidcard" class="text-gray  ">แบบหน้างานโครงการ : </label>
+        <label for="txtidcard" class="text-gray  ">ที่อยู่แบบหน้างานโครงการ : </label>
     </div>
 </div>
 <div class="col-8">
@@ -128,20 +125,6 @@ echo '<div class="row mb-3">
     <div class="form-group">
         <div class="uploaded_file_view" id="uploaded_view">
     </div>
-    </div>
-</div>
-</div>
-<div class="row mb-3">
-<div class="col-4 text-end">
-    <div class="form-group">
-        <label for="txtidcard" class="text-gray  ">รายละเอียดการสั่งซื้อ : </label>
-    </div>
-</div>
-<div class="col-8">
-    <div class="form-group">
-        <span id="txtidcard" class="text-gray">
-        ' . $data['Order_details'] . '
-        </span>
     </div>
 </div>
 </div>

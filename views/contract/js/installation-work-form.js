@@ -39,7 +39,7 @@ $('#installation-work-form').validate({
             required: "โปรดเลือกวันส่งมอบในสัญญา",
         },
         Project_work_page: {
-            required: "โปรดกรอกแบบหน้างานโครงการ ",
+            required: "โปรดกรอกที่อยู่แบบหน้างานโครงการ ",
         },
         Order_details: {
             required: "โปรดกรอกรายละเอียดการสั่งซื้อ ",

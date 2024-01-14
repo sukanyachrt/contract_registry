@@ -20,7 +20,6 @@ $data = [
     "Contract_delivery_dateoffer" => '',
     "Project_work_page" => '',
     "Picture" => '',
-    "Order_details" => '',
     "Credit_department" => '',
     "Installation_department" => '',
     "Installation_status" => '',
@@ -40,7 +39,6 @@ if ($_GET['id'] <= 0) {
 	t_install.Contract_delivery_dateoffer,
 	t_install.Project_work_page,
 	t_install.Picture,
-	t_install.Order_details,
 	t_install.Credit_department,
 	t_install.Installation_department,
 	t_install.Installation_status 
@@ -63,7 +61,6 @@ WHERE
    
     $data['hiddenPic']=$rsconnect['Picture'];
     $data['Picture'] = $imageData;
-    $data['Order_details'] = $rsconnect['Order_details'];
     $data['Credit_department'] = $rsconnect['Credit_department'];
     $data['Installation_department'] = $rsconnect['Installation_department'];
     $data['Installation_status'] = $rsconnect['Installation_status'];
@@ -91,7 +88,7 @@ echo ' <div class="row mb-3">
 </div>
 </div>
 <div class="row mb-3">
-<label class="col-sm-2 col-form-label" for="Project_work_page">แบบหน้างานโครงการ
+<label class="col-sm-2 col-form-label" for="Project_work_page">ที่อยู่แบบหน้างานโครงการ
 </label>
 <div class="col-sm-10 form-group">
     <input type="text" class="form-control" value="' . $data['Project_work_page'] . '" id="Project_work_page" name="Project_work_page" placeholder="แบบหน้างานโครงการ" />
@@ -126,17 +123,10 @@ echo ' <div class="row mb-3">
 
 </div>
 <div class="row mb-3" style="display:none;">
-<label class="col-sm-2 col-form-label" for="Order_details">hiddenPic
+<label class="col-sm-2 col-form-label">hiddenPic
 </label>
 <div class="col-sm-10 form-group">
 <input type="text" id="hiddenPic" name="hiddenPic" value="'.$data['hiddenPic'].'">
-</div>
-</div>
-<div class="row mb-3">
-<label class="col-sm-2 col-form-label" for="Order_details">รายละเอียดการสั่งซื้อ
-</label>
-<div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="' . $data['Order_details'] . '" id="Order_details" name="Order_details" placeholder="รายละเอียดการสั่งซื้อ" />
 </div>
 </div>
 <div class="row mb-3">

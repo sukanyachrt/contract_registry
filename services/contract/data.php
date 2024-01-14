@@ -53,8 +53,13 @@ if ($data == "data_Project") {
         $connect->sql = "UPDATE `contract_register` SET 
         `registration_code`='" . $post['registration_code'] . "',
         `Customer_ID`='" . $post['Customer_ID'] . "',
-        `Installment_payment`='" . $post['Installment_payment'] . "',
-        `Sale_Contract`='" . $post['Sale_Contract'] . "'
+        `type_payment`='" . $post['type_payment'] . "',
+        `period_payment`='" . $post['period_payment'] . "',
+        `money_payment`='" . $post['money_payment'] . "',
+        `contract_es`='" . $post['contract_es'] . "',
+        `contract_el`='" . $post['contract_el'] . "',
+        `contract_model`='" . $post['contract_model'] . "',
+        Order_details ='" . $post['Order_details'] . "'
         WHERE `Project_ID`='".$Project_code."'";
         $connect->queryData();
         $result = ["id" => $post['registration_code'], "status" => "ok"];
@@ -67,12 +72,17 @@ if ($data == "data_Project") {
         $id = $rsconnect['maxid'] + 1;
 
         $connect->sql = "INSERT INTO `contract_register`
-        (`registration_code`, `Project_ID`, `Customer_ID`, `Installment_payment`, `Sale_Contract`) VALUES 
+         VALUES 
         ('" . $id . "',
         '" . $Project_code . "',
         '" . $post['Customer_ID'] . "',
-        '" . $post['Installment_payment'] . "',
-        '" . $post['Sale_Contract'] . "'
+        '" . $post['type_payment'] . "',
+        '" . $post['period_payment'] . "',
+        '" . $post['money_payment'] . "',
+        '" . $post['contract_es'] . "',
+        '" . $post['contract_el'] . "',
+        '" . $post['contract_model'] . "',
+        '" . $post['Order_details'] . "'
         )";
         $connect->queryData();
         $result = ["id" => $connect->id_insertrows(), "status" => "ok"];
@@ -132,7 +142,6 @@ else if($data=="data_Installation"){
         `Contract_delivery_dateoffer`= '" . $post['Contract_delivery_dateoffer'] . "',
         `Project_work_page`= '" . $post['Project_work_page'] . "',
         `Picture`= '" . $filename . "',
-        `Order_details`= '" . $post['Order_details'] . "',
         `Credit_department`= '" . $post['Credit_department'] . "',
         `Installation_department`= '" . $post['Installation_department'] . "',
         `Installation_status`= '" . $post['Installation_status'] . "'
@@ -168,15 +177,13 @@ else if($data=="data_Installation"){
         $rsconnect = $connect->fetch_AssocData();
         $id = $rsconnect['maxid'] + 1;
         $connect->sql = "INSERT INTO `installation_work` 
-        (`Installation_code`, `Project_ID`, `Contract_delivery_datesend`, `Contract_delivery_dateoffer`,
-         `Project_work_page`, `Picture`, `Order_details`, `Credit_department`, `Installation_department`, `Installation_status`) VALUES
+         VALUES
          ('".$id."',
         '".$Project_code."',
          '".$post['Contract_delivery_datesend']."',
          '".$post['Contract_delivery_dateoffer']."',
          '".$post['Project_work_page']."',
          '".$filename."',
-         '".$post['Order_details']."',
          '".$post['Credit_department']."',
          '".$post['Installation_department']."',
          '".$post['Installation_status']."'
