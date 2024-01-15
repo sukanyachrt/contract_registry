@@ -53,7 +53,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <?php include("../../include/footer.php"); ?>
                     <div class="content-backdrop fade"></div>
                 </div>
@@ -67,5 +67,23 @@
 <script src="../../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
 <script>
-
+    $(document).ready(function() {
+        tablelistContract();
+    });
+    function tablelistContract() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("tableinstallContract").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "../../services/contract/tableinstallContract.php", true);
+        xhttp.send();
+    }
+    $("#search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tableinstallContract tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 </script>

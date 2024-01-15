@@ -1,5 +1,6 @@
 <?php
 include('../../Connect_Data.php');
+session_start();
 error_reporting(0);
 $connect = new Connect_Data();
 $connect->connectData();
@@ -157,36 +158,36 @@ echo '<div class="row mb-3">
 </div>
 </div>
 <div class="row mb-3">
-<div class="col-4 text-end">
-    <div class="form-group">
-        <label for="txtidcard" class="text-gray  ">สถานะการติดตั้ง : </label>
+    <div class="col-4 text-end">
+        <div class="form-group">
+            <label for="txtidcard" class="text-gray  ">สถานะการติดตั้ง : </label>
+        </div>
     </div>
-</div>
-<div class="col-8">
-    <div class="form-group">';
-        
+    <div class="col-8">
+        <div class="form-group">';
+            
 
-$installationStatusId = $data['Installation_status'];
-$foundStatus = '';
+    $installationStatusId = $data['Installation_status'];
+    $foundStatus = '';
 
-foreach ($options as $option) {
-    if ($option['id'] == $installationStatusId) {
-        $foundStatus = $option['status'];
-        break;
+    foreach ($options as $option) {
+        if ($option['id'] == $installationStatusId) {
+            $foundStatus = $option['status'];
+            break;
+        }
     }
-}
-if($foundStatus=="รอการติดตั้ง"){
-    echo '<span id="txtidcard" class="badge bg-label-warning">';
-}
-else{
-    echo '<span id="txtidcard" class="badge bg-label-success">';
-}
+    if($foundStatus=="รอการติดตั้ง"){
+        echo '<span  class="badge bg-label-warning statusInstall">';
+    }
+    else{
+        echo '<span  class="badge bg-label-success statusInstall">';
+    }
 
-echo $foundStatus;
+    echo $foundStatus;
 
-echo '</span>
+    echo '</span>
+        </div>
     </div>
-</div>
 </div>
 <input type="hidden" class="button_outer" id="hiddenPic" name="hiddenPic" value="'.$data['Picture'].'">
 ';

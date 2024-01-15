@@ -35,20 +35,18 @@ if ($data == "data_Project") {
          `Date`= '" . $post['Date'] . "',
          `Address`= '" . $post['Address'] . "',
          `Salesperson_Code`='" . $_SESSION['Salesperson_Code'] . "'
-        WHERE Project_code='".$id."'";
+        WHERE Project_code='" . $id . "'";
         $connect->queryData();
         $result = ["id" => $id, "status" => "ok"];
-
-
     }
     echo json_encode($result);
 } else if ($data == "data_Contract_register") {
     $post = $_POST;
     $Project_code = $_GET['id'];
-    $connect->sql = "SELECT * from contract_register WHERE Project_ID='".$Project_code."'";
+    $connect->sql = "SELECT * from contract_register WHERE Project_ID='" . $Project_code . "'";
     $connect->queryData();
     $row = $connect->num_rows();
-    if($row>0){
+    if ($row > 0) {
         //update
         $connect->sql = "UPDATE `contract_register` SET 
         `registration_code`='" . $post['registration_code'] . "',
@@ -60,11 +58,10 @@ if ($data == "data_Project") {
         `contract_el`='" . $post['contract_el'] . "',
         `contract_model`='" . $post['contract_model'] . "',
         Order_details ='" . $post['Order_details'] . "'
-        WHERE `Project_ID`='".$Project_code."'";
+        WHERE `Project_ID`='" . $Project_code . "'";
         $connect->queryData();
         $result = ["id" => $post['registration_code'], "status" => "ok"];
-    }
-    else{
+    } else {
         //insert
         $connect->sql = "SELECT MAX(registration_code) as maxid from contract_register";
         $connect->queryData();
@@ -89,52 +86,45 @@ if ($data == "data_Project") {
     }
 
     echo json_encode($result);
-}
-else if($data=="data_Installation"){
+} else if ($data == "data_Installation") {
     $post = $_POST;
     $Contract_delivery_datesend = explode('/', $post['Contract_delivery_datesend']);
     $post['Contract_delivery_datesend'] = ($Contract_delivery_datesend[2] - 543) . '-' . $Contract_delivery_datesend[1] . '-' . $Contract_delivery_datesend[0];
 
     $Contract_delivery_dateoffer = explode('/', $post['Contract_delivery_dateoffer']);
     $post['Contract_delivery_dateoffer'] = ($Contract_delivery_dateoffer[2] - 543) . '-' . $Contract_delivery_dateoffer[1] . '-' . $Contract_delivery_dateoffer[0];
-    
+
 
     $Project_code = $_GET['id'];
-    $connect->sql = "SELECT * from installation_work WHERE Project_ID='".$Project_code."'";
+    $connect->sql = "SELECT * from installation_work WHERE Project_ID='" . $Project_code . "'";
     $connect->queryData();
     $row = $connect->num_rows();
-    if($row>0){
+    if ($row > 0) {
         //update
         if ($_FILES["Picture"]["error"] > 0) {
-            $filename ="";
-        }
-        else{
-            $filename = $_FILES['Picture']['name']; 
-            $location = "../uploadfile/".$filename; 
-            $uploadOk = 1; 
-              
-            if($uploadOk == 0){ 
-                
-            }else{ 
-               /* Upload file */
-               if(move_uploaded_file($_FILES['Picture']['tmp_name'], $location)){ 
-                  
-               }else{ 
-                  
-               } 
-            } 
+            $filename = "";
+        } else {
+            $filename = $_FILES['Picture']['name'];
+            $location = "../uploadfile/" . $filename;
+            $uploadOk = 1;
+
+            if ($uploadOk == 0) {
+            } else {
+                /* Upload file */
+                if (move_uploaded_file($_FILES['Picture']['tmp_name'], $location)) {
+                } else {
+                }
+            }
         }
 
-         if($filename==""){
-            if($post['hiddenPic']==""){
-                $filename="";
+        if ($filename == "") {
+            if ($post['hiddenPic'] == "") {
+                $filename = "";
+            } else {
+                $filename = $post['hiddenPic'];
             }
-            else{
-                $filename=$post['hiddenPic'];
-            }
-           
         }
-        
+
 
         $connect->sql = "UPDATE `installation_work` SET 
         `Installation_code`= '" . $post['Installation_code'] . "',
@@ -145,31 +135,25 @@ else if($data=="data_Installation"){
         `Credit_department`= '" . $post['Credit_department'] . "',
         `Installation_department`= '" . $post['Installation_department'] . "',
         `Installation_status`= '" . $post['Installation_status'] . "'
-        WHERE `Project_ID`='".$Project_code."'";
+        WHERE `Project_ID`='" . $Project_code . "'";
         $connect->queryData();
         $result = ["id" => $Project_code, "status" => "ok"];
-
-    }
-    else{
+    } else {
         //insert
         if ($_FILES["Picture"]["error"] > 0) {
-            $filename ="";
-        }
-        else{
-            $filename = $_FILES['Picture']['name']; 
-            $location = "../uploadfile/".$filename; 
-            $uploadOk = 1; 
-              
-            if($uploadOk == 0){ 
-                
-            }else{ 
-               /* Upload file */
-               if(move_uploaded_file($_FILES['Picture']['tmp_name'], $location)){ 
-                  
-               }else{ 
-                  
-               } 
-            } 
+            $filename = "";
+        } else {
+            $filename = $_FILES['Picture']['name'];
+            $location = "../uploadfile/" . $filename;
+            $uploadOk = 1;
+
+            if ($uploadOk == 0) {
+            } else {
+                /* Upload file */
+                if (move_uploaded_file($_FILES['Picture']['tmp_name'], $location)) {
+                } else {
+                }
+            }
         }
 
         $connect->sql = "SELECT MAX(Installation_code) as maxid from installation_work";
@@ -178,25 +162,29 @@ else if($data=="data_Installation"){
         $id = $rsconnect['maxid'] + 1;
         $connect->sql = "INSERT INTO `installation_work` 
          VALUES
-         ('".$id."',
-        '".$Project_code."',
-         '".$post['Contract_delivery_datesend']."',
-         '".$post['Contract_delivery_dateoffer']."',
-         '".$post['Project_work_page']."',
-         '".$filename."',
-         '".$post['Credit_department']."',
-         '".$post['Installation_department']."',
-         '".$post['Installation_status']."'
+         ('" . $id . "',
+        '" . $Project_code . "',
+         '" . $post['Contract_delivery_datesend'] . "',
+         '" . $post['Contract_delivery_dateoffer'] . "',
+         '" . $post['Project_work_page'] . "',
+         '" . $filename . "',
+         '" . $post['Credit_department'] . "',
+         '" . $post['Installation_department'] . "',
+         '" . $post['Installation_status'] . "'
          )";
         $connect->queryData();
         $result = ["id" => $connect->id_insertrows(), "status" => "ok"];
-
     }
     echo json_encode($result);
-}
-else if($data=="projectStatus"){
+} else if ($data == "projectStatus") {
     $connect->sql = "UPDATE project SET Status_Project = '0' 
     WHERE Project_code='" . $_GET['id'] . "'";
-   $connect->queryData();
-   echo json_encode(["result" => $connect->affected_rows()]);
+    $connect->queryData();
+    echo json_encode(["result" => $connect->affected_rows()]);
+} else if ($data == "installStatus") {
+    
+    $connect->sql = "UPDATE installation_work SET Installation_status = '".$_GET['status']."' 
+    WHERE Project_ID ='" . $_GET['id'] . "'";
+    $connect->queryData();
+    echo json_encode(["result" => $connect->affected_rows()]);
 }

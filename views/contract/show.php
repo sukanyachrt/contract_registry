@@ -40,15 +40,30 @@
                                 <div class="col-6 col-sm-7 mb-sm-0">
                                     <h4 class="py-3 mb-2">ข้อมูลทะเบียนสัญญา<span class="text-muted fw-light"> </span> </h4>
                                 </div>
-                                <div class="col-6 col-sm-5 text-end pt-3">
-                                    <a href="data.php?id=<?php echo $_GET['id'] ?>" class="text-white btn btn-xs btn-warning">
-                                        <i class="tf-icons bx bx-edit-alt"></i> แก้ไข
-                                    </a>
-                                    <button type="button" class="btn btn-xs btn-danger" onclick="updateProject('<?php echo $_GET['id'] ?>')">
-                                        <i class="tf-icons bx bx-trash"></i>
-                                        ลบ
-                                    </button>
-                                </div>
+                                <?php
+                                if ($_SESSION['Salesperson_position'] != "ฝ่ายติดตั้ง") {
+                                ?>
+                                    <div class="col-6 col-sm-5 text-end pt-3">
+                                        <a href="data.php?id=<?php echo $_GET['id'] ?>" class="text-white btn btn-xs btn-warning">
+                                            <i class="tf-icons bx bx-edit-alt"></i> แก้ไข
+                                        </a>
+                                        <button type="button" class="btn btn-xs btn-danger" onclick="updateProject('<?php echo $_GET['id'] ?>')">
+                                            <i class="tf-icons bx bx-trash"></i>
+                                            ลบ
+                                        </button>
+                                    </div>
+                                <?php } ?>
+                                <?php
+                                if ($_SESSION['Salesperson_position'] == "ฝ่ายติดตั้ง") {
+                                ?>
+                                    <div class="col-6 col-sm-5 text-end pt-3">
+
+                                        <button type="button" class="btn btn-md btn-primary" onclick="updateInstallStatus('<?php echo $_GET['id'] ?>')">
+                                            <i class="tf-icons bx bx-message-alt-edit"></i>
+                                            อัพเดทสถานะงาน
+                                        </button>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
 
@@ -96,6 +111,53 @@
                                             ยกเลิก
                                         </button>
                                         <button type="button" id="btnIdProject" onclick="confirmDel_project()" class="btn btn-warning">ยืนยัน</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- อัพเดทสถานะงาน -->
+                        <div class="modal fade" id="modal_update_status" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-md" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header alert alert-primary">
+                                        <h4 class="modal-title" id="exampleModalLabel2">อัพเดทสถานะการติดตั้ง</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-4 h6 pt-2 text-sm-end text-start" for="basic-default-name">สถานะการติดตั้ง : </label>
+                                                <div class="col-sm-6">
+                                                    <?php
+                                                    $options = array(
+                                                        [
+                                                            'id' => '1',
+                                                            'status' => 'รอการติดตั้ง'
+                                                        ],
+                                                        [
+                                                            'id' => '2',
+                                                            'status' => 'ติดตั้งเสร็จแล้ว'
+                                                        ],
+                                                    );
+                                                    ?>
+                                                    <select class="form-control" id="Installation_status" name="Installation_status">
+                                                        <option value>เลือก</option>
+                                                        <?php foreach ($options as $key => $value) {
+                                                        ?>
+                                                            <option value="<?php echo $value['id'] ?>"><?php echo $value['status'] ?></option>
+                                                        <?php } ?>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                            ยกเลิก
+                                        </button>
+                                        <button type="button" id="btnIdUpdateStatus" onclick="confirm_Update_status()" class="btn btn-outline-primary">ยืนยัน</button>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +211,7 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("load_install").innerHTML = this.responseText;
-                var fileInputContainer = document.querySelector('.button_outer');
+                var fileInputContainer = document.querySelector(' .button_outer');
                 loadfile(fileInputContainer);
             }
         };
@@ -185,6 +247,39 @@
                     window.location.href = document.referrer;
 
                 }
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+
+    }
+
+    function updateInstallStatus(objId) {
+        var statusInstall = $('.statusInstall').html();
+        $('#Installation_status option').filter(function() {
+            return $(this).text() === statusInstall;
+        }).prop('selected', true);
+        $('#modal_update_status').modal('show');
+        $('#btnIdUpdateStatus').val(objId)
+    }
+
+    function confirm_Update_status() {
+        let objId = $('#btnIdUpdateStatus').val();
+        let Installation_status = $('#Installation_status').val();
+        $.ajax({
+            type: 'GET',
+            url: "../../services/contract/data.php?v=installStatus&id=" + objId + "&status=" + Installation_status,
+            success: function(response) {
+                console.log(response);
+                $('#modal_update_status').modal('hide');
+                load_install();
+                toastr.success("อัพเดทสถานะแล้วค่ะ !");
+                // if (response.result == 1) {
+                //     sessionStorage.setItem('toastrShown', 'delproject');
+                //     window.location.href = document.referrer;
+
+                // }
             },
             error: function(error) {
                 console.log(error)
