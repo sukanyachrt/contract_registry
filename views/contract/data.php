@@ -277,6 +277,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-sm-12 text-center">
+                                <a href="javascript:history.back()" class="btn btn-secondary mx-4">
+                                    <i class="tf-icons bx bxs-left-arrow-alt"></i>
+                                    กลับ
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -377,8 +385,8 @@
                     thaiyear: true
                 }).datepicker('update', moment(Contract_delivery_dateoffer, 'DD/MM/YYYY').toDate());
 
-                 var fileInputContainer = document.querySelector('.button_outer');
-                 loadfile(fileInputContainer);
+                var fileInputContainer = document.querySelector('.button_outer');
+                loadfile(fileInputContainer);
             }
 
         };
@@ -460,7 +468,11 @@
                                             console.log(Res)
                                             if (Res.id > 0 && Res.status == "ok") {
                                                 sessionStorage.setItem('toastrShown', 'saveContract');
-                                                location.href = 'index.php';
+                                                if ('<?php echo $_SESSION['Salesperson_position']; ?>' === "admin_sale") {
+                                                    location.href = 'index.php';
+                                                } else {
+                                                    location.href = 'listcontract.php';
+                                                }
                                             }
                                         },
                                         error: function(e) {

@@ -23,13 +23,13 @@
                
             </a>
         </li>
-        <li class="menu-item active" data-menu="employee">
+        <li class="menu-item " data-menu="employee">
             <a href="../employee/index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-user-pin"></i>
                 <div data-i18n="Basic">ข้อมูลพนักงาน</div>
             </a>
         </li>
-        <li class="menu-item" data-menu="contract">
+        <li class="menu-item active" data-menu="contract">
             <a href="../contract/index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-file-doc"></i>
                 <div data-i18n="Basic">ข้อมูลทะเบียนสัญญา</div>

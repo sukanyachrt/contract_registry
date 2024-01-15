@@ -69,16 +69,16 @@
                                             <div id="load_install"></div>
                                         </div>
                                     </div>
-
-
-
-
-
                                 </div>
-
-
                             </div>
-
+                        </div>
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-sm-12 text-center">
+                                <a href="javascript:history.back()" class="btn btn-secondary mx-4">
+                                    <i class="tf-icons bx bxs-left-arrow-alt"></i>
+                                    กลับ
+                                </a>
+                            </div>
                         </div>
                         <!-- ลบข้อมูล -->
                         <div class="modal fade" id="modal_confirm_del" tabindex="-1" aria-hidden="true">
@@ -182,7 +182,7 @@
             success: function(response) {
                 if (response.result == 1) {
                     sessionStorage.setItem('toastrShown', 'delproject');
-                    location.href = 'index.php';
+                    window.location.href = document.referrer;
 
                 }
             },

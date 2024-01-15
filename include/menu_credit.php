@@ -17,16 +17,16 @@
         <li class="menu-header small text-uppercase"><span class="menu-header-text">เมนูฝ่ายสินเชื่อ</span></li>
         <li class="menu-item" data-menu="customer">
             <a href="../customer/index.php" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-file-doc"></i>
+                <i class="menu-icon tf-icons bx bxs-group"></i>
                 <div data-i18n="Basic">ข้อมูลลูกค้า</div>
             </a>
         </li>
-        <!-- <li class="menu-item" data-menu="contract">
-            <a href="../contract/index.php" class="menu-link">
+        <li class="menu-item active" data-menu="contract">
+            <a href="../contract/listcontract.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-file-doc"></i>
                 <div data-i18n="Basic">ข้อมูลทะเบียนสัญญา</div>
             </a>
-        </li> -->
+        </li>
 
 
     </ul>

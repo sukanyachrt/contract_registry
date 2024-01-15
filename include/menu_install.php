@@ -17,8 +17,8 @@
         <!-- Components -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">จัดการข้อมูล</span></li>
         
-        <li class="menu-item" data-menu="contract">
-            <a href="../contract/index.php" class="menu-link">
+        <li class="menu-item active" data-menu="contract">
+            <a href="../contract/install.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-file-doc"></i>
                 <div data-i18n="Basic">ข้อมูลทะเบียนสัญญา</div>
             </a>

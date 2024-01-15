@@ -161,6 +161,7 @@
                 type: "POST",
                 data: data, // ใช้ข้อมูลจากการร้องขอแรก
                 success: function(Res) {
+                    sessionStorage.removeItem('menu');
                     window.location.replace(Res.page);
                 },
 
