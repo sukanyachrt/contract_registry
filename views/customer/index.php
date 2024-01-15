@@ -13,22 +13,29 @@
                         <h4 class="py-3 mb-0">ข้อมูลลูกค้า</h4>
 
                         <div class="row">
-                            <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
-                                <a href="data.php" class="btn btn-primary text-white account-image-reset mb-4">
-                                    <i class="bx bx-plus d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">
-                                        <i class="bx bx-plus me-1"></i>
+                            <?php
+                            if ($_SESSION['Salesperson_position'] == "admin_sale") {
+                            ?>
+                                <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
+                                    <a href="data.php" class="btn btn-primary text-white account-image-reset mb-4">
+                                        <i class="bx bx-plus d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">
+                                            <i class="bx bx-plus me-1"></i>
 
-                                        เพิ่มข้อมูล</span>
-                                </a>
-                            </div>
+                                            เพิ่มข้อมูล</span>
+                                    </a>
+                                </div>
+                            <?php
+                            }
+                            ?>
+
 
                             <div class="col-lg-12 mb-4 order-0">
                                 <div class="card">
                                     <h5 class="card-header">
 
                                         <div class="input-group">
-                                        <span class="input-group-text bg-primary text-white" id="basic-addon11">ค้นหาข้อมูล </span>
+                                            <span class="input-group-text bg-primary text-white" id="basic-addon11">ค้นหาข้อมูล </span>
                                             <input type="text" autocomplete="yes" id="search" name="search" class="form-control" placeholder="ค้นหาข้อมูลจากตาราง" />
                                         </div>
 
@@ -92,9 +99,9 @@
 <script>
     $(document).ready(function() {
         dataCustomer();
-        
 
-        
+
+
 
         if (sessionStorage.getItem('toastrShown') === 'edit') {
             toastr.success("แก้ไขข้อมูลแล้วค่ะ !");
@@ -102,6 +109,10 @@
         }
         if (sessionStorage.getItem('toastrShown') === 'save') {
             toastr.success("บันทึกข้อมูลแล้วค่ะ !");
+            sessionStorage.removeItem('toastrShown');
+        }
+        if (sessionStorage.getItem('toastrShown') === 'no') {
+            toastr.error("ข้อมูลลูกค้านี้ถูกลบไปแล้วค่ะ !");
             sessionStorage.removeItem('toastrShown');
         }
     });
@@ -141,6 +152,10 @@
                 if (response.result == 1) {
                     dataCustomer();
                     toastr.success("ลบข้อมูลลูกค้าแล้วค่ะ !");
+                    $('#modal_confirm_del').modal('hide');
+                }
+                else{
+                    toastr.error("ข้อมูลลูกค้านี้ถูกลบไปแล้วค่ะ !");
                     $('#modal_confirm_del').modal('hide');
                 }
             },
