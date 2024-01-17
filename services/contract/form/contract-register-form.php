@@ -12,7 +12,8 @@ $data=[
     "period_payment" => '',
     "contract_es" => '',
     "contract_el" => '',
-    "contract_model" => ''
+    "contract_model" => '',
+    "Order_details"=>''
 ];
    
 if($_GET['id']<=0){
@@ -47,6 +48,7 @@ WHERE t_contract.Project_ID='".$_GET['id']."'";
     $data['contract_es']=$rsconnect['contract_es'];
     $data['contract_el']=$rsconnect['contract_el'];
     $data['contract_model']=$rsconnect['contract_model'];
+    $data['Order_details']=$rsconnect['Order_details'];
 }
 
 
@@ -128,8 +130,21 @@ echo '</select>
 <div class="row mb-3">
 <label class="col-sm-2 col-form-label" for="Order_details">รายละเอียด
 </label>
+<div class="col-sm-10 form-group">';
+
+    echo '<input class="form-control " type="file" id="Order_details" name="Order_details" accept="application/pdf" />';
+    echo '<div class="alert alert-primary alert-dismissible" role="alert" id="orderDetailsAlert" onclick="Showfilepdf(\''. $data['Order_details'] .'\')">
+    '.$data['Order_details'].'
+    <button type="button" class="btn-close" id="dataOrder_details"  name="dataOrder_details" value="'.$data['Order_details'].'" onclick="event.stopPropagation(); RemoveFilePdf(\''. $data['Order_details'] .'\')"  aria-label="Close"></button>
+    </div>
+</div>
+</div>
+</div>
+<div class="row mb-3" style="display:none;">
+<label class="col-sm-2 col-form-label">hiddenOrder_details
+</label>
 <div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="' . $data['Order_details'] . '" id="Order_details" name="Order_details" placeholder="รายละเอียดการสั่งซื้อ" />
+<input type="text" id="hiddenOrder_details" name="hiddenOrder_details" value="'.$data['Order_details'].'">
 </div>
 </div>
 <div class="row justify-content-end">
@@ -143,5 +158,7 @@ echo '</select>
         <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
     </button>
 </div>
-</div>';
+</div>
+
+';
 ?>

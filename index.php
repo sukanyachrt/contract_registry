@@ -50,7 +50,7 @@
                         </div>
                         <!-- /Logo -->
                         <p class="text-center mb-4">
-                            <span>กรณีศึกษา บริษัท ฮิตาชิ เอลลิเวเตอร์ (ประเทศไทย)</span>
+                            <span>บริษัท ฮิตาชิ เอลลิเวเตอร์ (ประเทศไทย)</span>
                         </p>
 
                         <form id="loginForm" class="mb-3">

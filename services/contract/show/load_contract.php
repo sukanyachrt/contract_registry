@@ -4,22 +4,23 @@ error_reporting(0);
 $connect = new Connect_Data();
 $connect->connectData();
 
-$data=[
+$data = [
     "registration_code" => '',
     "Customer_Name" => '',
     "type_payment" => '',
     "Order_details" => '',
-    "period_payment" =>'',
+    "period_payment" => '',
     "money_payment" => '',
     "contract_es" => '',
     "contract_el" => '',
-    "contract_model"=>''
+    "contract_model" => '',
+    "Order_details" => ''
 
 ];
-   
 
-    
-    $connect->sql = "SELECT
+
+
+$connect->sql = "SELECT
 	t_contract.registration_code,
 	t_contract.Customer_ID,
 	t_contract.type_payment,
@@ -28,23 +29,24 @@ $data=[
 	t_contract.contract_es,
     t_contract.contract_el,
     t_contract.contract_model,
+    t_contract.Order_details,
     customer.Customer_Name 
 FROM
 	project AS t_project
 	INNER JOIN contract_register AS t_contract ON t_project.Project_code = t_contract.Project_ID
 	INNER JOIN customer ON t_contract.Customer_ID = customer.Customer_ID
-WHERE t_contract.Project_ID='".$_GET['id']."'";
-    $connect->queryData();
-    $rsconnect = $connect->fetch_AssocData();
-    $data['Order_details']=$rsconnect['Order_details'];
-    $data['registration_code']=$rsconnect['registration_code'];
-    $data['Customer_Name']=$rsconnect['Customer_Name'];
-    $data['type_payment']=$rsconnect['type_payment'];
-    $data['period_payment']=$rsconnect['period_payment'];
-    $data['money_payment']=$rsconnect['money_payment'];
-    $data['contract_es']=$rsconnect['contract_es'];
-    $data['contract_el']=$rsconnect['contract_el'];
-    $data['contract_model']=$rsconnect['contract_model'];
+WHERE t_contract.Project_ID='" . $_GET['id'] . "'";
+$connect->queryData();
+$rsconnect = $connect->fetch_AssocData();
+$data['Order_details'] = $rsconnect['Order_details'];
+$data['registration_code'] = $rsconnect['registration_code'];
+$data['Customer_Name'] = $rsconnect['Customer_Name'];
+$data['type_payment'] = $rsconnect['type_payment'];
+$data['period_payment'] = $rsconnect['period_payment'];
+$data['money_payment'] = $rsconnect['money_payment'];
+$data['contract_es'] = $rsconnect['contract_es'];
+$data['contract_el'] = $rsconnect['contract_el'];
+$data['contract_model'] = $rsconnect['contract_model'];
 
 
 
@@ -57,7 +59,7 @@ echo '<div class="row mb-3">
 <div class="col-8">
     <div class="form-group">
         <span id="txtidcard" class="text-gray">
-            '.$data['registration_code'].'
+            ' . $data['registration_code'] . '
         </span>
     </div>
 </div>
@@ -71,7 +73,7 @@ echo '<div class="row mb-3">
 <div class="col-8">
     <div class="form-group">
         <span id="txtidcard" class="text-gray">
-        '.$data['Customer_Name'].'
+        ' . $data['Customer_Name'] . '
         </span>
     </div>
 </div>
@@ -95,7 +97,7 @@ echo '<div class="row mb-3">
 <div class="col-8">
     <div class="form-group">
         <span id="txtidcard" class="text-gray">
-        '.$data['type_payment'].'
+        ' . $data['type_payment'] . '
         </span>
     </div>
 </div>
@@ -109,7 +111,7 @@ echo '<div class="row mb-3">
 <div class="col-8">
     <div class="form-group">
         <span id="txtidcard" class="text-gray">
-        '.$data['money_payment'].'
+        ' . $data['money_payment'] . '
         </span>
     </div>
 </div>
@@ -123,7 +125,7 @@ echo '<div class="row mb-3">
 <div class="col-8">
     <div class="form-group">
         <span id="txtidcard" class="text-gray">
-        '.$data['period_payment'].'
+        ' . $data['period_payment'] . '
         </span>
     </div>
 </div>
@@ -147,7 +149,7 @@ echo '<div class="row mb-3">
 <div class="col-8">
     <div class="form-group">
         <span id="txtidcard" class="text-gray">
-        '.$data['contract_es'].'
+        ' . $data['contract_es'] . '
         </span>
     </div>
 </div>
@@ -161,7 +163,7 @@ echo '<div class="row mb-3">
 <div class="col-8">
     <div class="form-group">
         <span id="txtidcard" class="text-gray">
-        '.$data['contract_el'].'
+        ' . $data['contract_el'] . '
         </span>
     </div>
 </div>
@@ -175,7 +177,7 @@ echo '<div class="row mb-3">
 <div class="col-8">
     <div class="form-group">
         <span id="txtidcard" class="text-gray">
-        '.$data['contract_model'].'
+        ' . $data['contract_model'] . '
         </span>
     </div>
 </div>
@@ -187,10 +189,17 @@ echo '<div class="row mb-3">
     </div>
 </div>
 <div class="col-8">
-    <div class="form-group">
-        <span id="txtidcard" class="text-gray">
+    <div class="form-group">';
+    if($data['Order_details']!==""){
+        echo '<a target="_blank" class="btn btn-outline-secondary" href="../../services/uploadfile/'. $data['Order_details'] .'" >
+        <i class="bx bxs-file-pdf text-danger" ></i>
         ' . $data['Order_details'] . '
-        </span>
-    </div>
+    </a>';
+    }
+    else{
+        echo "-";
+    }
+    
+'</div>
 </div>
 </div>';

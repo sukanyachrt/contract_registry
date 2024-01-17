@@ -48,6 +48,31 @@ if ($data == "data_Project") {
     $row = $connect->num_rows();
     if ($row > 0) {
         //update
+        if ($_FILES["Order_details"]["error"] > 0) {
+            $filename = "";
+        } else {
+            $filename = $_FILES['Order_details']['name'];
+            $location = "../uploadfile/" . $filename;
+            $uploadOk = 1;
+
+            if ($uploadOk == 0) {
+            } else {
+                /* Upload file */
+                if (move_uploaded_file($_FILES['Order_details']['tmp_name'], $location)) {
+                } else {
+                }
+            }
+        }
+
+        if ($filename == "") {
+            if ($post['hiddenOrder_details'] == "") {
+                $filename = "";
+            } else {
+                $filename = $post['hiddenOrder_details'];
+            }
+        }
+
+
         $connect->sql = "UPDATE `contract_register` SET 
         `registration_code`='" . $post['registration_code'] . "',
         `Customer_ID`='" . $post['Customer_ID'] . "',
@@ -57,7 +82,7 @@ if ($data == "data_Project") {
         `contract_es`='" . $post['contract_es'] . "',
         `contract_el`='" . $post['contract_el'] . "',
         `contract_model`='" . $post['contract_model'] . "',
-        Order_details ='" . $post['Order_details'] . "'
+        Order_details ='" . $filename. "'
         WHERE `Project_ID`='" . $Project_code . "'";
         $connect->queryData();
         $result = ["id" => $post['registration_code'], "status" => "ok"];
@@ -67,6 +92,24 @@ if ($data == "data_Project") {
         $connect->queryData();
         $rsconnect = $connect->fetch_AssocData();
         $id = $rsconnect['maxid'] + 1;
+
+        if ($_FILES["Order_details"]["error"] > 0) {
+            $filename = "";
+        } else {
+            $filename = $_FILES['Order_details']['name'];
+            $location = "../uploadfile/" . $filename;
+            $uploadOk = 1;
+
+            if ($uploadOk == 0) {
+            } else {
+                /* Upload file */
+                if (move_uploaded_file($_FILES['Order_details']['tmp_name'], $location)) {
+                } else {
+                    
+                }
+            }
+        }
+
 
         $connect->sql = "INSERT INTO `contract_register`
          VALUES 
@@ -79,7 +122,7 @@ if ($data == "data_Project") {
         '" . $post['contract_es'] . "',
         '" . $post['contract_el'] . "',
         '" . $post['contract_model'] . "',
-        '" . $post['Order_details'] . "'
+        '" . $filename . "'
         )";
         $connect->queryData();
         $result = ["id" => $connect->id_insertrows(), "status" => "ok"];

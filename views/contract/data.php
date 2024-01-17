@@ -240,7 +240,6 @@
                                                     </div>
 
                                                 </div>
-                                                <!-- Personal Info -->
                                                 <div id="contract-register-detail" class="content">
                                                     <div class="col-xxl">
                                                         <div class="mb-4">
@@ -255,7 +254,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- Social Links -->
                                                 <div id="installation-work-detail" class="content">
                                                     <div class="col-xxl">
                                                         <div class="mb-4">
@@ -355,7 +353,14 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("load-contract-register-form").innerHTML = this.responseText;
+                if ($('#dataOrder_details').val() == "") {
 
+                    $('#Order_details').show()
+                    $('#orderDetailsAlert').hide()
+                } else {
+                    $('#Order_details').hide()
+                    $('#orderDetailsAlert').show()
+                }
             }
 
         };
@@ -442,13 +447,19 @@
                     if (Res.id > 0 && Res.status == "ok") {
                         //บันทึกข้อมูลโครงการ
                         let id = Res.id;
+                        var formregister = new FormData($('#contract-register-form')[0]);
+                        var files = $('#Order_details')[0].files[0];
+                        formregister.append('Order_details', files);
+
 
                         $.ajax({
                             async: true,
                             url: "../../services/contract/data.php?v=data_Contract_register&id=" + id,
                             type: "POST",
                             cache: false,
-                            data: $('#contract-register-form').serialize(),
+                            contentType: false,
+                            processData: false,
+                            data: formregister,
                             success: function(Res) {
                                 console.log(Res)
                                 if (Res.id > 0 && Res.status == "ok") {
@@ -583,8 +594,17 @@
             $("#uploaded_view").append('<img src="' + fileInput + '" alt="Uploaded Image" />').addClass("show");
 
         }
-
-
-
     }
+
+    function RemoveFilePdf(filepdf) {
+       $('#hiddenOrder_details').val('')
+        $('#Order_details').show()
+        $('#orderDetailsAlert').hide()
+    }
+    function Showfilepdf(file){
+        var url = '../../services/uploadfile/'+file;
+        window.open(url, '_blank');
+    }
+
+    
 </script>
