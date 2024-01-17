@@ -13,7 +13,11 @@ $data=[
     "contract_es" => '',
     "contract_el" => '',
     "contract_model" => '',
-    "Order_details"=>''
+    "Order_details"=>'',
+    "Salesperson_Code"=>'',
+    "Salesperson_Name"=>'',
+    "Salesperson_Tel"=>''
+
 ];
    
 if($_GET['id']<=0){
@@ -33,7 +37,11 @@ else{
 	t_contract.contract_es,
     t_contract.contract_model,
     t_contract.contract_el,
-    t_contract.Order_details
+    t_contract.Order_details,
+    t_contract.Salesperson_Code,
+    t_contract.Salesperson_Name,
+    t_contract.Salesperson_Tel
+
 FROM
 	project AS t_project
 	INNER JOIN contract_register AS t_contract ON t_project.Project_code = t_contract.Project_ID
@@ -49,6 +57,9 @@ WHERE t_contract.Project_ID='".$_GET['id']."'";
     $data['contract_el']=$rsconnect['contract_el'];
     $data['contract_model']=$rsconnect['contract_model'];
     $data['Order_details']=$rsconnect['Order_details'];
+    $data['Salesperson_Code']=$rsconnect['Salesperson_Code'];
+    $data['Salesperson_Name']=$rsconnect['Salesperson_Name'];
+    $data['Salesperson_Tel']=$rsconnect['Salesperson_Tel'];
 }
 
 
@@ -145,6 +156,31 @@ echo '</select>
 </label>
 <div class="col-sm-10 form-group">
 <input type="text" id="hiddenOrder_details" name="hiddenOrder_details" value="'.$data['Order_details'].'">
+</div>
+</div>
+<div class="row mb-3">
+<div class="col-sm-12 form-group">
+<div class="divider">
+<div class="divider-text">ข้อมูลพนักงานขาย</div>
+</div>
+</div>
+</div>
+<div class="row mb-3">
+<label class="col-sm-2 col-form-label" for="Salesperson_Code">รหัสพนักงานขาย</label>
+<div class="col-sm-10 form-group">
+    <input type="text" class="form-control" value="'.$data['Salesperson_Code'].'" id="Salesperson_Code" name="Salesperson_Code" placeholder="รหัสพนักงานขาย" />
+</div>
+</div>
+<div class="row mb-3">
+<label class="col-sm-2 col-form-label" for="Salesperson_Name">ชื่อพนักงานขาย</label>
+<div class="col-sm-10 form-group">
+    <input type="text" class="form-control" value="'.$data['Salesperson_Name'].'" id="Salesperson_Name" name="Salesperson_Name" placeholder="ชื่อพนักงานขาย" />
+</div>
+</div>
+<div class="row mb-3">
+<label class="col-sm-2 col-form-label" for="Salesperson_Tel">เบอร์โทรศัพท์</label>
+<div class="col-sm-10 form-group">
+    <input type="text" class="form-control" value="'.$data['Salesperson_Tel'].'" id="Salesperson_Tel" name="Salesperson_Tel" placeholder="เบอร์โทรศัพท์" />
 </div>
 </div>
 <div class="row justify-content-end">

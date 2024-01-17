@@ -14,8 +14,10 @@ $data = [
     "contract_es" => '',
     "contract_el" => '',
     "contract_model" => '',
-    "Order_details" => ''
-
+    "Order_details" => '',
+    "Salesperson_Code"=>'',
+    "Salesperson_Name"=>'',
+    "Salesperson_Tel"=>''
 ];
 
 
@@ -30,7 +32,10 @@ $connect->sql = "SELECT
     t_contract.contract_el,
     t_contract.contract_model,
     t_contract.Order_details,
-    customer.Customer_Name 
+    customer.Customer_Name,
+    t_contract.Salesperson_Code,
+    t_contract.Salesperson_Name,
+    t_contract.Salesperson_Tel
 FROM
 	project AS t_project
 	INNER JOIN contract_register AS t_contract ON t_project.Project_code = t_contract.Project_ID
@@ -47,6 +52,9 @@ $data['money_payment'] = $rsconnect['money_payment'];
 $data['contract_es'] = $rsconnect['contract_es'];
 $data['contract_el'] = $rsconnect['contract_el'];
 $data['contract_model'] = $rsconnect['contract_model'];
+$data['Salesperson_Code']=$rsconnect['Salesperson_Code'];
+$data['Salesperson_Name']=$rsconnect['Salesperson_Name'];
+$data['Salesperson_Tel']=$rsconnect['Salesperson_Tel'];
 
 
 
@@ -200,6 +208,58 @@ echo '<div class="row mb-3">
         echo "-";
     }
     
-'</div>
+echo '</div>
 </div>
-</div>';
+</div>
+<div class="row mb-0">
+    <div class="col-2 form-group">
+    </div>
+    <div class="col-8 form-group">
+        <div class="divider">
+            <div class="divider-text">ข้อมูลพนักงานขาย</div>
+        </div>
+    </div>
+</div>
+<div class="row mb-3">
+<div class="col-4 text-end">
+    <div class="form-group">
+        <label for="txtidcard" class="text-gray  ">รหัสพนักงานขาย : </label>
+    </div>
+</div>
+<div class="col-8">
+    <div class="form-group">
+        <span id="txtidcard" class="text-gray">
+        ' . $data['Salesperson_Code'] . '
+        </span>
+    </div>
+</div>
+</div>
+<div class="row mb-3">
+<div class="col-4 text-end">
+    <div class="form-group">
+        <label for="txtidcard" class="text-gray  ">ชื่อพนักงานขาย : </label>
+    </div>
+</div>
+<div class="col-8">
+    <div class="form-group">
+        <span id="txtidcard" class="text-gray">
+        ' . $data['Salesperson_Name'] . '
+        </span>
+    </div>
+</div>
+</div>
+<div class="row mb-3">
+<div class="col-4 text-end">
+    <div class="form-group">
+        <label for="txtidcard" class="text-gray  ">เบอร์โทรศัพท์ : </label>
+    </div>
+</div>
+<div class="col-8">
+    <div class="form-group">
+        <span id="txtidcard" class="text-gray">
+        ' . $data['Salesperson_Tel'] . '
+        </span>
+    </div>
+</div>
+</div>
+';

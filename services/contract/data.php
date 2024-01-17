@@ -82,6 +82,9 @@ if ($data == "data_Project") {
         `contract_es`='" . $post['contract_es'] . "',
         `contract_el`='" . $post['contract_el'] . "',
         `contract_model`='" . $post['contract_model'] . "',
+        `Salesperson_Code`='" . $post['Salesperson_Code'] . "',
+        `Salesperson_Name`='" . $post['Salesperson_Name'] . "',
+        `Salesperson_Tel`='" . $post['Salesperson_Tel'] . "',
         Order_details ='" . $filename. "'
         WHERE `Project_ID`='" . $Project_code . "'";
         $connect->queryData();
@@ -112,6 +115,7 @@ if ($data == "data_Project") {
 
 
         $connect->sql = "INSERT INTO `contract_register`
+        
          VALUES 
         ('" . $id . "',
         '" . $Project_code . "',
@@ -122,7 +126,10 @@ if ($data == "data_Project") {
         '" . $post['contract_es'] . "',
         '" . $post['contract_el'] . "',
         '" . $post['contract_model'] . "',
-        '" . $filename . "'
+        '" . $filename . "',
+        '" . $post['Salesperson_Code'] . "',
+        '" . $post['Salesperson_Name'] . "',
+        '" . $post['Salesperson_Tel'] . "'
         )";
         $connect->queryData();
         $result = ["id" => $connect->id_insertrows(), "status" => "ok"];

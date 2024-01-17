@@ -26,6 +26,19 @@ $('#contract-register-form').validate({
             required: true,
             maxlength: 60
         },
+        Salesperson_Code: {
+            required: true,
+
+        },
+        Salesperson_Name: {
+            required: true,
+
+        },
+        Salesperson_Tel: {
+            required: true,
+            number: true,
+            maxlength: 10
+        },
        
     },
     messages: {
@@ -47,6 +60,16 @@ $('#contract-register-form').validate({
         },
         Sale_Contract: {
             required: "โปรดกรอกสัญญาซื้อขาย ",
+        },
+
+        Salesperson_Code: {
+            required: "โปรดกรอกรหัสพนักงานขาย ",
+        },
+        Salesperson_Name: {
+            required: "โปรดกรอกชื่อพนักงานขาย ",
+        },
+        Salesperson_Tel: {
+            required: "โปรดกรอกเบอร์พนักงานขาย ",
         },
         
     },
