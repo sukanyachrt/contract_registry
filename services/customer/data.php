@@ -20,7 +20,6 @@ if ($data == "customerStatus") {
     `Customer_Name`='" . $post['Customer_Name'] . "',
     `Address`='" . $post['Address'] . "',
     `Telephone_Number`='" . $post['Telephone_Number'] . "',
-    `Customer_Status`='" . $post['Customer_Status'] . "',
     Salesperson_Code ='" . $_SESSION['Salesperson_Code'] . "'
     WHERE Customer_ID='" . $_GET['id'] . "'";
     $connect->queryData();
@@ -33,7 +32,7 @@ if ($data == "customerStatus") {
     ('" . $post['Customer_Name'] . "',
     '" . $post['Address'] . "',
     '" . $post['Telephone_Number'] . "',
-    '" . $post['Customer_Status'] . "',
+    '1',
     '" . $_SESSION['Salesperson_Code'] . "'
     )";
     $connect->queryData();

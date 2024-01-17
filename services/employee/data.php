@@ -24,8 +24,7 @@ if ($data == "updateEmployStatus") {
     $connect->sql = "UPDATE `salesperson` SET 
     `Salesperson_Name`='" . $post['Salesperson_Name'] . "',
     `Telephone_Number`='" . $post['Telephone_Number'] . "',
-    `Salesperson_position`='" . $post['Salesperson_position'] . "',
-    `Salesperson_status`='" . $post['Salesperson_status'] . "'
+    `Salesperson_position`='" . $post['Salesperson_position'] . "'
     WHERE Salesperson_Code='" . $_GET['id'] . "'";
     $connect->queryData();
 
@@ -40,7 +39,7 @@ if ($data == "updateEmployStatus") {
     '" . $post['Salesperson_Name'] . "',
     '" . $post['Telephone_Number'] . "',
     '" . $post['Salesperson_position'] . "',
-    '" . $post['Salesperson_status'] . "')";
+    '1')";
     $connect->queryData();
 
     $connect->sql = "INSERT INTO `login`(`Login_Code`, `Password_ID`, `Salesperson_Code`) VALUES

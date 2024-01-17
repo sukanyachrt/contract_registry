@@ -28,15 +28,15 @@
                                     <div class="card-body">
                                         <form id="employeeForm">
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="Salesperson_Code">รหัสพนักงานขาย</label>
+                                                <label class="col-sm-2 col-form-label" for="Salesperson_Code">รหัสพนักงาน</label>
                                                 <div class="col-sm-10 form-group">
-                                                    <input type="text" class="form-control" ReadOnly id="Salesperson_Code" name="Salesperson_Code" placeholder="รหัสพนักงานขาย" />
+                                                    <input type="text" class="form-control" ReadOnly id="Salesperson_Code" name="Salesperson_Code" placeholder="รหัสพนักงาน" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="Salesperson_Name">ชื่อพนักงานขาย</label>
+                                                <label class="col-sm-2 col-form-label" for="Salesperson_Name">ชื่อพนักงาน</label>
                                                 <div class="col-sm-10 form-group">
-                                                    <input type="text" class="form-control" id="Salesperson_Name" name="Salesperson_Name" placeholder="ชื่อพนักงานขาย" />
+                                                    <input type="text" class="form-control" id="Salesperson_Name" name="Salesperson_Name" placeholder="ชื่อพนักงาน" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -60,16 +60,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="Salesperson_status"> สถานะพนักงาน</label>
-                                                <div class="col-sm-10 form-group">
-                                                    <select id="Salesperson_status" name="Salesperson_status" class="form-select">
-                                                        <option value="">เลือกสถานะพนักงาน</option>
-                                                        <option value="1">ใช้งาน</option>
-                                                        <option value="0">ไม่ใช้งาน</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            
                                             <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="Login_Code"> Username เข้าสู่ระบบ</label>
                                                 <div class="col-sm-10 form-group">
@@ -217,9 +208,6 @@
             Salesperson_position: {
                 required: true,
             },
-            Salesperson_status: {
-                required: true,
-            },
             Login_Code: {
                 required: true,
                 alphanumeric: true,
@@ -249,9 +237,6 @@
             },
             Salesperson_position: {
                 required: "กรุณาเลือกตำแหน่งพนักงานขาย",
-            },
-            Salesperson_status: {
-                required: "กรุณาเลือกสถานะพนักงานขาย",
             },
             Login_Code: {
                 required: "กรุณากรอก USERNAME เข้าสู่ระบบ",

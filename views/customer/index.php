@@ -49,7 +49,6 @@
                                                         <th class="text-center">ชื่อลูกค้า</th>
                                                         <th class="text-center">ที่อยู่</th>
                                                         <th class="text-center">เบอร์โทรศัพท์</th>
-                                                        <th class="text-center">พนักงานขาย</th>
                                                         <th class="text-center">สถานะ</th>
                                                         <th class="text-center">จัดการข้อมูล</th>
                                                     </tr>

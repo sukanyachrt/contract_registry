@@ -68,12 +68,4 @@ echo '<div class="row justify-content-around">
 <div class="col-8 text-start h6 text-muted">
 '.$data['Telephone_Number'].'
 </div>
-</div>
-<div class="row justify-content-around">
-<div class="col-4 text-end h6">
-สถานะ :
-</div>
-<div class="col-8 text-start h6 text-muted">
-'.$data['Customer_Status'].'
-</div>
 </div>';

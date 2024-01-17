@@ -28,6 +28,7 @@ while ($rsconnect = $connect->fetch_AssocData()) {
     <td class="text-center">' . $rsconnect['Salesperson_position'] . '</td>
     <td class="text-center">' . $Salesperson_status . '</td>
     <td class="text-center">
+    <a  href="show.php?id=' . $rsconnect['Salesperson_Code'] . '"><button class="border-secondary text-secondary"><i class="bx bx-zoom-in me-1"></i></button></a>
         <a  href="data.php?id='.$rsconnect['Salesperson_Code'].'"><button class="border-warning text-warning"><i class="bx bx-edit-alt me-1"></i></button></a>
         <button class="border-danger text-danger"  onclick="updateEmployStatus('.$rsconnect['Salesperson_Code'].')"><i class="bx bx-trash me-1"></i></button>
     </td>

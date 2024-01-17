@@ -27,7 +27,6 @@ while ($rsconnect = $connect->fetch_AssocData()) {
     <td class="text-center">' . $rsconnect['Customer_Name'] . '</td>
     <td class="text-center">' . $rsconnect['Address'] . '</td>
     <td class="text-center">' . $rsconnect['Telephone_Number'] . '</td>
-    <td class="text-center">' . $rsconnect['Salesperson_Name'] . '</td>
     <td class="text-center">' . $Customer_Status . '</td>
     <td class="text-center">';
     if ($_SESSION['Salesperson_position'] == "admin_sale") {

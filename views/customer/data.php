@@ -59,16 +59,7 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="Customer_Status"> สถานะ</label>
-                                                <div class="col-sm-10 form-group">
-                                                    <select id="Customer_Status" name="Customer_Status" class="form-select">
-                                                        <option value="">เลือกสถานะ</option>
-                                                        <option value="1">ใช้งาน</option>
-                                                        <option value="0">ไม่ใช้งาน</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                           
                                             
                                             <div class="row justify-content-end">
                                                 <div class="col-sm-10">
@@ -129,7 +120,6 @@
                         $('#Customer_Name').val(data.Customer_Name)
                         $('#Telephone_Number').val(data.Telephone_Number)
                         $('#Address').val(data.Address)
-                        $('#Customer_Status').val(data.Customer_Status)
                         $('#customerForm').valid();
                     }
                 }
@@ -203,9 +193,7 @@
             Address: {
                 required: true,
             },
-            Customer_Status: {
-                required: true,
-            },
+            
             
         },
         messages: {
@@ -225,9 +213,7 @@
             Address: {
                 required: "กรุณากรอกที่อยู่",
             },
-            Customer_Status: {
-                required: "กรุณาเลือกสถานะ",
-            },
+           
             
 
         },

@@ -36,8 +36,8 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-center">รหัสพนักงานขาย</th>
-                                                        <th class="text-center">ชื่อพนักงานขาย</th>
+                                                        <th class="text-center">รหัสพนักงาน</th>
+                                                        <th class="text-center">ชื่อพนักงาน</th>
                                                         <th class="text-center">เบอร์โทรศัพท์</th>
                                                         <th class="text-center">ตำแหน่ง</th>
                                                         <th class="text-center">สถานะ</th>
