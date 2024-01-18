@@ -13,15 +13,7 @@
                         <h4 class="py-3 mb-0">ข้อมูลทะเบียนสัญญา</h4>
 
                         <div class="row">
-                            <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
-                                <a href="data.php" class="btn btn-primary text-white account-image-reset mb-4">
-                                    <i class="bx bx-plus d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">
-                                        <i class="bx bx-plus me-1"></i>
-
-                                        เพิ่มข้อมูล</span>
-                                </a>
-                            </div>
+                            
                             <div class="col-lg-12 mb-4 order-0">
                                 <div class="card">
                                     <h5 class="card-header ">
