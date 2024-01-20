@@ -145,27 +145,27 @@ if ($data == "data_Project") {
     $row = $connect->num_rows();
     if ($row > 0) {
         //update
-        if ($_FILES["Picture"]["error"] > 0) {
+        if ($_FILES["uploadfile_install"]["error"] > 0) {
             $filename = "";
         } else {
-            $filename = $_FILES['Picture']['name'];
+            $filename = $_FILES['uploadfile_install']['name'];
             $location = "../uploadfile/" . $filename;
             $uploadOk = 1;
 
             if ($uploadOk == 0) {
             } else {
                 /* Upload file */
-                if (move_uploaded_file($_FILES['Picture']['tmp_name'], $location)) {
+                if (move_uploaded_file($_FILES['uploadfile_install']['tmp_name'], $location)) {
                 } else {
                 }
             }
         }
 
         if ($filename == "") {
-            if ($post['hiddenPic'] == "") {
+            if ($post['hiddenuploadfile_install'] == "") {
                 $filename = "";
             } else {
-                $filename = $post['hiddenPic'];
+                $filename = $post['hiddenuploadfile_install'];
             }
         }
 
@@ -175,7 +175,7 @@ if ($data == "data_Project") {
         `Contract_delivery_datesend`= '" . $post['Contract_delivery_datesend'] . "',
         `Contract_delivery_dateoffer`= '" . $post['Contract_delivery_dateoffer'] . "',
         `Project_work_page`= '" . $post['Project_work_page'] . "',
-        `Picture`= '" . $filename . "',
+        `uploadfile_install`= '" . $filename . "',
         `Credit_department`= '" . $post['Credit_department'] . "',
         `Installation_department`= '" . $post['Installation_department'] . "',
         `Installation_status`= '" . $post['Installation_status'] . "'
@@ -184,18 +184,19 @@ if ($data == "data_Project") {
         $result = ["id" => $Project_code, "status" => "ok"];
     } else {
         //insert
-        if ($_FILES["Picture"]["error"] > 0) {
+        if ($_FILES["uploadfile_install"]["error"] > 0) {
             $filename = "";
         } else {
-            $filename = $_FILES['Picture']['name'];
+            $filename = $_FILES['uploadfile_install']['name'];
             $location = "../uploadfile/" . $filename;
             $uploadOk = 1;
 
             if ($uploadOk == 0) {
             } else {
                 /* Upload file */
-                if (move_uploaded_file($_FILES['Picture']['tmp_name'], $location)) {
+                if (move_uploaded_file($_FILES['uploadfile_install']['tmp_name'], $location)) {
                 } else {
+                    
                 }
             }
         }
@@ -211,10 +212,10 @@ if ($data == "data_Project") {
          '" . $post['Contract_delivery_datesend'] . "',
          '" . $post['Contract_delivery_dateoffer'] . "',
          '" . $post['Project_work_page'] . "',
-         '" . $filename . "',
          '" . $post['Credit_department'] . "',
          '" . $post['Installation_department'] . "',
-         '" . $post['Installation_status'] . "'
+         '" . $post['Installation_status'] . "',
+         '" . $filename . "'
          )";
         $connect->queryData();
         $result = ["id" => $connect->id_insertrows(), "status" => "ok"];

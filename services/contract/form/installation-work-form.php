@@ -19,11 +19,10 @@ $data = [
     "Contract_delivery_datesend" => '',
     "Contract_delivery_dateoffer" => '',
     "Project_work_page" => '',
-    "Picture" => '',
+    "uploadfile_install" => '',
     "Credit_department" => '',
     "Installation_department" => '',
     "Installation_status" => '',
-    "hiddenPic" => ''
 ];
 
 if ($_GET['id'] <= 0) {
@@ -38,7 +37,7 @@ if ($_GET['id'] <= 0) {
 	t_install.Contract_delivery_datesend,
 	t_install.Contract_delivery_dateoffer,
 	t_install.Project_work_page,
-	t_install.Picture,
+	t_install.uploadfile_install,
 	t_install.Credit_department,
 	t_install.Installation_department,
 	t_install.Installation_status 
@@ -52,15 +51,7 @@ WHERE
     $data['Contract_delivery_datesend'] = date('d/m/Y', strtotime($rsconnect['Contract_delivery_datesend']));
     $data['Contract_delivery_dateoffer'] = date('d/m/Y', strtotime($rsconnect['Contract_delivery_dateoffer']));
     $data['Project_work_page'] = $rsconnect['Project_work_page'];
-    if($rsconnect['Picture']!=""){
-        $imageData = "../../services/uploadfile/" . $rsconnect['Picture'];
-    }
-    else{
-        $imageData ="";
-    }
-   
-    $data['hiddenPic']=$rsconnect['Picture'];
-    $data['Picture'] = $imageData;
+    $data['uploadfile_install'] = $rsconnect['uploadfile_install'];
     $data['Credit_department'] = $rsconnect['Credit_department'];
     $data['Installation_department'] = $rsconnect['Installation_department'];
     $data['Installation_status'] = $rsconnect['Installation_status'];
@@ -94,39 +85,24 @@ echo ' <div class="row mb-3">
     <input type="text" class="form-control" value="' . $data['Project_work_page'] . '" id="Project_work_page" name="Project_work_page" placeholder="แบบหน้างานโครงการ" />
 </div>
 </div>
-<div class="row mb-3 displayimage" style="display:none">
-<label class="col-sm-2 col-form-label" for="Picture">รูปภาพ (*ไฟล์รูปเท่านั้น)
+<div class="row mb-3">
+<label class="col-sm-2 col-form-label" for="uploadfile_install">อัพโหลดไฟล์เอกสาร
 </label>
-    <div class="col-sm-10 form-group">
-        <div class="error_msg"></div>
-                <div class="uploaded_file_view" id="uploaded_view">
-                    <span class="file_remove" onclick="file_remove()">X</span>
-                </div>
-        </div>
-    </div>
-</div>
-<div class="row mb-3 uploadImage">
-<label class="col-sm-2 col-form-label" for="Picture">รูปภาพ (*ไฟล์รูปเท่านั้น)
-</label>
-<div class="col-sm-10 form-group">
-    <div class="button_outer" onclick="showFile(this)" style="cursor:pointer">
-        <div class="btn_upload">
-            <input type="file" hidden value="' . $data['Picture'] . '" id="Picture" name="Picture" accept="image/*" >
-                Upload Image
-        </div>
-        <div class="processing_bar"></div>
-        <div class="success_box"></div>
-    </div>
-</div>
-</div>
-<div>
+<div class="col-sm-10 form-group">';
 
+echo '<input class="form-control " type="file" id="uploadfile_install" name="uploadfile_install" accept="application/pdf" />';
+echo '<div class="alert alert-primary alert-dismissible" role="alert" id="uploadfile_installAlert" onclick="Showfilepdf(\'' . $data['uploadfile_install'] . '\')">
+    ' . $data['uploadfile_install'] . '
+    <button type="button" class="btn-close" id="datauploadfile_install"  name="datauploadfile_install" value="' . $data['uploadfile_install'] . '" onclick="event.stopPropagation(); RemoveUploadfile(\'' . $data['uploadfile_install'] . '\')"  aria-label="Close"></button>
+    </div>
+</div>
+</div>
 </div>
 <div class="row mb-3" style="display:none;">
-<label class="col-sm-2 col-form-label">hiddenPic
+<label class="col-sm-2 col-form-label">hiddenuploadfile_install
 </label>
 <div class="col-sm-10 form-group">
-<input type="text" id="hiddenPic" name="hiddenPic" value="'.$data['hiddenPic'].'">
+<input type="text" id="hiddenuploadfile_install" name="hiddenuploadfile_install" value="' . $data['uploadfile_install'] . '">
 </div>
 </div>
 <div class="row mb-3">

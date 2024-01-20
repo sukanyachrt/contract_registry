@@ -332,6 +332,7 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("load-project-form").innerHTML = this.responseText;
+
                 var Date = document.getElementById("Date").value;
                 $('#Date').datepicker({
                     format: 'dd/mm/yyyy',
@@ -363,28 +364,19 @@
                 }
                 var dateTypePayments = document.querySelectorAll('input[name="dateTypePayment[]"]');
 
-for (var i = 0; i < dateTypePayments.length; i++) {
-  var currentElement = dateTypePayments[i];
-  var currentValue = currentElement.value;
+                for (var i = 0; i < dateTypePayments.length; i++) {
+                    var currentElement = dateTypePayments[i];
+                    var currentValue = currentElement.value;
+                    $(currentElement).datepicker({
+                        format: 'dd/mm/yyyy',
+                        todayBtn: true,
+                        language: 'th',
+                        thaiyear: true
+                    });
+                    $(currentElement).datepicker('setDate', moment(currentValue, 'DD/MM/YYYY').toDate());
+                }
 
-  // ตั้งค่า datepicker สำหรับแต่ละองค์ประกอบ
-  $(currentElement).datepicker({
-    format: 'dd/mm/yyyy',
-    todayBtn: true,
-    language: 'th',
-    thaiyear: true
-  });
 
-  // ให้ datepicker มีค่าเริ่มต้น
-  $(currentElement).datepicker('setDate', moment(currentValue, 'DD/MM/YYYY').toDate());
-}
-
-                // $('.dateTypePayment').datepicker({
-                //     format: 'dd/mm/yyyy',
-                //     todayBtn: true,
-                //     language: 'th',
-                //     thaiyear: true
-                // });
             }
 
         };
@@ -413,9 +405,16 @@ for (var i = 0; i < dateTypePayments.length; i++) {
                     language: 'th',
                     thaiyear: true
                 }).datepicker('update', moment(Contract_delivery_dateoffer, 'DD/MM/YYYY').toDate());
+                if ($('#datauploadfile_install').val() == "") {
 
-                var fileInputContainer = document.querySelector('.button_outer');
-                loadfile(fileInputContainer);
+                    $('#uploadfile_install').show()
+                    $('#uploadfile_installAlert').hide()
+                } else {
+                    $('#uploadfile_install').hide()
+                    $('#uploadfile_installAlert').show()
+                }
+                // var fileInputContainer = document.querySelector('.button_outer');
+                // loadfile(fileInputContainer);
             }
 
         };
@@ -520,8 +519,11 @@ for (var i = 0; i < dateTypePayments.length; i++) {
                                                 if (Res.id > 0 && Res.status == "ok") {
                                                     //บันทึกข้อมูลการตรวจสอบการติดตั้ง
                                                     var fd = new FormData($('#installation-work-form')[0]);
-                                                    var files = $('#Picture')[0].files[0];
-                                                    fd.append('Picture', files);
+                                                    var files = $('#uploadfile_install')[0].files[0];
+                                                    fd.append('uploadfile_install', files);
+
+                        
+
                                                     $.ajax({
                                                         async: true,
                                                         url: "../../services/contract/data.php?v=data_Installation&id=" + id,
@@ -737,4 +739,12 @@ for (var i = 0; i < dateTypePayments.length; i++) {
         var url = '../../services/uploadfile/' + file;
         window.open(url, '_blank');
     }
+
+    function RemoveUploadfile(filepdf) {
+        $('#hiddenuploadfile_install').val('')
+        $('#uploadfile_install').show()
+        $('#uploadfile_installAlert').hide()
+    }
+
+    
 </script>

@@ -19,7 +19,7 @@ $data = [
     "Contract_delivery_datesend" => '',
     "Contract_delivery_dateoffer" => '',
     "Project_work_page" => '',
-    "Picture" => '',
+    "uploadfile_install" => '',
     "Credit_department" => '',
     "Installation_department" => '',
     "Installation_status" => '',
@@ -33,7 +33,7 @@ $connect->sql = "SELECT
 	t_install.Contract_delivery_datesend,
 	t_install.Contract_delivery_dateoffer,
 	t_install.Project_work_page,
-	t_install.Picture,
+	t_install.uploadfile_install,
 	t_install.Credit_department,
 	t_install.Installation_department,
 	t_install.Installation_status 
@@ -48,14 +48,9 @@ $data['Installation_code'] = $rsconnect['Installation_code'];
 $data['Contract_delivery_datesend'] = date('d/m/Y', strtotime($rsconnect['Contract_delivery_datesend']));
 $data['Contract_delivery_dateoffer'] = date('d/m/Y', strtotime($rsconnect['Contract_delivery_dateoffer']));
 $data['Project_work_page'] = $rsconnect['Project_work_page'];
-if ($rsconnect['Picture'] != "") {
-    $imageData = "../../services/uploadfile/" . $rsconnect['Picture'];
-} else {
-    $imageData = "";
-}
 
-$data['hiddenPic'] = $rsconnect['Picture'];
-$data['Picture'] = $imageData;
+
+$data['uploadfile_install'] = $rsconnect['uploadfile_install'];
 $data['Credit_department'] = $rsconnect['Credit_department'];
 $data['Installation_department'] = $rsconnect['Installation_department'];
 $data['Installation_status'] = $rsconnect['Installation_status'];
@@ -119,14 +114,22 @@ echo '<div class="row mb-3">
 <div class="row mb-3">
 <div class="col-4 text-end">
     <div class="form-group">
-        <label for="txtidcard" class="text-gray  ">รูปภาพ : </label>
+        <label for="txtidcard" class="text-gray  ">ไฟล์เอกสาร : </label>
     </div>
 </div>
 <div class="col-8">
-    <div class="form-group">
-        <div class="uploaded_file_view" id="uploaded_view">
-    </div>
-    </div>
+    <div class="form-group">';
+    if($data['uploadfile_install']!==""){
+        echo '<a target="_blank" class="btn btn-outline-secondary" href="../../services/uploadfile/'. $data['uploadfile_install'] .'" >
+        <i class="bx bxs-file-pdf text-danger" ></i>
+        ' . $data['uploadfile_install'] . '
+    </a>';
+    }
+    else{
+        echo "-";
+    }
+    
+echo '</div>
 </div>
 </div>
 <div class="row mb-3">
