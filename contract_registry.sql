@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2024 at 06:47 PM
+-- Generation Time: Jan 20, 2024 at 07:21 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -31,9 +31,6 @@ CREATE TABLE `contract_register` (
   `registration_code` int(11) NOT NULL COMMENT 'รหัสทะเบียนสัญญาเข้า',
   `Project_ID` int(11) NOT NULL COMMENT 'รหัสโครงการ',
   `Customer_ID` int(11) NOT NULL COMMENT 'รหัสลูกค้า ',
-  `type_payment` varchar(60) NOT NULL COMMENT 'ประเภทการชำระ\r\nตั๋ว/เช็ค/โอน',
-  `period_payment` varchar(2) NOT NULL COMMENT 'งวดในการชำระ',
-  `money_payment` varchar(10) NOT NULL COMMENT 'จำนวนเงินในการชำระ',
   `contract_es` varchar(60) NOT NULL COMMENT 'd/s',
   `contract_el` varchar(60) NOT NULL COMMENT 'e/l',
   `contract_model` varchar(60) NOT NULL COMMENT 'model\r\n',
@@ -47,28 +44,9 @@ CREATE TABLE `contract_register` (
 -- Dumping data for table `contract_register`
 --
 
-INSERT INTO `contract_register` (`registration_code`, `Project_ID`, `Customer_ID`, `type_payment`, `period_payment`, `money_payment`, `contract_es`, `contract_el`, `contract_model`, `Order_details`, `Salesperson_Code`, `Salesperson_Name`, `Salesperson_Tel`) VALUES
-(1, 1, 1, '20235', '', '', 'asfsfsedg', '', '', '', '', '', ''),
-(2, 2, 1, '20235', '', '', 'asfsfsedg', '', '', '', '', '', ''),
-(3, 3, 1, '20235', '', '', 'asfsfsedg', '', '', '', '', '', ''),
-(4, 4, 1, '20235', '', '', 'asfsfsedg', '', '', '', '', '', ''),
-(5, 5, 2, 'ตั๋ว', '1', '10', 'สัญญา', '', '', '', '', '', ''),
-(6, 6, 1, '20235', '', '', 'asfsfsedg', '', '', '', '', '', ''),
-(7, 7, 1, '20235', '', '', 'asfsfsedg', '', '', '', '', '', ''),
-(8, 8, 1, '202023', '', '', 'สัญญาs', '', '', '', '', '', ''),
-(9, 9, 2, 'เงินโอน', '', '', 'สัญญา 9', '', '', '', '', '', ''),
-(10, 10, 1, 'เงินโอน', '', '', 'สัญญา 10', '', '', '', '', '', ''),
-(11, 12, 1, 'เงินโอน', '1', '1000', '45', '25', '41', 'ก', '', '', ''),
-(12, 13, 1, 'เงินโอน', '1', '1000', '45', '25', '41', 'ก', '', '', ''),
-(13, 18, 1, '11', '11', '11', '11', '11', '11', '', '', '', ''),
-(14, 19, 1, '11', '11', '11', '11', '11', '11', 'เอกสาร.pdf', '', '', ''),
-(15, 20, 1, 'เงินโอน', '1', '100', '5', '6', '78', 'เอกสาร.pdf', '', '', ''),
-(16, 21, 1, 'เงินโอน', '1', '1150', 'e/s', 'e/l', '1', 'เอกสาร.pdf', '', '', ''),
-(17, 22, 1, 'เงินโอน', '1', '1150', 'e/s', 'e/l', '1', 'เอกสาร.pdf', '', '', ''),
-(18, 23, 1, 'เงินโอน', '1', '1150', 'e/s', 'e/l', '1', 'เอกสาร.pdf', '', '', ''),
-(19, 24, 1, 'เงินโอน', '1', '1150', 'e/s', 'e/l', '1', '221_บทที่-2-เอกสารและงานวิจัยที่เกี่ยวข้อง.pdf', '0001', 'พนักงานขาย', '2'),
-(20, 25, 1, 'เช็ค', '1', '500000', 'e/s', 'e/l', 'Model -2', '0003', '0004', 'พนักงานขายคนที่ 4', '1234567890'),
-(21, 26, 1, 'เช็ค ', '2', '10000', 'e/s', 'e/l', 'model 2', 'เอกสาร.pdf', '0004', 'พนักงานขายคนที่ 4', '1234567890');
+INSERT INTO `contract_register` (`registration_code`, `Project_ID`, `Customer_ID`, `contract_es`, `contract_el`, `contract_model`, `Order_details`, `Salesperson_Code`, `Salesperson_Name`, `Salesperson_Tel`) VALUES
+(1, 1, 1, 'e/s', 'e/l', 'model-1', '', '00001', 'พนักงานขาย 1', '123456789'),
+(2, 2, 2, 'e/s', 'e/l', 'model-2', 'ในข้อมูลพนักงานขายก็มี-3-ส่วนคือ.pdf', '00002', 'พนักงานขาย 2', '123456789');
 
 -- --------------------------------------------------------
 
@@ -117,16 +95,8 @@ CREATE TABLE `installation_work` (
 --
 
 INSERT INTO `installation_work` (`Installation_code`, `Project_ID`, `Contract_delivery_datesend`, `Contract_delivery_dateoffer`, `Project_work_page`, `Picture`, `Credit_department`, `Installation_department`, `Installation_status`) VALUES
-(2, 6, '2024-01-28', '2024-01-29', 's', '416813371_1053052439282675_4035767971425649831_n.jpg', 's', 's', '1'),
-(3, 7, '2024-01-28', '2024-01-29', 's', '416813371_1053052439282675_4035767971425649831_n.jpg', 's', 's', '1'),
-(5, 5, '0001-11-28', '0001-11-28', 'แบบหน้างานโครงการ-5', '', 'ฝ่ายสินเชื่อ-5', 'ฝ่ายติดตั้ง-5', '1'),
-(8, 8, '2024-02-01', '2024-02-09', 'ทดสอบแบบหน้าโครงการ', '410795972_351035521041101_4838595659033220839_n.jpg', 'ทดสอบฝ่ายสินเชื่อ', 'ทดสอบฝ่ายติดตั้ง', '1'),
-(9, 9, '2024-01-31', '2024-01-31', 'แบบหน้างานโครงการ-6', '', 'ฝ่ายสินเชื่อ-5', 'ฝ่ายติดตั้ง-5', '2'),
-(10, 10, '2024-01-16', '2024-01-16', 'แบบหน้างานโครงการ-10', '410795972_351035521041101_4838595659033220839_n.jpg', 'ฝ่ายสินเชื่อ-10', 'ฝ่ายติดตั้ง-10', '1'),
-(11, 13, '2024-01-28', '2024-01-28', '455', '', 'ฝ่ายสินเชื่อ-11', 'ฝ่ายติดตั้ง-11', '1'),
-(24, 24, '2024-02-04', '2024-02-04', 'แบบหน้างานโครงการ-21', '416813371_1053052439282675_4035767971425649831_n (1).jpg', 'ทดสอบฝ่ายสินเชื่อ-21', 'ทดสอบฝ่ายติดตั้ง-21', '1'),
-(25, 25, '2024-01-30', '2024-01-31', 'แบบหน้างานโครงการ-25', '416813371_1053052439282675_4035767971425649831_n (1).jpg', 'ทดสอบฝ่ายสินเชื่อ-25', 'ทดสอบฝ่ายติดตั้ง-25', '1'),
-(26, 26, '2024-01-31', '2024-02-01', 'แบบหน้างานโครงการ-26', '', 'ทดสอบฝ่ายสินเชื่อ-26', 'ทดสอบฝ่ายติดตั้ง-26', '1');
+(1, 1, '2024-01-31', '2024-01-31', 'แบบหน้างานโครงการ-1', '', 'ฝ่ายสินเชื่อ1', 'ฝ่ายติดตั้ง 1', '1'),
+(2, 2, '2024-01-31', '2024-01-31', 'แบบหน้างานโครงการ-2', '419454920_903452357724444_2265001668548057696_n.jpg', 'ฝ่ายสินเชื่อ2', 'ฝ่ายติดตั้ง 2', '1');
 
 -- --------------------------------------------------------
 
@@ -154,6 +124,30 @@ INSERT INTO `login` (`id`, `Login_Code`, `Password_ID`, `Salesperson_Code`) VALU
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payment_information`
+--
+
+CREATE TABLE `payment_information` (
+  `Payment_code` int(11) NOT NULL COMMENT 'รหัสการชำระเงิน',
+  `Project_ID` int(11) NOT NULL COMMENT 'รหัสโครงการ',
+  `type_payment` varchar(255) NOT NULL COMMENT 'ประเภทการชำระ',
+  `period_payment` varchar(2) NOT NULL COMMENT 'งวดที่ชำระ',
+  `date_payment` date NOT NULL COMMENT 'วันที่ชำระเงิน',
+  `money_payment` varchar(10) NOT NULL COMMENT 'จำนวน'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `payment_information`
+--
+
+INSERT INTO `payment_information` (`Payment_code`, `Project_ID`, `type_payment`, `period_payment`, `date_payment`, `money_payment`) VALUES
+(1, 1, 'เงินโอน', '1', '2024-01-31', '1000'),
+(2, 1, 'เงินโอน', '2', '2024-01-30', '1500'),
+(3, 2, 'เงินโอน', '1', '2024-01-31', '5000');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `project`
 --
 
@@ -171,32 +165,8 @@ CREATE TABLE `project` (
 --
 
 INSERT INTO `project` (`Project_code`, `Name_Project`, `Date`, `Address`, `Salesperson_Code`, `Status_Project`) VALUES
-(1, 'dev', '2024-01-29', '225 หมู่ 2 ต.ควนลัง', 1, '1'),
-(2, 'dev', '2024-01-29', '225 หมู่ 2 ต.ควนลัง', 1, '1'),
-(3, 'dev', '2024-01-29', '225 หมู่ 2 ต.ควนลัง', 1, '1'),
-(4, 'dev', '2024-01-29', '225 หมู่ 2 ต.ควนลัง', 1, '1'),
-(5, 'โครงการที่ 1', '2024-01-13', '74หมู่ 2 ', 1, '0'),
-(6, 'dev', '2024-01-29', '225 หมู่ 2 ต.ควนลัง', 1, '0'),
-(7, 'dev', '2024-01-29', '225 หมู่ 2 ต.ควนลัง', 1, '0'),
-(8, 'ทดสอบสร้างโครงการ', '2024-01-13', '74 ร้อยเอ็ดddd', 2, '0'),
-(9, 'โครงการที่ 9', '2024-01-13', '74', 1, '1'),
-(10, 'โครงการที่ 10', '2024-01-15', '74', 1, '1'),
-(11, 'โครงการที่ 11', '2024-01-14', '508', 1, '1'),
-(12, 'โครงการที่ 11', '2024-01-14', '508', 1, '1'),
-(13, 'โครงการที่ 11', '2024-01-14', '508', 1, '1'),
-(14, 'sfsfsf', '2024-01-17', 'sffsf', 1, '1'),
-(15, 'dd', '2024-01-17', 'ddd', 1, '1'),
-(16, 'dd', '2024-01-17', 'ddd', 1, '1'),
-(17, '11', '2024-01-17', '111', 1, '1'),
-(18, '11', '2024-01-17', '111', 1, '1'),
-(19, '11', '2024-01-17', '111', 1, '1'),
-(20, 'โครงการที่ 20', '2024-01-17', '20', 1, '1'),
-(21, 'โครงการที่ 21', '2024-01-17', '21', 1, '1'),
-(22, 'โครงการที่ 21', '2024-01-17', '21', 1, '1'),
-(23, 'โครงการที่ 21', '2024-01-17', '21', 1, '1'),
-(24, 'โครงการที่ 21', '2024-01-17', '21', 1, '1'),
-(25, 'โครงการที่ 25', '2024-01-17', '25', 1, '1'),
-(26, 'โครงการที่ 26', '2024-01-17', '26', 1, '1');
+(1, 'โครงการที่ 1', '2024-01-20', '1', 4, '1'),
+(2, 'โครงการที่ 2', '2024-01-20', '2', 4, '1');
 
 -- --------------------------------------------------------
 
@@ -256,6 +226,12 @@ ALTER TABLE `login`
   ADD KEY `fk_saleperson` (`Salesperson_Code`);
 
 --
+-- Indexes for table `payment_information`
+--
+ALTER TABLE `payment_information`
+  ADD PRIMARY KEY (`Payment_code`);
+
+--
 -- Indexes for table `project`
 --
 ALTER TABLE `project`
@@ -276,7 +252,7 @@ ALTER TABLE `salesperson`
 -- AUTO_INCREMENT for table `contract_register`
 --
 ALTER TABLE `contract_register`
-  MODIFY `registration_code` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสทะเบียนสัญญาเข้า', AUTO_INCREMENT=26;
+  MODIFY `registration_code` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสทะเบียนสัญญาเข้า', AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -288,7 +264,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `installation_work`
 --
 ALTER TABLE `installation_work`
-  MODIFY `Installation_code` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการตรวจสอบและ\r\nการรับงานติดตั้ง\r\n', AUTO_INCREMENT=27;
+  MODIFY `Installation_code` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการตรวจสอบและ\r\nการรับงานติดตั้ง\r\n', AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `login`
@@ -297,10 +273,16 @@ ALTER TABLE `login`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `payment_information`
+--
+ALTER TABLE `payment_information`
+  MODIFY `Payment_code` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการชำระเงิน', AUTO_INCREMENT=17;
+
+--
 -- AUTO_INCREMENT for table `project`
 --
 ALTER TABLE `project`
-  MODIFY `Project_code` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสโครงการ', AUTO_INCREMENT=27;
+  MODIFY `Project_code` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสโครงการ', AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `salesperson`
