@@ -104,8 +104,10 @@ FROM
 	payment_information
 WHERE Project_ID='" . $_GET['id'] . "'";
 $connect->queryData();
+$summoney_payment=0;
 while($rsconnect = $connect->fetch_AssocData()){
-
+    $summoney_payment+=$rsconnect["money_payment"];
+ $money_payment=   number_format($rsconnect["money_payment"], 2, '.', ',');
     echo '<tr>
     <td class="text-center">
        '.$rsconnect['type_payment'].'
@@ -116,57 +118,17 @@ while($rsconnect = $connect->fetch_AssocData()){
     '.date('d/m/Y', strtotime($rsconnect['date_payment'])).'
     </td>
     <td class="text-center">
-    '.$rsconnect['money_payment'].'
+    '.$money_payment.'
     </td>
     
 </tr>';
 }
-
-        
-   echo '</tbody>
+echo '<tr>
+        <td colspan="3" class="text-end" style="font-weight: bold;">จำนวนเงินทั้งสิ้น</td>
+        <td class="text-center" style="font-weight: bold;">'.number_format($summoney_payment, 2, '.', ',').'</td>
+    </tr>
+</tbody>
 </table>
-</div>
-</div>
-<div class="row mb-3">
-<div class="col-4 text-end">
-    <div class="form-group">
-        <label for="txtidcard" class="text-gray  ">ประเภทการชำระเงิน : </label>
-    </div>
-</div>
-<div class="col-8">
-    <div class="form-group">
-        <span id="txtidcard" class="text-gray">
-        ' . $data['type_payment'] . '
-        </span>
-    </div>
-</div>
-</div>
-<div class="row mb-3">
-<div class="col-4 text-end">
-    <div class="form-group">
-        <label for="txtidcard" class="text-gray  ">จำนวนเงิน : </label>
-    </div>
-</div>
-<div class="col-8">
-    <div class="form-group">
-        <span id="txtidcard" class="text-gray">
-        ' . $data['money_payment'] . '
-        </span>
-    </div>
-</div>
-</div>
-<div class="row mb-0">
-<div class="col-4 text-end">
-    <div class="form-group">
-        <label for="txtidcard" class="text-gray  ">งวดในการชำระ : </label>
-    </div>
-</div>
-<div class="col-8">
-    <div class="form-group">
-        <span id="txtidcard" class="text-gray">
-        ' . $data['period_payment'] . '
-        </span>
-    </div>
 </div>
 </div>
 <div class="row mb-0">

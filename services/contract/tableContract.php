@@ -24,7 +24,7 @@ t_contract.contract_el,
 t_contract.contract_es,
 t_contract.contract_model,
 t_cus.Customer_Name,
-t_sale.Salesperson_Name 
+t_contract.Salesperson_Name
 FROM
 project AS t_project
 INNER JOIN contract_register AS t_contract ON t_project.Project_code = t_contract.Project_ID

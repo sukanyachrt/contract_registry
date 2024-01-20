@@ -24,7 +24,7 @@ t_contract.contract_el,
 t_contract.contract_es,
 t_contract.contract_model,
 t_cus.Customer_Name,
-t_sale.Salesperson_Name 
+t_contract.Salesperson_Name
 FROM
 project AS t_project
 INNER JOIN contract_register AS t_contract ON t_project.Project_code = t_contract.Project_ID
@@ -42,6 +42,7 @@ while ($rsconnect = $connect->fetch_AssocData()) {
     <td class="text-center">' . $rsconnect['DATE'] . '</td>
     <td class="text-center">' . $rsconnect['Customer_Name'] . '</td>
     <td class="text-center">' . $rsconnect['Address'] . '</td>
+    <td class="text-center">' . $rsconnect['Salesperson_Name'] . '</td>
     <td class="text-center">
     <a  href="show.php?id=' . $rsconnect['Project_code'] . '"><button class="border-secondary text-secondary"><i class="bx bx-zoom-in me-1"></i></button></a>
         <a  href="data.php?id=' . $rsconnect['Project_code'] . '"><button class="border-warning text-warning"><i class="bx bx-edit-alt me-1"></i></button></a>
