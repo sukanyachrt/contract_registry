@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 20, 2024 at 07:21 AM
+-- Generation Time: Jan 20, 2024 at 10:12 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -46,7 +46,9 @@ CREATE TABLE `contract_register` (
 
 INSERT INTO `contract_register` (`registration_code`, `Project_ID`, `Customer_ID`, `contract_es`, `contract_el`, `contract_model`, `Order_details`, `Salesperson_Code`, `Salesperson_Name`, `Salesperson_Tel`) VALUES
 (1, 1, 1, 'e/s', 'e/l', 'model-1', '', '00001', 'พนักงานขาย 1', '123456789'),
-(2, 2, 2, 'e/s', 'e/l', 'model-2', 'ในข้อมูลพนักงานขายก็มี-3-ส่วนคือ.pdf', '00002', 'พนักงานขาย 2', '123456789');
+(2, 2, 2, 'e/s', 'e/l', 'model-2', 'ในข้อมูลพนักงานขายก็มี-3-ส่วนคือ.pdf', '00002', 'พนักงานขาย 2', '123456789'),
+(3, 3, 1, '4/4', '-', 'NCA-1000-CO06', 'ให้หาวิทยานิพนธ์ งานวิจัย 5 บท.pdf', '001', 'ภูมิพัฒน์ จันทร์ศรี', '0987654321'),
+(4, 4, 4, '4/4', '-', 'NCA-1000-Co60', 'ให้หาวิทยานิพนธ์ งานวิจัย 5 บท.pdf', '001', 'นายภูมิพัฒน์ จันทร์ศรี', '1234567890');
 
 -- --------------------------------------------------------
 
@@ -70,7 +72,8 @@ CREATE TABLE `customer` (
 INSERT INTO `customer` (`Customer_ID`, `Customer_Name`, `Address`, `Telephone_Number`, `Customer_Status`, `Salesperson_Code`) VALUES
 (1, 'ลูกค้า คนที่1', '74', '0817894561', '1', 1),
 (2, 'ลูกค้า คนที่2', '508', '0742822100', '1', 1),
-(3, 'ลูกค้า คนที่3', '3', '1234567890', '1', 1);
+(3, 'ลูกค้า คนที่3', '3', '1234567890', '1', 1),
+(4, 'คุณพิมพ์ใจ สมดี', '65/7 พระรามที่2 ซอย 33 แขวง บางมด เขต จอมทอง จังหวัด กรุงเทพมหานคร 10150', '0621679012', '1', 4);
 
 -- --------------------------------------------------------
 
@@ -84,19 +87,21 @@ CREATE TABLE `installation_work` (
   `Contract_delivery_datesend` date NOT NULL COMMENT 'วันส่งของในสัญญา',
   `Contract_delivery_dateoffer` date NOT NULL COMMENT 'วันส่งมอบในสัญญา',
   `Project_work_page` varchar(60) NOT NULL COMMENT 'ที่อยู่แบบหน้างานโครงการ',
-  `Picture` varchar(255) DEFAULT NULL COMMENT 'แผนที่/รูปภาพ',
   `Credit_department` varchar(255) NOT NULL COMMENT 'ฝ่ายสินเชื่อ',
   `Installation_department` varchar(255) NOT NULL COMMENT 'ฝ่ายติดตั้ง',
-  `Installation_status` varchar(1) NOT NULL COMMENT 'สถานะการตรวจสอบ'
+  `Installation_status` varchar(1) NOT NULL COMMENT 'สถานะการตรวจสอบ',
+  `uploadfile_install` text NOT NULL COMMENT 'ไฟล์เอกสาร'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `installation_work`
 --
 
-INSERT INTO `installation_work` (`Installation_code`, `Project_ID`, `Contract_delivery_datesend`, `Contract_delivery_dateoffer`, `Project_work_page`, `Picture`, `Credit_department`, `Installation_department`, `Installation_status`) VALUES
-(1, 1, '2024-01-31', '2024-01-31', 'แบบหน้างานโครงการ-1', '', 'ฝ่ายสินเชื่อ1', 'ฝ่ายติดตั้ง 1', '1'),
-(2, 2, '2024-01-31', '2024-01-31', 'แบบหน้างานโครงการ-2', '419454920_903452357724444_2265001668548057696_n.jpg', 'ฝ่ายสินเชื่อ2', 'ฝ่ายติดตั้ง 2', '1');
+INSERT INTO `installation_work` (`Installation_code`, `Project_ID`, `Contract_delivery_datesend`, `Contract_delivery_dateoffer`, `Project_work_page`, `Credit_department`, `Installation_department`, `Installation_status`, `uploadfile_install`) VALUES
+(1, 1, '2024-01-31', '2024-01-31', 'แบบหน้างานโครงการ-1', 'ฝ่ายสินเชื่อ1', 'ฝ่ายติดตั้ง 1', '1', ''),
+(2, 2, '2024-01-31', '2024-01-31', 'แบบหน้างานโครงการ-2', 'ฝ่ายสินเชื่อ2', 'ฝ่ายติดตั้ง 2', '1', ''),
+(3, 3, '2024-06-16', '2024-06-01', 'เซ็นทรัลพลาซ่าลาดพร้าว จังหวัดกรุงเทพ', '-', '-', '2', ''),
+(4, 4, '2024-02-14', '2024-01-30', 'เขต บึงกุ่ม จังหวัดกรุงเทพมหานคร', '-', '-', '1', 'download (1).jpg');
 
 -- --------------------------------------------------------
 
@@ -143,7 +148,13 @@ CREATE TABLE `payment_information` (
 INSERT INTO `payment_information` (`Payment_code`, `Project_ID`, `type_payment`, `period_payment`, `date_payment`, `money_payment`) VALUES
 (1, 1, 'เงินโอน', '1', '2024-01-31', '1000'),
 (2, 1, 'เงินโอน', '2', '2024-01-30', '1500'),
-(3, 2, 'เงินโอน', '1', '2024-01-31', '5000');
+(3, 2, 'เงินโอน', '1', '2024-01-31', '5000'),
+(4, 3, 'เช็ค', '1', '2023-11-30', '277570.09'),
+(5, 3, 'เช็ค', '2', '2024-05-10', '508878.50'),
+(6, 3, 'เช็ค', '3', '2024-07-10', '138785.05'),
+(7, 4, 'เช็ค', '1', '2024-01-02', '900000'),
+(8, 4, 'เช็ค', '2', '2024-03-12', '120000'),
+(9, 4, 'เช็ค', '3', '2024-07-16', '50000');
 
 -- --------------------------------------------------------
 
@@ -166,7 +177,9 @@ CREATE TABLE `project` (
 
 INSERT INTO `project` (`Project_code`, `Name_Project`, `Date`, `Address`, `Salesperson_Code`, `Status_Project`) VALUES
 (1, 'โครงการที่ 1', '2024-01-20', '1', 4, '1'),
-(2, 'โครงการที่ 2', '2024-01-20', '2', 4, '1');
+(2, 'โครงการที่ 2', '2024-01-20', '2', 4, '1'),
+(3, 'SOM-O', '2024-01-20', 'กรุงเทพมหานคร', 4, '1'),
+(4, 'Little Edo BKK', '2024-01-20', 'เขต บึงกุ่ม จังหวัดกรุงเทพมหานคร', 4, '1');
 
 -- --------------------------------------------------------
 
@@ -258,7 +271,7 @@ ALTER TABLE `contract_register`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `Customer_ID` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสลูกค้า', AUTO_INCREMENT=4;
+  MODIFY `Customer_ID` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสลูกค้า', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `installation_work`
@@ -276,7 +289,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `payment_information`
 --
 ALTER TABLE `payment_information`
-  MODIFY `Payment_code` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการชำระเงิน', AUTO_INCREMENT=17;
+  MODIFY `Payment_code` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการชำระเงิน', AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `project`
