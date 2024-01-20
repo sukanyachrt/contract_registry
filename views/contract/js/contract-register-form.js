@@ -8,20 +8,7 @@ $('#contract-register-form').validate({
             required: true,
 
         },
-        type_payment: {
-            required: true,
-            maxlength: 60
-        },
-        money_payment: {
-            required: true,
-            number: true,
-            maxlength: 10
-        },
-        period_payment: {
-            required: true,
-            number: true,
-            maxlength: 2
-        },
+       
         Sale_Contract: {
             required: true,
             maxlength: 60
@@ -48,15 +35,6 @@ $('#contract-register-form').validate({
         },
         Customer_ID: {
             required: "โปรดเลือกรหัสลูกค้า ",
-        },
-        type_payment: {
-            required: "โปรดกรอกประเภทการชำระ",
-        },
-        money_payment: {
-            required: "โปรดกรอกจำนวนเงิน",
-        },
-        period_payment: {
-            required: "โปรดกรอกงวดที่ชำระ",
         },
         Sale_Contract: {
             required: "โปรดกรอกสัญญาซื้อขาย ",

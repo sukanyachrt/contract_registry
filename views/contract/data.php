@@ -361,6 +361,30 @@
                     $('#Order_details').hide()
                     $('#orderDetailsAlert').show()
                 }
+                var dateTypePayments = document.querySelectorAll('input[name="dateTypePayment[]"]');
+
+for (var i = 0; i < dateTypePayments.length; i++) {
+  var currentElement = dateTypePayments[i];
+  var currentValue = currentElement.value;
+
+  // ตั้งค่า datepicker สำหรับแต่ละองค์ประกอบ
+  $(currentElement).datepicker({
+    format: 'dd/mm/yyyy',
+    todayBtn: true,
+    language: 'th',
+    thaiyear: true
+  });
+
+  // ให้ datepicker มีค่าเริ่มต้น
+  $(currentElement).datepicker('setDate', moment(currentValue, 'DD/MM/YYYY').toDate());
+}
+
+                // $('.dateTypePayment').datepicker({
+                //     format: 'dd/mm/yyyy',
+                //     todayBtn: true,
+                //     language: 'th',
+                //     thaiyear: true
+                // });
             }
 
         };
@@ -413,6 +437,7 @@
     }
 
     function checkContract() {
+
         if ($('#contract-register-form').valid()) {
             $('[data-target="#contract-register-detail"] .step-trigger .bs-stepper-title').css('color', 'green');
             $('[data-target="#contract-register-detail"] .bs-stepper-circle').css('background-color', 'green');
@@ -420,8 +445,9 @@
             $('[data-target="#contract-register-detail"] .step-trigger .bs-stepper-title').css('color', 'red');
             $('[data-target="#contract-register-detail"] .bs-stepper-circle').css('background-color', 'red');
         }
-
+        checkPaymentinformation()
         stepper.next();
+
     }
 
     function checkInstall() {
@@ -435,77 +461,116 @@
 
         if ($('#project-form').valid() && $('#contract-register-form').valid() && $('#installation-work-form').valid()) {
             //บันทึกข้อมูล
-            console.log("บันทึกข้อมูล")
-            $.ajax({
-                async: true,
-                url: "../../services/contract/data.php?v=data_Project&id=<?php echo $id ?>",
-                type: "POST",
-                cache: false,
-                data: $('#project-form').serialize(),
-                success: function(Res) {
-                    console.log(Res)
-                    if (Res.id > 0 && Res.status == "ok") {
-                        //บันทึกข้อมูลโครงการ
-                        let id = Res.id;
-                        var formregister = new FormData($('#contract-register-form')[0]);
-                        var files = $('#Order_details')[0].files[0];
-                        formregister.append('Order_details', files);
+            console.log(checkPaymentinformation())
+            if (checkPaymentinformation() == true) {
+                console.log("บันทึกข้อมูล")
+                $.ajax({
+                    async: true,
+                    url: "../../services/contract/data.php?v=data_Project&id=<?php echo $id ?>",
+                    type: "POST",
+                    cache: false,
+                    data: $('#project-form').serialize(),
+                    success: function(Res) {
+                        console.log(Res)
+                        if (Res.id > 0 && Res.status == "ok") {
+                            //บันทึกข้อมูลโครงการ
+                            let id = Res.id;
+                            var formregister = new FormData($('#contract-register-form')[0]);
+                            var files = $('#Order_details')[0].files[0];
+                            formregister.append('Order_details', files);
 
 
-                        $.ajax({
-                            async: true,
-                            url: "../../services/contract/data.php?v=data_Contract_register&id=" + id,
-                            type: "POST",
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            data: formregister,
-                            success: function(Res) {
-                                console.log(Res)
-                                if (Res.id > 0 && Res.status == "ok") {
-                                    //บันทึกข้อมูลการตรวจสอบการติดตั้ง
-                                    var fd = new FormData($('#installation-work-form')[0]);
-                                    var files = $('#Picture')[0].files[0];
-                                    fd.append('Picture', files);
-                                    $.ajax({
-                                        async: true,
-                                        url: "../../services/contract/data.php?v=data_Installation&id=" + id,
-                                        type: "POST",
-                                        cache: false,
-                                        contentType: false,
-                                        processData: false,
-                                        data: fd,
-                                        success: function(Res) {
-                                            console.log(Res)
-                                            if (Res.id > 0 && Res.status == "ok") {
-                                                sessionStorage.setItem('toastrShown', 'saveContract');
-                                                if ('<?php echo $_SESSION['Salesperson_position']; ?>' === "admin_sale") {
-                                                    location.href = 'index.php';
-                                                } else {
-                                                    location.href = 'listcontract.php';
+                            $.ajax({
+                                async: true,
+                                url: "../../services/contract/data.php?v=data_Contract_register&id=" + id,
+                                type: "POST",
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                data: formregister,
+                                success: function(Res) {
+                                    console.log(Res)
+                                    if (Res.id > 0 && Res.status == "ok") {
+
+                                        //บันทึกการชำระเงิน
+                                        let tbPaymentinformation = [];
+                                        $('#tbPaymentinformation tbody tr').each(function() {
+                                            var type_payment = $(this).find('td:eq(0) input[type="text"]').val();
+                                            var period_payment = $(this).find('td:eq(1) input[type="number"]').val();
+                                            var date_payment = $(this).find('td:eq(2) input[type="text"]').val();
+                                            var money_payment = $(this).find('td:eq(3) input[type="number"]').val();
+                                            tbPaymentinformation.push({
+                                                'type_payment': type_payment,
+                                                'period_payment': period_payment,
+                                                'date_payment': date_payment,
+                                                'money_payment': money_payment,
+                                            });
+                                        });
+
+                                        $.ajax({
+                                            async: true,
+                                            url: "../../services/contract/data.php?v=data_Payment&id=" + id,
+                                            type: "POST",
+                                            cache: false,
+                                            data: {
+                                                tbPaymentinformation: JSON.stringify(tbPaymentinformation)
+                                            },
+                                            success: function(Res) {
+                                                console.log(Res)
+                                                if (Res.id > 0 && Res.status == "ok") {
+                                                    //บันทึกข้อมูลการตรวจสอบการติดตั้ง
+                                                    var fd = new FormData($('#installation-work-form')[0]);
+                                                    var files = $('#Picture')[0].files[0];
+                                                    fd.append('Picture', files);
+                                                    $.ajax({
+                                                        async: true,
+                                                        url: "../../services/contract/data.php?v=data_Installation&id=" + id,
+                                                        type: "POST",
+                                                        cache: false,
+                                                        contentType: false,
+                                                        processData: false,
+                                                        data: fd,
+                                                        success: function(Res) {
+                                                            console.log(Res)
+                                                            if (Res.id > 0 && Res.status == "ok") {
+                                                                sessionStorage.setItem('toastrShown', 'saveContract');
+                                                                if ('<?php echo $_SESSION['Salesperson_position']; ?>' === "admin_sale") {
+                                                                    location.href = 'index.php';
+                                                                } else {
+                                                                    location.href = 'listcontract.php';
+                                                                }
+                                                            }
+                                                        },
+                                                        error: function(e) {
+                                                            console.log(e)
+                                                            toastr.error(e.responseText);
+                                                        }
+                                                    });
                                                 }
                                             }
-                                        },
-                                        error: function(e) {
-                                            console.log(e)
-                                            toastr.error(e.responseText);
-                                        }
-                                    });
-                                }
+                                        });
 
-                            },
-                            error: function(e) {
-                                console.log(e)
-                                toastr.error(e.responseText);
-                            }
-                        });
+
+
+                                    }
+
+                                },
+                                error: function(e) {
+                                    console.log(e)
+                                    toastr.error(e.responseText);
+                                }
+                            });
+                        }
+                    },
+                    error: function(e) {
+                        console.log(e)
+                        toastr.error(e.responseText);
                     }
-                },
-                error: function(e) {
-                    console.log(e)
-                    toastr.error(e.responseText);
-                }
-            });
+                });
+            } else {
+                toastr.error("โปรดกรอกข้อมูลการชำระเงินในหน้าทะเบียนสัญญาให้ครบ !");
+            }
+
         } else {
             toastr.error("โปรดกรอกข้อมูลให้ครบค่ะ !");
         }
@@ -514,9 +579,75 @@
 
     }
 
+    function checkPaymentinformation() {
+        var isValid = true;
+
+        $('#tbPaymentinformation tbody tr').each(function() {
+            var inputs = $(this).find('input');
+            inputs.each(function() {
+                if ($(this).val() === '') {
+                    isValid = false;
+                    return false;
+                }
+            });
+
+            if (!isValid) {
+                return false;
+            }
+        });
+
+        if (isValid) {
+            $('.error_Paymentinformation').hide();
+            return true;
 
 
 
+        } else {
+
+            $('.error_Paymentinformation').show();
+            return false;
+        }
+    }
+
+
+    function addRow() {
+        var newRow = `<tr>
+            <td>
+                <input type="text" autocomplete="yes" class="form-control" id="type_payment" placeholder="ประเภทการชำระ">
+            </td>
+            <td>
+                <input type="number" autocomplete="yes" class="form-control" id="period_payment" placeholder="งวดที่ชำระ">
+            </td>
+            <td>
+                <input type="text" autocomplete="yes" class="form-control dateTypePayment" readOnly id="date_payment" placeholder="วันเดือนปีที่ชำระ">
+            </td>
+            <td>
+                <input type="number" autocomplete="yes" class="form-control" id="money_payment" placeholder="จำนวนเงิน">
+            </td>
+            <td class="text-right py-0 align-middle">
+                <div class="btn-group btn-group-sm">
+                    <button type="button"  class="btn btn-primary" onclick="addRow()"> <i class="tf-icons bx bx-plus"></i></button>
+                    <button type="button"   class="btn btn-danger" onclick="removeRow(this)"><i class="bx bx-trash me-1"></i></button>
+                </div>
+            </td>
+        </tr>`;
+
+        $("#tbPaymentinformation tbody").append(newRow);
+        $('.dateTypePayment').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: true,
+            language: 'th',
+            thaiyear: true
+        });
+    }
+
+    function removeRow(e) {
+        if ($("#tbPaymentinformation tbody tr").length === 1) {
+            return;
+        }
+        var row = $(e).closest("tr");
+        row.remove();
+    }
 
 
 
@@ -597,14 +728,13 @@
     }
 
     function RemoveFilePdf(filepdf) {
-       $('#hiddenOrder_details').val('')
+        $('#hiddenOrder_details').val('')
         $('#Order_details').show()
         $('#orderDetailsAlert').hide()
     }
-    function Showfilepdf(file){
-        var url = '../../services/uploadfile/'+file;
+
+    function Showfilepdf(file) {
+        var url = '../../services/uploadfile/' + file;
         window.open(url, '_blank');
     }
-
-    
 </script>

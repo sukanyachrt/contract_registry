@@ -20,9 +20,6 @@ t_project.Address,
 t_project.Salesperson_Code,
 t_contract.registration_code,
 t_contract.Customer_ID,
-t_contract.type_payment,
-t_contract.money_payment,
-t_contract.period_payment,
 t_contract.contract_el,
 t_contract.contract_es,
 t_contract.contract_model,
@@ -33,8 +30,9 @@ project AS t_project
 INNER JOIN contract_register AS t_contract ON t_project.Project_code = t_contract.Project_ID
 INNER JOIN installation_work AS t_install ON t_project.Project_code = t_install.Project_ID
 INNER JOIN customer AS t_cus ON t_contract.Customer_ID = t_cus.Customer_ID
-INNER JOIN salesperson AS t_sale ON t_project.Salesperson_Code = t_sale.Salesperson_Code
-WHERE Status_Project=1";
+INNER JOIN salesperson AS t_sale ON t_project.Salesperson_Code = t_sale.Salesperson_Code 
+WHERE
+Status_Project = 1";
 $connect->queryData();
 while ($rsconnect = $connect->fetch_AssocData()) {
     if ($rsconnect['Installation_status'] == 1) {

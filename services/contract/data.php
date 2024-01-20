@@ -76,9 +76,6 @@ if ($data == "data_Project") {
         $connect->sql = "UPDATE `contract_register` SET 
         `registration_code`='" . $post['registration_code'] . "',
         `Customer_ID`='" . $post['Customer_ID'] . "',
-        `type_payment`='" . $post['type_payment'] . "',
-        `period_payment`='" . $post['period_payment'] . "',
-        `money_payment`='" . $post['money_payment'] . "',
         `contract_es`='" . $post['contract_es'] . "',
         `contract_el`='" . $post['contract_el'] . "',
         `contract_model`='" . $post['contract_model'] . "',
@@ -120,9 +117,6 @@ if ($data == "data_Project") {
         ('" . $id . "',
         '" . $Project_code . "',
         '" . $post['Customer_ID'] . "',
-        '" . $post['type_payment'] . "',
-        '" . $post['period_payment'] . "',
-        '" . $post['money_payment'] . "',
         '" . $post['contract_es'] . "',
         '" . $post['contract_el'] . "',
         '" . $post['contract_model'] . "',
@@ -226,7 +220,37 @@ if ($data == "data_Project") {
         $result = ["id" => $connect->id_insertrows(), "status" => "ok"];
     }
     echo json_encode($result);
-} else if ($data == "projectStatus") {
+}
+else if($data=="data_Payment"){
+    $post = json_decode($_POST['tbPaymentinformation'], true);
+    $Project_code = $_GET['id'];
+    
+    $connect->sql = "DELETE FROM `payment_information` WHERE  `Project_ID`='" . $Project_code . "'";
+    $connect->queryData();
+
+
+	foreach ($post as $item) {
+		$expdate_payment = explode('/', $item['date_payment']);
+		$date_payment = ($expdate_payment[2] - 543) . '-' . $expdate_payment[1] . '-' . $expdate_payment[0];
+        $connect->sql = "SELECT MAX(Payment_code) as maxid from payment_information";
+        $connect->queryData();
+        $rsconnect = $connect->fetch_AssocData();
+        $id = $rsconnect['maxid'] + 1;
+
+		$connect->sql = "INSERT INTO `payment_information` VALUES 
+		 ('" . $id . "',
+        '" . $Project_code . "',
+         '" . $item['type_payment'] . "',
+         '" . $item['period_payment'] . "',
+         '" . $date_payment . "',
+         '" . $item['money_payment'] . "'
+         )";
+		 $connect->queryData();
+         $result = ["id" => $connect->id_insertrows(), "status" => "ok"];
+	}
+    echo json_encode($result);
+}
+else if ($data == "projectStatus") {
     $connect->sql = "UPDATE project SET Status_Project = '0' 
     WHERE Project_code='" . $_GET['id'] . "'";
     $connect->queryData();

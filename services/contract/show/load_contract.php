@@ -7,10 +7,7 @@ $connect->connectData();
 $data = [
     "registration_code" => '',
     "Customer_Name" => '',
-    "type_payment" => '',
     "Order_details" => '',
-    "period_payment" => '',
-    "money_payment" => '',
     "contract_es" => '',
     "contract_el" => '',
     "contract_model" => '',
@@ -20,14 +17,9 @@ $data = [
     "Salesperson_Tel"=>''
 ];
 
-
-
 $connect->sql = "SELECT
 	t_contract.registration_code,
 	t_contract.Customer_ID,
-	t_contract.type_payment,
-    t_contract.period_payment,
-    t_contract.money_payment,
 	t_contract.contract_es,
     t_contract.contract_el,
     t_contract.contract_model,
@@ -46,17 +38,12 @@ $rsconnect = $connect->fetch_AssocData();
 $data['Order_details'] = $rsconnect['Order_details'];
 $data['registration_code'] = $rsconnect['registration_code'];
 $data['Customer_Name'] = $rsconnect['Customer_Name'];
-$data['type_payment'] = $rsconnect['type_payment'];
-$data['period_payment'] = $rsconnect['period_payment'];
-$data['money_payment'] = $rsconnect['money_payment'];
 $data['contract_es'] = $rsconnect['contract_es'];
 $data['contract_el'] = $rsconnect['contract_el'];
 $data['contract_model'] = $rsconnect['contract_model'];
 $data['Salesperson_Code']=$rsconnect['Salesperson_Code'];
 $data['Salesperson_Name']=$rsconnect['Salesperson_Name'];
 $data['Salesperson_Tel']=$rsconnect['Salesperson_Tel'];
-
-
 
 echo '<div class="row mb-3">
 <div class="col-4 text-end">
@@ -95,7 +82,51 @@ echo '<div class="row mb-3">
 </div>
 </div>
 </div>
+<div class="row mb-3">
+<div class="col-sm-12">
+<table class="table table-bordered table-hover text-xs " id="tbPaymentinformation">
+    <thead class="bg-primary">
+        <tr>
+            <th class="text-center text-white">ประเภทการชำระ</th>
+            <th class="text-center text-white">งวดที่ชำระ</th>
+            <th class="text-center text-white">วันเดือนปีที่ชำระ</th>
+            <th class="text-center text-white">จำนวนเงิน</th>
+        </tr>
+    </thead>
+    <tbody>';
+    $connect->sql = "SELECT
+	Payment_code, 
+	type_payment, 
+	period_payment, 
+	date_payment, 
+	money_payment
+FROM
+	payment_information
+WHERE Project_ID='" . $_GET['id'] . "'";
+$connect->queryData();
+while($rsconnect = $connect->fetch_AssocData()){
 
+    echo '<tr>
+    <td class="text-center">
+       '.$rsconnect['type_payment'].'
+    </td>
+    <td class="text-center">
+    '.$rsconnect['period_payment'].'
+    <td class="text-center">
+    '.date('d/m/Y', strtotime($rsconnect['date_payment'])).'
+    </td>
+    <td class="text-center">
+    '.$rsconnect['money_payment'].'
+    </td>
+    
+</tr>';
+}
+
+        
+   echo '</tbody>
+</table>
+</div>
+</div>
 <div class="row mb-3">
 <div class="col-4 text-end">
     <div class="form-group">

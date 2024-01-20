@@ -4,7 +4,7 @@ error_reporting(0);
 $connect = new Connect_Data();
 $connect->connectData();
 
-$data=[
+$data = [
     "registration_code" => '',
     "Customer_ID" => '',
     "type_payment" => '',
@@ -13,27 +13,23 @@ $data=[
     "contract_es" => '',
     "contract_el" => '',
     "contract_model" => '',
-    "Order_details"=>'',
-    "Salesperson_Code"=>'',
-    "Salesperson_Name"=>'',
-    "Salesperson_Tel"=>''
+    "Order_details" => '',
+    "Salesperson_Code" => '',
+    "Salesperson_Name" => '',
+    "Salesperson_Tel" => ''
 
 ];
-   
-if($_GET['id']<=0){
+
+if ($_GET['id'] <= 0) {
     $connect->sql = "SELECT	MAX( registration_code  ) AS maxid FROM	`contract_register`";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
-    $data['registration_code']=$rsconnect['maxid']+1;
-}
-else{
-    
+    $data['registration_code'] = $rsconnect['maxid'] + 1;
+} else {
+
     $connect->sql = "SELECT 
     t_contract.registration_code,
 	t_contract.Customer_ID,
-	t_contract.type_payment,
-    t_contract.money_payment,
-    t_contract.period_payment,
 	t_contract.contract_es,
     t_contract.contract_model,
     t_contract.contract_el,
@@ -45,45 +41,40 @@ else{
 FROM
 	project AS t_project
 	INNER JOIN contract_register AS t_contract ON t_project.Project_code = t_contract.Project_ID
-WHERE t_contract.Project_ID='".$_GET['id']."'";
+WHERE t_contract.Project_ID='" . $_GET['id'] . "'";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
-    $data['registration_code']=$rsconnect['registration_code'];
-    $data['Customer_ID']=$rsconnect['Customer_ID'];
-    $data['type_payment']=$rsconnect['type_payment'];
-    $data['money_payment']=$rsconnect['money_payment'];
-    $data['period_payment']=$rsconnect['period_payment'];
-    $data['contract_es']=$rsconnect['contract_es'];
-    $data['contract_el']=$rsconnect['contract_el'];
-    $data['contract_model']=$rsconnect['contract_model'];
-    $data['Order_details']=$rsconnect['Order_details'];
-    $data['Salesperson_Code']=$rsconnect['Salesperson_Code'];
-    $data['Salesperson_Name']=$rsconnect['Salesperson_Name'];
-    $data['Salesperson_Tel']=$rsconnect['Salesperson_Tel'];
+    $data['registration_code'] = $rsconnect['registration_code'];
+    $data['Customer_ID'] = $rsconnect['Customer_ID'];
+    $data['contract_es'] = $rsconnect['contract_es'];
+    $data['contract_el'] = $rsconnect['contract_el'];
+    $data['contract_model'] = $rsconnect['contract_model'];
+    $data['Order_details'] = $rsconnect['Order_details'];
+    $data['Salesperson_Code'] = $rsconnect['Salesperson_Code'];
+    $data['Salesperson_Name'] = $rsconnect['Salesperson_Name'];
+    $data['Salesperson_Tel'] = $rsconnect['Salesperson_Tel'];
 }
 
 
 echo '<div class="row mb-3">
 <label class="col-sm-2 col-form-label" for="registration_code">รหัสทะเบียนสัญญาเข้า</label>
 <div class="col-sm-10 form-group">
-    <input type="text" class="form-control" readOnly value="'.$data['registration_code'].'" id="registration_code" name="registration_code" placeholder="รหัสทะเบียนสัญญาเข้า" />
+    <input type="text" class="form-control" readOnly value="' . $data['registration_code'] . '" id="registration_code" name="registration_code" placeholder="รหัสทะเบียนสัญญาเข้า" />
 </div>
 </div>
 <div class="row mb-3">
 <label class="col-sm-2 col-form-label" for="Customer_ID">รหัสลูกค้า</label>
 <div class="col-sm-10 form-group">
-<select class="form-control" value="'.$data['Customer_ID'].'" id="Customer_ID" name="Customer_ID">';
+<select class="form-control" value="' . $data['Customer_ID'] . '" id="Customer_ID" name="Customer_ID">';
 echo '<option value>เลือก</option>';
 $connect->sql = "SELECT	* FROM	`customer` WHERE Customer_Status='1'";
 $connect->queryData();
-while($rsconnect = $connect->fetch_AssocData()){
-    echo '<option value="'.$rsconnect['Customer_ID'].'"';
+while ($rsconnect = $connect->fetch_AssocData()) {
+    echo '<option value="' . $rsconnect['Customer_ID'] . '"';
     if ($data['Customer_ID'] == $rsconnect['Customer_ID']) {
         echo " selected";
     }
-    echo '>'.$rsconnect['Customer_ID'].'</option>';
-    
-   
+    echo '>' . $rsconnect['Customer_ID'] . '</option>';
 }
 echo '</select>
 </div>
@@ -96,23 +87,83 @@ echo '</select>
 </div>
 </div>
 <div class="row mb-3">
-<label class="col-sm-2 col-form-label" for="type_payment">ประเภทการชำระ</label>
-<div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['type_payment'].'" id="type_payment" name="type_payment" placeholder="ประเภทการชำระ" />
+<div class="col-sm-12 text-center error_Paymentinformation" style="display:none;">
+    <p style="color: red;" id="error_Paymentinformation">** โปรดกรอกข้อมูลการชำระให้ครบถ้วนค่ะ **</p>
+</div>
+
+<div class="col-sm-12">
+<table class="table table-bordered table-hover text-xs " id="tbPaymentinformation">
+    <thead class="bg-primary">
+        <tr>
+            <th class="text-center text-white">ประเภทการชำระ</th>
+            <th class="text-center text-white">งวดที่ชำระ</th>
+            <th class="text-center text-white">วันเดือนปีที่ชำระ</th>
+            <th class="text-center text-white">จำนวนเงิน</th>
+            <th class="text-center text-white"></th>
+        </tr>
+    </thead>
+    <tbody>';
+        if ($_GET['id'] <= 0) {
+        echo '<tr>
+            <td>
+                <input type="text" autocomplete="yes" class="form-control" id="type_payment" placeholder="ประเภทการชำระ">
+            </td>
+            <td>
+                <input type="number" autocomplete="yes" class="form-control" id="period_payment" placeholder="งวดที่ชำระ">
+            </td>
+            <td>
+                <input type="text" autocomplete="yes" name="dateTypePayment[]" class="form-control dateTypePayment" readOnly placeholder="วันเดือนปีที่ชำระ">
+            </td>
+            <td>
+                <input type="number" autocomplete="yes" class="form-control" id="money_payment" placeholder="จำนวนเงิน">
+            </td>
+            <td class="text-right py-0 align-middle">
+                <div class="btn-group btn-group-sm">
+                    <button type="button"  class="btn btn-primary" onclick="addRow()"> <i class="tf-icons bx bx-plus"></i></button>
+                    <button type="button"   class="btn btn-danger" onclick="removeRow(this)"><i class="bx bx-trash me-1"></i></button>
+                </div>
+            </td>
+        </tr>';
+        }
+        else{
+            $connect->sql = "SELECT
+            Payment_code, 
+            type_payment, 
+            period_payment, 
+            date_payment, 
+            money_payment
+            FROM
+                payment_information
+            WHERE Project_ID='" . $_GET['id'] . "'";
+            $connect->queryData();
+            while($rsconnect = $connect->fetch_AssocData()){
+                echo '<tr>
+                <td>
+                    <input type="text" autocomplete="yes" class="form-control" name="type_payment[]" value="' . $rsconnect['type_payment'] . '" placeholder="ประเภทการชำระ">
+                </td>
+                <td>
+                    <input type="number" autocomplete="yes" class="form-control" name="period_payment[]" value="' . $rsconnect['period_payment'] . '" placeholder="งวดที่ชำระ">
+                </td>
+                <td>
+                    <input type="text" autocomplete="yes" name="dateTypePayment[]" class="form-control dateTypePayment" value="' . date('d/m/Y',strtotime($rsconnect['date_payment'])) . '" readOnly id="date_payment" placeholder="วันเดือนปีที่ชำระ">
+                </td>
+                <td>
+                    <input type="number" autocomplete="yes" class="form-control" name="money_payment[]" value="' . $rsconnect['money_payment'] . '" placeholder="จำนวนเงิน">
+                </td>
+                <td class="text-right py-0 align-middle">
+                    <div class="btn-group btn-group-sm">
+                        <button type="button"  class="btn btn-primary" onclick="addRow()"> <i class="tf-icons bx bx-plus"></i></button>
+                        <button type="button"   class="btn btn-danger" onclick="removeRow(this)"><i class="bx bx-trash me-1"></i></button>
+                    </div>
+                </td>
+            </tr>';
+            }
+        }
+    echo '</tbody>
+</table>
 </div>
 </div>
-<div class="row mb-3">
-<label class="col-sm-2 col-form-label" for="money_payment">จำนวนเงิน</label>
-<div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['money_payment'].'" id="money_payment" name="money_payment" placeholder="จำนวนเงิน" />
-</div>
-</div>
-<div class="row mb-3">
-<label class="col-sm-2 col-form-label" for="period_payment">งวดที่ชำระ</label>
-<div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['period_payment'].'" id="period_payment" name="period_payment" placeholder="งวดที่ชำระ" />
-</div>
-</div>
+
 <div class="row mb-3">
 <div class="col-sm-12 form-group">
 <div class="divider">
@@ -123,19 +174,19 @@ echo '</select>
 <div class="row mb-3">
 <label class="col-sm-2 col-form-label" for="contract_es">E/S</label>
 <div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['contract_es'].'" id="contract_es" name="contract_es" placeholder="E/S" />
+    <input type="text" class="form-control" value="' . $data['contract_es'] . '" id="contract_es" name="contract_es" placeholder="E/S" />
 </div>
 </div>
 <div class="row mb-3">
 <label class="col-sm-2 col-form-label" for="contract_el">E/L</label>
 <div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['contract_el'].'" id="contract_el" name="contract_el" placeholder="E/L" />
+    <input type="text" class="form-control" value="' . $data['contract_el'] . '" id="contract_el" name="contract_el" placeholder="E/L" />
 </div>
 </div>
 <div class="row mb-3">
 <label class="col-sm-2 col-form-label" for="contract_model">Model</label>
 <div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['contract_model'].'" id="contract_model" name="contract_model" placeholder="Model" />
+    <input type="text" class="form-control" value="' . $data['contract_model'] . '" id="contract_model" name="contract_model" placeholder="Model" />
 </div>
 </div>
 <div class="row mb-3">
@@ -143,10 +194,10 @@ echo '</select>
 </label>
 <div class="col-sm-10 form-group">';
 
-    echo '<input class="form-control " type="file" id="Order_details" name="Order_details" accept="application/pdf" />';
-    echo '<div class="alert alert-primary alert-dismissible" role="alert" id="orderDetailsAlert" onclick="Showfilepdf(\''. $data['Order_details'] .'\')">
-    '.$data['Order_details'].'
-    <button type="button" class="btn-close" id="dataOrder_details"  name="dataOrder_details" value="'.$data['Order_details'].'" onclick="event.stopPropagation(); RemoveFilePdf(\''. $data['Order_details'] .'\')"  aria-label="Close"></button>
+echo '<input class="form-control " type="file" id="Order_details" name="Order_details" accept="application/pdf" />';
+echo '<div class="alert alert-primary alert-dismissible" role="alert" id="orderDetailsAlert" onclick="Showfilepdf(\'' . $data['Order_details'] . '\')">
+    ' . $data['Order_details'] . '
+    <button type="button" class="btn-close" id="dataOrder_details"  name="dataOrder_details" value="' . $data['Order_details'] . '" onclick="event.stopPropagation(); RemoveFilePdf(\'' . $data['Order_details'] . '\')"  aria-label="Close"></button>
     </div>
 </div>
 </div>
@@ -155,7 +206,7 @@ echo '</select>
 <label class="col-sm-2 col-form-label">hiddenOrder_details
 </label>
 <div class="col-sm-10 form-group">
-<input type="text" id="hiddenOrder_details" name="hiddenOrder_details" value="'.$data['Order_details'].'">
+<input type="text" id="hiddenOrder_details" name="hiddenOrder_details" value="' . $data['Order_details'] . '">
 </div>
 </div>
 <div class="row mb-3">
@@ -168,19 +219,19 @@ echo '</select>
 <div class="row mb-3">
 <label class="col-sm-2 col-form-label" for="Salesperson_Code">รหัสพนักงานขาย</label>
 <div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['Salesperson_Code'].'" id="Salesperson_Code" name="Salesperson_Code" placeholder="รหัสพนักงานขาย" />
+    <input type="text" class="form-control" value="' . $data['Salesperson_Code'] . '" id="Salesperson_Code" name="Salesperson_Code" placeholder="รหัสพนักงานขาย" />
 </div>
 </div>
 <div class="row mb-3">
 <label class="col-sm-2 col-form-label" for="Salesperson_Name">ชื่อพนักงานขาย</label>
 <div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['Salesperson_Name'].'" id="Salesperson_Name" name="Salesperson_Name" placeholder="ชื่อพนักงานขาย" />
+    <input type="text" class="form-control" value="' . $data['Salesperson_Name'] . '" id="Salesperson_Name" name="Salesperson_Name" placeholder="ชื่อพนักงานขาย" />
 </div>
 </div>
 <div class="row mb-3">
 <label class="col-sm-2 col-form-label" for="Salesperson_Tel">เบอร์โทรศัพท์</label>
 <div class="col-sm-10 form-group">
-    <input type="text" class="form-control" value="'.$data['Salesperson_Tel'].'" id="Salesperson_Tel" name="Salesperson_Tel" placeholder="เบอร์โทรศัพท์" />
+    <input type="text" class="form-control" value="' . $data['Salesperson_Tel'] . '" id="Salesperson_Tel" name="Salesperson_Tel" placeholder="เบอร์โทรศัพท์" />
 </div>
 </div>
 <div class="row justify-content-end">
@@ -197,4 +248,3 @@ echo '</select>
 </div>
 
 ';
-?>
