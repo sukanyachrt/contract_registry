@@ -70,11 +70,21 @@ echo '<option value>เลือก</option>';
 $connect->sql = "SELECT	* FROM	`customer` WHERE Customer_Status='1'";
 $connect->queryData();
 while ($rsconnect = $connect->fetch_AssocData()) {
+    if($rsconnect['Customer_ID']<=9){
+        $max="00".$rsconnect['Customer_ID'];
+    }
+    else if($rsconnect['Customer_ID']>=10 && $rsconnect['maxid']<=99){
+        $max="0".$rsconnect['Customer_ID'];
+    }
+    else{
+        $max=$rsconnect['Customer_ID'];
+    }
+
     echo '<option value="' . $rsconnect['Customer_ID'] . '"';
     if ($data['Customer_ID'] == $rsconnect['Customer_ID']) {
         echo " selected";
     }
-    echo '>' . $rsconnect['Customer_ID'] . '</option>';
+    echo '>' . $max . '</option>';
 }
 echo '</select>
 </div>

@@ -69,7 +69,17 @@ if ($data == "customerStatus") {
     $connect->sql = "SELECT	MAX( Customer_ID )+ 1 AS maxid FROM	customer";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
+    
+    if($rsconnect['maxid']<=9){
+        $max="00".$rsconnect['maxid'];
+    }
+    else if($rsconnect['maxid']>=10 && $rsconnect['maxid']<=99){
+        $max="0".$rsconnect['maxid'];
+    }
+    else{
+        $max=$rsconnect['maxid'];
+    }
+    $result = ["maxid" => $max];
 
-    $result = ["maxid" => $rsconnect['maxid']];
     echo json_encode($result);
 }
