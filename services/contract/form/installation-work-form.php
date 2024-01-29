@@ -31,7 +31,8 @@ if ($_GET['id'] <= 0) {
     $rsconnect = $connect->fetch_AssocData();
     $data['Installation_code'] = $rsconnect['maxid'] + 1;
 } else {
-    $data['Installation_code'] = $_GET['id'];
+
+   
     $connect->sql = "SELECT
 	t_install.Installation_code,
 	t_install.Contract_delivery_datesend,
@@ -48,6 +49,7 @@ WHERE
 	t_project.Project_code = '" . $_GET['id'] . "'";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
+    $data['Installation_code'] = $rsconnect['Installation_code'];
     $data['Contract_delivery_datesend'] = date('d/m/Y', strtotime($rsconnect['Contract_delivery_datesend']));
     $data['Contract_delivery_dateoffer'] = date('d/m/Y', strtotime($rsconnect['Contract_delivery_dateoffer']));
     $data['Project_work_page'] = $rsconnect['Project_work_page'];

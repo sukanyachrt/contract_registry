@@ -12,10 +12,20 @@ $data=[
 ];
    
 if($_GET['id']<=0){
-    $connect->sql = "SELECT	MAX( Project_code  ) AS maxid FROM	`project`";
+    $connect->sql = "SELECT MAX(CAST(SUBSTRING(Project_code, 3) AS UNSIGNED)) AS maxid
+    FROM project
+    WHERE Project_code LIKE 'TH%';";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
-    $data['Project_code']=$rsconnect['maxid']+1;
+    $data['Project_code']=$rsconnect['maxid'];
+    if($rsconnect['maxid']==0){
+        $data['Project_code']="TH"."50600";
+    }
+    else{
+        $data['Project_code']="TH".$rsconnect['maxid']+1;
+    }
+    
+    
 }
 else{
     $data['Project_code']=$_GET['id'];

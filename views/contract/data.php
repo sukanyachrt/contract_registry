@@ -471,7 +471,7 @@
                     data: $('#project-form').serialize(),
                     success: function(Res) {
                         console.log(Res)
-                        if (Res.id > 0 && Res.status == "ok") {
+                        if (Res.status == "ok") {
                             //บันทึกข้อมูลโครงการ
                             let id = Res.id;
                             var formregister = new FormData($('#contract-register-form')[0]);
@@ -489,7 +489,7 @@
                                 data: formregister,
                                 success: function(Res) {
                                     console.log(Res)
-                                    if (Res.id > 0 && Res.status == "ok") {
+                                    if (Res.status == "ok") {
 
                                         //บันทึกการชำระเงิน
                                         let tbPaymentinformation = [];
@@ -516,7 +516,7 @@
                                             },
                                             success: function(Res) {
                                                 console.log(Res)
-                                                if (Res.id > 0 && Res.status == "ok") {
+                                                if (Res.status == "ok") {
                                                     //บันทึกข้อมูลการตรวจสอบการติดตั้ง
                                                     var fd = new FormData($('#installation-work-form')[0]);
                                                     var files = $('#uploadfile_install')[0].files[0];
@@ -534,7 +534,7 @@
                                                         data: fd,
                                                         success: function(Res) {
                                                             console.log(Res)
-                                                            if (Res.id > 0 && Res.status == "ok") {
+                                                            if (Res.status == "ok") {
                                                                 sessionStorage.setItem('toastrShown', 'saveContract');
                                                                 if ('<?php echo $_SESSION['Salesperson_position']; ?>' === "admin_sale") {
                                                                     location.href = 'index.php';

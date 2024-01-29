@@ -31,11 +31,18 @@ if ($data == "updateEmployStatus") {
     echo json_encode(["result" => $connect->affected_rows()]);
 } else if ($data == "insertemploy") {
     $post = $_POST;
-    $connect->sql = "SELECT	MAX( Salesperson_Code )+ 1 AS maxid FROM	salesperson";
+    $connect->sql = "SELECT	 Salesperson_Code AS maxid FROM salesperson WHERE Salesperson_Code='".$post['Salesperson_Code']."'";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
     $maxid=$rsconnect['maxid'];
-    $connect->sql = "INSERT INTO `salesperson` (`Salesperson_Code`, `Salesperson_Name`, `Telephone_Number`, `Salesperson_position`, `Salesperson_status`) VALUES ('" . $maxid. "',
+    if(round($rsconnect['maxid'])>0){
+        $maxid=$rsconnect['maxid']+1;
+    }
+    else{
+        $maxid=$post['Salesperson_Code'];
+    }
+    $connect->sql = "INSERT INTO `salesperson` (`Salesperson_Code`, `Salesperson_Name`, `Telephone_Number`, `Salesperson_position`, `Salesperson_status`) VALUES
+     ('" . $maxid. "',
     '" . $post['Salesperson_Name'] . "',
     '" . $post['Telephone_Number'] . "',
     '" . $post['Salesperson_position'] . "',
@@ -76,10 +83,20 @@ FROM
 
     echo json_encode($result[0]);
 } else if ($data == "maxIdEmploy") {
-    $connect->sql = "SELECT	MAX( Salesperson_Code )+ 1 AS maxid FROM	salesperson";
+    $connect->sql = "SELECT	MAX( Salesperson_Code ) AS maxid FROM	salesperson";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
+    if(round($rsconnect['maxid'])==0){
+        $maxid="61001";
+    }
+    else if($rsconnect['maxid']<=61000){
+        $maxid="61001";
+    }
+    else{
+        $maxid=$rsconnect['maxid']+1;
+    }
+   
 
-    $result = ["maxid" => $rsconnect['maxid']];
+    $result = ["maxid" => $maxid];
     echo json_encode($result);
 }

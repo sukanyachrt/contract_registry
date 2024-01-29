@@ -21,10 +21,25 @@ $data = [
 ];
 
 if ($_GET['id'] <= 0) {
-    $connect->sql = "SELECT	MAX( registration_code  ) AS maxid FROM	`contract_register`";
+    $connect->sql = "SELECT MAX(CAST(SUBSTRING(registration_code, 5) AS UNSIGNED)) AS maxid
+    FROM contract_register
+    WHERE registration_code LIKE 'THE%'";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
-    $data['registration_code'] = $rsconnect['maxid'] + 1;
+    $maxid= $rsconnect['maxid'] + 1;
+    if($maxid<=9){
+        $data['registration_code'] = "THE."."00".$maxid."/".(date('Y')+543);
+    }
+    else  if($maxid>=10 && $maxid<=99)
+    {
+        $data['registration_code'] = "THE."."0".$maxid."/".(date('Y')+543);
+    }
+    else{
+        $data['registration_code'] = "THE.".$maxid."/".(date('Y')+543);
+    }
+    
+    
+   
 } else {
 
     $connect->sql = "SELECT 
