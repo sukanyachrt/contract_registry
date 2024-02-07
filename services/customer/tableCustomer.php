@@ -22,8 +22,20 @@ while ($rsconnect = $connect->fetch_AssocData()) {
     } else {
         $Customer_Status = '<span class="badge bg-label-danger">ไม่ใช้งาน</span>';
     }
+
+    if($rsconnect['Customer_ID']<=9){
+        $Customer_ID="00".$rsconnect['Customer_ID'];
+    }
+    else if($rsconnect['Customer_ID']>=10 && $rsconnect['Customer_ID']<=99){
+        $Customer_ID="0".$rsconnect['Customer_ID'];
+    }
+    else{
+        $Customer_ID=$rsconnect['Customer_ID'];
+    }
+
+
     echo '<tr>
-    <td class="text-center">' . $rsconnect['Customer_ID'] . '</td>
+    <td class="text-center">' . $Customer_ID . '</td>
     <td class="text-center">' . $rsconnect['Customer_Name'] . '</td>
     <td class="text-center">' . $rsconnect['Address'] . '</td>
     <td class="text-center">' . $rsconnect['Telephone_Number'] . '</td>
