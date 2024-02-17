@@ -125,3 +125,10 @@
   text-align: center;
   margin-top: 1rem;
 }
+.table>thead>tr>th {
+  background-color: #BC2721;
+
+}
+.table:not(.table-dark) th {
+color: #fff;
+}
