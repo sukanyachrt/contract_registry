@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="../../assets/plugins/bs-stepper/css/bs-stepper.min.css">
 <style>
     .active .bs-stepper-title {
-        color: #696cff;
+        color: #BC2721;
     }
 
     * {
