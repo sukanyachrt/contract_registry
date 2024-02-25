@@ -26,20 +26,14 @@ if ($_GET['id'] <= 0) {
     WHERE registration_code LIKE 'THE%'";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
-    $maxid= $rsconnect['maxid'] + 1;
-    if($maxid<=9){
-        $data['registration_code'] = "THE."."00".$maxid."/".(date('Y')+543);
+    $maxid = $rsconnect['maxid'] + 1;
+    if ($maxid <= 9) {
+        $data['registration_code'] = "THE." . "00" . $maxid . "/" . (date('Y') + 543);
+    } else  if ($maxid >= 10 && $maxid <= 99) {
+        $data['registration_code'] = "THE." . "0" . $maxid . "/" . (date('Y') + 543);
+    } else {
+        $data['registration_code'] = "THE." . $maxid . "/" . (date('Y') + 543);
     }
-    else  if($maxid>=10 && $maxid<=99)
-    {
-        $data['registration_code'] = "THE."."0".$maxid."/".(date('Y')+543);
-    }
-    else{
-        $data['registration_code'] = "THE.".$maxid."/".(date('Y')+543);
-    }
-    
-    
-   
 } else {
 
     $connect->sql = "SELECT 
@@ -85,14 +79,12 @@ echo '<option value>เลือก</option>';
 $connect->sql = "SELECT	* FROM	`customer` WHERE Customer_Status='1'";
 $connect->queryData();
 while ($rsconnect = $connect->fetch_AssocData()) {
-    if($rsconnect['Customer_ID']<=9){
-        $max="00".$rsconnect['Customer_ID'];
-    }
-    else if($rsconnect['Customer_ID']>=10 && $rsconnect['maxid']<=99){
-        $max="0".$rsconnect['Customer_ID'];
-    }
-    else{
-        $max=$rsconnect['Customer_ID'];
+    if ($rsconnect['Customer_ID'] <= 9) {
+        $max = "00" . $rsconnect['Customer_ID'];
+    } else if ($rsconnect['Customer_ID'] >= 10 && $rsconnect['maxid'] <= 99) {
+        $max = "0" . $rsconnect['Customer_ID'];
+    } else {
+        $max = $rsconnect['Customer_ID'];
     }
 
     echo '<option value="' . $rsconnect['Customer_ID'] . '"';
@@ -128,13 +120,25 @@ echo '</select>
         </tr>
     </thead>
     <tbody>';
-        if ($_GET['id'] <= 0) {
-        echo '<tr>
+if ($_GET['id'] <= 0) {
+    echo '<tr>
             <td>
-                <input type="text" autocomplete="yes" class="form-control" id="type_payment" placeholder="ประเภทการชำระ">
+             <select id="type_payment" class="form-control" placeholder="ประเภทการชำระ">
+                <option value=""> เลือกประเภทการชำระ </option>
+                <option value="เช็ค">เช็ค</option>
+                <option value="ตั๋ว">ตั๋ว</option>
+                <option value="สลิป">สลิป</option>
+             </select>
             </td>
             <td>
-                <input type="number" autocomplete="yes" class="form-control" id="period_payment" placeholder="งวดที่ชำระ">
+            <select id="period_payment" class="form-control" placeholder="งวดที่ชำระ">
+                <option value=""> งวดที่ชำระ </option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+             </select>
             </td>
             <td>
                 <input type="text" autocomplete="yes" name="dateTypePayment[]" class="form-control dateTypePayment" readOnly placeholder="วันเดือนปีที่ชำระ">
@@ -149,9 +153,8 @@ echo '</select>
                 </div>
             </td>
         </tr>';
-        }
-        else{
-            $connect->sql = "SELECT
+} else {
+    $connect->sql = "SELECT
             Payment_code, 
             type_payment, 
             period_payment, 
@@ -160,17 +163,31 @@ echo '</select>
             FROM
                 payment_information
             WHERE Project_ID='" . $_GET['id'] . "'";
-            $connect->queryData();
-            while($rsconnect = $connect->fetch_AssocData()){
-                echo '<tr>
+    $connect->queryData();
+    while ($rsconnect = $connect->fetch_AssocData()) {
+        echo '<tr>
                 <td>
-                    <input type="text" autocomplete="yes" class="form-control" name="type_payment[]" value="' . $rsconnect['type_payment'] . '" placeholder="ประเภทการชำระ">
+                <select name="type_payment[]" class="form-control" placeholder="ประเภทการชำระ">
+                <option value=""> เลือกประเภทการชำระ </option>
+                <option selected value="' . $rsconnect['type_payment'] . '">' . $rsconnect['type_payment'] . '</option>
+                <option value="เช็ค">เช็ค</option>
+                <option value="ตั๋ว">ตั๋ว</option>
+                <option value="สลิป">สลิป</option>
+             </select>
+               </td>
+                <td>
+                <select name="period_payment[]" class="form-control" placeholder="งวดที่ชำระ">
+                <option value=""> งวดที่ชำระ </option>
+                <option selected value="' . $rsconnect['period_payment'] . '">' . $rsconnect['period_payment'] . '</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+             </select>
                 </td>
                 <td>
-                    <input type="number" autocomplete="yes" class="form-control" name="period_payment[]" value="' . $rsconnect['period_payment'] . '" placeholder="งวดที่ชำระ">
-                </td>
-                <td>
-                    <input type="text" autocomplete="yes" name="dateTypePayment[]" class="form-control dateTypePayment" value="' . date('d/m/Y',strtotime($rsconnect['date_payment'])) . '" readOnly id="date_payment" placeholder="วันเดือนปีที่ชำระ">
+                    <input type="text" autocomplete="yes" name="dateTypePayment[]" class="form-control dateTypePayment" value="' . date('d/m/Y', strtotime($rsconnect['date_payment'])) . '" readOnly id="date_payment" placeholder="วันเดือนปีที่ชำระ">
                 </td>
                 <td>
                     <input type="number" autocomplete="yes" class="form-control" name="money_payment[]" value="' . $rsconnect['money_payment'] . '" placeholder="จำนวนเงิน">
@@ -182,9 +199,9 @@ echo '</select>
                     </div>
                 </td>
             </tr>';
-            }
-        }
-    echo '</tbody>
+    }
+}
+echo '</tbody>
 </table>
 </div>
 </div>

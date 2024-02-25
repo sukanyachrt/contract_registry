@@ -494,8 +494,8 @@
                                         //บันทึกการชำระเงิน
                                         let tbPaymentinformation = [];
                                         $('#tbPaymentinformation tbody tr').each(function() {
-                                            var type_payment = $(this).find('td:eq(0) input[type="text"]').val();
-                                            var period_payment = $(this).find('td:eq(1) input[type="number"]').val();
+                                            var type_payment = $(this).find('td:eq(0) select option:selected').val();
+                                            var period_payment = $(this).find('td:eq(1) select option:selected').val();
                                             var date_payment = $(this).find('td:eq(2) input[type="text"]').val();
                                             var money_payment = $(this).find('td:eq(3) input[type="number"]').val();
                                             tbPaymentinformation.push({
@@ -522,7 +522,7 @@
                                                     var files = $('#uploadfile_install')[0].files[0];
                                                     fd.append('uploadfile_install', files);
 
-                        
+
 
                                                     $.ajax({
                                                         async: true,
@@ -615,10 +615,22 @@
     function addRow() {
         var newRow = `<tr>
             <td>
-                <input type="text" autocomplete="yes" class="form-control" id="type_payment" placeholder="ประเภทการชำระ">
+            <select id="type_payment" class="form-control" placeholder="ประเภทการชำระ">
+                <option value=""> เลือกประเภทการชำระ </option>
+                <option value="เช็ค">เช็ค</option>
+                <option value="ตั๋ว">ตั๋ว</option>
+                <option value="สลิป">สลิป</option>
+             </select>
             </td>
             <td>
-                <input type="number" autocomplete="yes" class="form-control" id="period_payment" placeholder="งวดที่ชำระ">
+            <select id="period_payment" class="form-control" placeholder="งวดที่ชำระ">
+                <option value=""> งวดที่ชำระ </option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+             </select>
             </td>
             <td>
                 <input type="text" autocomplete="yes" class="form-control dateTypePayment" readOnly id="date_payment" placeholder="วันเดือนปีที่ชำระ">
@@ -745,6 +757,4 @@
         $('#uploadfile_install').show()
         $('#uploadfile_installAlert').hide()
     }
-
-    
 </script>
